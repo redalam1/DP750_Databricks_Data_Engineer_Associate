@@ -1,0 +1,2641 @@
+[
+  {
+    "pregunta": "2301 - A data analyst needs to run ad-hoc SQL queries on a large Delta table. They require the fastest possible startup time and minimal management overhead. Which compute resource should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "A serverless SQL warehouse.",
+        "es_correcta": true,
+        "explicacion": "Serverless SQL warehouses are recommended for most SQL workloads. They provide instant and elastic compute, eliminating the need to wait for infrastructure resources. Databricks handles capacity management, patching, and performance optimization, leading to a lower total cost of ownership and faster startup times for ad-hoc queries."
+      },
+      {
+        "texto_opcion": "A classic all-purpose cluster.",
+        "es_correcta": false,
+        "explicacion": "All-purpose clusters are designed for interactive workloads like notebooks and have slower startup times compared to serverless SQL warehouses. They also require manual management of clusters and configurations, which is not optimal for ad-hoc SQL queries."
+      },
+      {
+        "texto_opcion": "A pro SQL warehouse.",
+        "es_correcta": false,
+        "explicacion": "Pro SQL warehouses are used when serverless is not available or when custom networking is needed. For fastest startup time and minimal management overhead, a serverless SQL warehouse is the recommended choice."
+      },
+      {
+        "texto_opcion": "A job cluster.",
+        "es_correcta": false,
+        "explicacion": "Job clusters are ephemeral and designed for automated ETL workloads, not for interactive, ad-hoc SQL queries. They are not the appropriate compute resource for this scenario."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2302 - A data engineer is configuring a SQL warehouse for a BI team. They want to ensure it stops after a period of inactivity to minimize costs. What is the default auto-stop time for a serverless SQL warehouse in the UI?",
+    "opciones": [
+      {
+        "texto_opcion": "5 minutes",
+        "es_correcta": false,
+        "explicacion": "5 minutes is the minimum auto-stop time for a serverless SQL warehouse in the UI, but it is not the default. The default is 10 minutes."
+      },
+      {
+        "texto_opcion": "10 minutes",
+        "es_correcta": true,
+        "explicacion": "For serverless SQL warehouses, the default auto-stop time is 10 minutes, which is recommended for typical use. The minimum is 5 minutes when using the UI."
+      },
+      {
+        "texto_opcion": "45 minutes",
+        "es_correcta": false,
+        "explicacion": "45 minutes is the default auto-stop time for pro and classic SQL warehouses, not for serverless SQL warehouses. Serverless SQL warehouses have a default of 10 minutes."
+      },
+      {
+        "texto_opcion": "1 hour",
+        "es_correcta": false,
+        "explicacion": "1 hour is not the default auto-stop time for any SQL warehouse type. The defaults are 10 minutes for serverless and 45 minutes for pro/classic warehouses."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2303 - A data engineer wants to grant a user permission to run queries against a SQL warehouse but not see the query history or query profiles. Which permission level should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "CAN VIEW",
+        "es_correcta": false,
+        "explicacion": "CAN VIEW allows users to view SQL warehouses, including query history and query profiles, but these users cannot run queries on the warehouse."
+      },
+      {
+        "texto_opcion": "CAN USE",
+        "es_correcta": true,
+        "explicacion": "The CAN USE permission allows users to run queries on the warehouse. This is the minimum permission required to execute queries. Users with CAN USE can run queries but lack the monitoring capabilities of CAN MONITOR."
+      },
+      {
+        "texto_opcion": "CAN MONITOR",
+        "es_correcta": false,
+        "explicacion": "CAN MONITOR users can run queries and also see query history and profiles. The requirement is to run queries without seeing the history, making CAN USE the correct permission."
+      },
+      {
+        "texto_opcion": "CAN MANAGE",
+        "es_correcta": false,
+        "explicacion": "CAN MANAGE provides full control to configure and manage the warehouse, which is far more than what the engineer wants to grant."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2304 - A data analyst is writing a SQL query in the SQL editor and wants to insert a table name with spaces. How should they reference it?",
+    "opciones": [
+      {
+        "texto_opcion": "Enclose the identifier in square brackets, e.g., `[My Table]`.",
+        "es_correcta": false,
+        "explicacion": "Square brackets are not the correct syntax for escaping identifiers in Databricks SQL. The proper way is to use backticks."
+      },
+      {
+        "texto_opcion": "Enclose the identifier in backticks, e.g., `My Table`.",
+        "es_correcta": true,
+        "explicacion": "If a table or column name includes spaces, you must wrap those identifiers in backticks in your SQL queries. This is the correct way to handle identifiers with special characters in Databricks SQL."
+      },
+      {
+        "texto_opcion": "Use double quotes, e.g., \"My Table\".",
+        "es_correcta": false,
+        "explicacion": "Double quotes are not the standard way to escape identifiers in Databricks SQL. The correct syntax for escaping identifiers is backticks."
+      },
+      {
+        "texto_opcion": "Replace spaces with underscores, e.g., `My_Table`.",
+        "es_correcta": false,
+        "explicacion": "While you can rename the table, the question asks how to reference it in a query with its existing name. The correct way to handle spaces in a name is to use backticks."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2305 - A data analyst is creating a new dashboard. According to the documentation, what is the first step to define the data for the dashboard?",
+    "opciones": [
+      {
+        "texto_opcion": "Create visualizations on the Canvas tab.",
+        "es_correcta": false,
+        "explicacion": "The Canvas tab is where you create and edit widgets like visualizations and filters. However, you must first define the datasets on the Data tab before you can create visualizations."
+      },
+      {
+        "texto_opcion": "Define the underlying datasets in the Data tab.",
+        "es_correcta": true,
+        "explicacion": "The Data tab is for defining the underlying datasets used in your dashboard. You can write SQL queries to define a dataset or, in Unity Catalog-enabled workspaces, select a Unity Catalog table or view as a dataset. The Canvas tab is used after datasets are defined to add visualizations and filters."
+      },
+      {
+        "texto_opcion": "Add filters to make the dashboard interactive.",
+        "es_correcta": false,
+        "explicacion": "Filters are added on the Canvas tab after the datasets are defined. You must have a dataset to apply a filter to."
+      },
+      {
+        "texto_opcion": "Publish the dashboard to share it with the team.",
+        "es_correcta": false,
+        "explicacion": "Publishing is the final step after the dashboard is built and configured. You must define datasets and create visualizations before publishing."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2306 - A data analyst has created a SQL query and wants to save it. What is the correct way to ensure the query is persisted and can be shared with other team members?",
+    "opciones": [
+      {
+        "texto_opcion": "Click Save in the SQL editor.",
+        "es_correcta": true,
+        "explicacion": "The Save button near the top-right of the SQL editor saves your query. When you modify a query but don't explicitly click Save, that state is retained as a query draft for 30 days. To retain your changes and make the query available for sharing, you must explicitly save it."
+      },
+      {
+        "texto_opcion": "The query is automatically saved when you close the browser tab.",
+        "es_correcta": false,
+        "explicacion": "While query drafts are retained for 30 days, they are not considered saved queries. To persist the query and make it shareable, you must explicitly click the Save button."
+      },
+      {
+        "texto_opcion": "Run the query and the results are automatically saved.",
+        "es_correcta": false,
+        "explicacion": "Running a query does not automatically save the query definition. You must explicitly click Save to persist the query and make it available for sharing."
+      },
+      {
+        "texto_opcion": "Add a tag to the query, which automatically saves it.",
+        "es_correcta": false,
+        "explicacion": "Adding a tag helps organize the query, but it does not automatically save it. You must still click Save to persist the query definition."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2307 - A data engineer is investigating a slow query. Where can they find detailed information about the query's execution plan and performance metrics?",
+    "opciones": [
+      {
+        "texto_opcion": "In the Query History section, by clicking the query text and selecting 'View Query Profile'.",
+        "es_correcta": true,
+        "explicacion": "The Query History section shows queries performed using SQL warehouses. You can click the query text to open a summary panel, which includes a preview of the query profile directed acyclic graph (DAG). For more detailed information about the query's performance, including its execution plan, you can click 'View Query Profile'."
+      },
+      {
+        "texto_opcion": "In the SQL editor, by hovering over the query run button.",
+        "es_correcta": false,
+        "explicacion": "The SQL editor's run button does not provide detailed execution plan or performance metrics. Query history is the appropriate place to find this information."
+      },
+      {
+        "texto_opcion": "In the Alerts section, by reviewing the alert history.",
+        "es_correcta": false,
+        "explicacion": "The Alerts section shows alert evaluation history, not detailed query execution plans. Query history is the correct place to find performance details."
+      },
+      {
+        "texto_opcion": "In the Catalog Explorer, by clicking on the table name.",
+        "es_correcta": false,
+        "explicacion": "Catalog Explorer shows table metadata and schema, not query execution details. Query history is the appropriate place for query performance information."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2308 - A data engineer is creating a Databricks SQL alert to monitor data quality. They want to be notified when the sum of a column exceeds a threshold. What is the correct way to configure this alert?",
+    "opciones": [
+      {
+        "texto_opcion": "Write a query that returns the aggregated value, and configure the alert to check the condition against that value.",
+        "es_correcta": true,
+        "explicacion": "In the Condition field, you can select an aggregation like SUM or AVERAGE, choose the column to check, and set the logical operator and threshold value. The alert will run the query on a schedule and notify you when the condition is met."
+      },
+      {
+        "texto_opcion": "Use a scheduled job to run a Python script that checks the condition.",
+        "es_correcta": false,
+        "explicacion": "Databricks SQL alerts are designed specifically for monitoring SQL query results without the need for external scripts. They provide a built-in, low-code way to set up condition-based notifications."
+      },
+      {
+        "texto_opcion": "Set up a dashboard that displays the sum and manually check it.",
+        "es_correcta": false,
+        "explicacion": "Manual checks are not efficient and do not provide automated notifications. Databricks SQL alerts automate this process by evaluating conditions on a schedule and sending notifications."
+      },
+      {
+        "texto_opcion": "Use the Query History to review the sum after each run.",
+        "es_correcta": false,
+        "explicacion": "Query History is for reviewing past queries, not for automated monitoring and notifications. Alerts are the correct tool for this use case."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Alerts"
+    ]
+  },
+  {
+    "pregunta": "2309 - A data analyst is creating a bar chart in the SQL editor. They want to show the sum of sales by product category. How should they configure the visualization?",
+    "opciones": [
+      {
+        "texto_opcion": "Set X-axis to the product category and Y-axis to the sum of sales.",
+        "es_correcta": true,
+        "explicacion": "For a bar chart showing sum of sales by category, you set the X-axis to the categorical column (product category) and the Y-axis to the aggregated numeric column (sum of sales). You can configure the Y-axis aggregation type to Sum."
+      },
+      {
+        "texto_opcion": "Set X-axis to the sum of sales and Y-axis to the product category.",
+        "es_correcta": false,
+        "explicacion": "This would put the sum of sales on the x-axis, which is not typical for a bar chart showing sales by category. The x-axis should be the category, and the y-axis should be the aggregated value."
+      },
+      {
+        "texto_opcion": "Set both axes to the product category to show duplicates.",
+        "es_correcta": false,
+        "explicacion": "Setting both axes to the same category would not produce a meaningful chart. The x-axis should be the category, and the y-axis should be the metric you are visualizing."
+      },
+      {
+        "texto_opcion": "The visualization will automatically select the correct fields.",
+        "es_correcta": false,
+        "explicacion": "While the visualization tool provides suggestions, you typically need to manually configure the x and y axes to display the desired data correctly."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Visualization concepts"
+    ]
+  },
+  {
+    "pregunta": "2310 - A data engineer is optimizing a SQL query that performs an `INNER JOIN` using an `OR` condition. According to Databricks best practices, why is this inefficient, and how should it be rewritten?",
+    "opciones": [
+      {
+        "texto_opcion": "The `OR` condition forces a Cartesian product-like operation. Rewrite the query using `UNION` with separate equi-join conditions.",
+        "es_correcta": true,
+        "explicacion": "A join condition with an `OR` is a non-equi join that can force Spark to use an expensive `PhotonBroadcastNestedLoopJoin`, which is slow for large datasets. The recommended approach is to rewrite the query using `UNION` with separate equi-join conditions, allowing Spark to use more efficient `PhotonBroadcastHashJoin` for each part."
+      },
+      {
+        "texto_opcion": "Increase the number of shuffle partitions to distribute the data more evenly.",
+        "es_correcta": false,
+        "explicacion": "Increasing shuffle partitions can help with data skew, but it does not address the fundamental inefficiency of a non-equi join with `OR` conditions. The join strategy itself needs to be optimized."
+      },
+      {
+        "texto_opcion": "Enable Adaptive Query Execution (AQE) to optimize join strategies at runtime.",
+        "es_correcta": false,
+        "explicacion": "AQE can help with dynamic optimization, but it may not be able to resolve the issue of a non-equi join with `OR` conditions. Rewriting the query is a more direct and effective solution."
+      },
+      {
+        "texto_opcion": "Use a broadcast hint to broadcast one of the DataFrames.",
+        "es_correcta": false,
+        "explicacion": "Broadcast hints are useful for joining a large table with a small one, but they are not effective for complex non-equi joins with `OR` conditions. The query rewrite is the recommended approach."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2311 - A data engineer is using the Query History system table to analyze query performance across the account. What is a key consideration when using this table?",
+    "opciones": [
+      {
+        "texto_opcion": "The table provides real-time query data with no retention limit.",
+        "es_correcta": false,
+        "explicacion": "The query history holds query data for the past 30 days, after which it is automatically deleted. It does not provide unlimited retention."
+      },
+      {
+        "texto_opcion": "By default, only admins have access to the query history system table.",
+        "es_correcta": true,
+        "explicacion": "Databricks system tables include a query history table (`system.query.history`) where privileged users can view tabular query history records from across your account. By default, only admins have access to your account's system tables."
+      },
+      {
+        "texto_opcion": "The system table is automatically enabled for all users.",
+        "es_correcta": false,
+        "explicacion": "By default, only admins have access to the system tables. Access must be granted to other users."
+      },
+      {
+        "texto_opcion": "The table only contains query history for the current user.",
+        "es_correcta": false,
+        "explicacion": "The system table provides tabular query history records from across your account, not just for the current user. It is a system-wide view for privileged users."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2312 - A data analyst wants to create an interactive dashboard where users can select a marketing segment to filter the data. Which feature should they use to implement this?",
+    "opciones": [
+      {
+        "texto_opcion": "Query-based parameters in the dataset definition.",
+        "es_correcta": true,
+        "explicacion": "You can add a parameter to a dataset to filter the returned values. For example, adding a `WHERE c_mktsegment = :segment` clause creates a parameter. You can then add a filter widget on the dashboard canvas that is linked to this parameter, allowing users to select a value and filter the data."
+      },
+      {
+        "texto_opcion": "A separate dashboard for each marketing segment.",
+        "es_correcta": false,
+        "explicacion": "Creating separate dashboards for each segment would be redundant and difficult to maintain. Parameters and filters allow a single dashboard to support interactive filtering."
+      },
+      {
+        "texto_opcion": "Hardcode the marketing segment in the query.",
+        "es_correcta": false,
+        "explicacion": "Hardcoding the segment would require modifying the query for each segment, which is not interactive and is inefficient. Parameters allow users to change the value without editing the query."
+      },
+      {
+        "texto_opcion": "Use the Canvas tab to manually filter the data.",
+        "es_correcta": false,
+        "explicacion": "The Canvas tab is for creating and arranging widgets. Filtering is configured through the filter widget, which can be linked to a query-based parameter."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2313 - A data engineer is creating a SQL function in Databricks SQL. Which statement about SQL functions is true?",
+    "opciones": [
+      {
+        "texto_opcion": "SQL functions can only be created for scalar values, not table results.",
+        "es_correcta": false,
+        "explicacion": "Databricks SQL supports both scalar functions (returning a single value) and table functions (returning a set of rows). The `RETURNS TABLE` clause is used to create table functions."
+      },
+      {
+        "texto_opcion": "Python UDFs in Databricks SQL require Unity Catalog.",
+        "es_correcta": true,
+        "explicacion": "Python UDFs in Databricks SQL require Unity Catalog on serverless or pro SQL warehouses, or a Unity Catalog-enabled compute resource."
+      },
+      {
+        "texto_opcion": "Functions are always `DETERMINISTIC` by default and cannot be marked otherwise.",
+        "es_correcta": false,
+        "explicacion": "You can mark a function as `DETERMINISTIC` or `NOT DETERMINISTIC`. If you do not specify this option, it is derived from the function body."
+      },
+      {
+        "texto_opcion": "Function parameters cannot have default values.",
+        "es_correcta": false,
+        "explicacion": "SQL functions in Databricks SQL support default values for parameters. When you specify a default for one parameter, all following parameters must also have a default."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL functions"
+    ]
+  },
+  {
+    "pregunta": "2314 - A data analyst is configuring a SQL warehouse to handle a high number of concurrent queries from the BI team. According to Databricks recommendations, what is the suggested scaling configuration?",
+    "opciones": [
+      {
+        "texto_opcion": "Set the minimum clusters to the expected peak concurrency to avoid scaling delays.",
+        "es_correcta": false,
+        "explicacion": "This would be costly, as the warehouse would run at its peak size at all times. The purpose of auto-scaling is to scale up only when needed and scale down to save costs. You set a range for Databricks to manage."
+      },
+      {
+        "texto_opcion": "Configure the minimum and maximum clusters based on the expected concurrency, with a recommendation of one cluster for every 10 concurrent queries.",
+        "es_correcta": true,
+        "explicacion": "Databricks recommends a cluster for every 10 concurrent queries. Configuring the minimum and maximum cluster range allows Intelligent Workload Management to scale the warehouse up and down automatically, balancing performance and cost."
+      },
+      {
+        "texto_opcion": "Set the maximum clusters to 1 to ensure consistent performance.",
+        "es_correcta": false,
+        "explicacion": "Setting the maximum clusters to 1 prevents the warehouse from scaling out to handle concurrent queries, leading to queuing and poor performance during high-usage periods. It is recommended to set a higher maximum to handle concurrency."
+      },
+      {
+        "texto_opcion": "Disable auto-scaling and manually resize the warehouse based on the day of the week.",
+        "es_correcta": false,
+        "explicacion": "This is an inefficient manual process. Serverless SQL warehouses are designed for intelligent autoscaling to automatically handle variations in demand. Manual resizing would create unnecessary overhead."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2315 - A data engineer is writing a SQL query and wants to create a visualization. According to the documentation, what is the maximum number of rows that can be returned in a SQL query result table?",
+    "opciones": [
+      {
+        "texto_opcion": "1,000 rows",
+        "es_correcta": false,
+        "explicacion": "1,000 rows is the default limit for query results when the Limit 1000 option is selected. However, the maximum number of rows that can be returned is 64,000."
+      },
+      {
+        "texto_opcion": "64,000 rows",
+        "es_correcta": true,
+        "explicacion": "The maximum number of rows returned in a table is 64,000. To return all rows (up to this limit), deselect Limit 1000 from the Run drop-down menu."
+      },
+      {
+        "texto_opcion": "10,000 rows",
+        "es_correcta": false,
+        "explicacion": "10,000 rows is not the maximum limit. The maximum is 64,000 rows."
+      },
+      {
+        "texto_opcion": "Unlimited",
+        "es_correcta": false,
+        "explicacion": "There is a limit of 64,000 rows for query results in the SQL editor. For larger result sets, you would need to use other methods or add a LIMIT clause."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2316 - A data analyst has created a dashboard and wants to share it with a colleague. What is the recommended way to do this?",
+    "opciones": [
+      {
+        "texto_opcion": "Publish the dashboard and use the Share dialog to add the colleague.",
+        "es_correcta": true,
+        "explicacion": "To share a dashboard, you publish it and then use the Share dialog to add users, groups, or service principals, setting appropriate permission levels. After publishing, you can copy the link to share the published dashboard."
+      },
+      {
+        "texto_opcion": "Send the colleague the raw SQL query used in the dashboard.",
+        "es_correcta": false,
+        "explicacion": "Sending the raw SQL query would not share the dashboard's visualizations and interactive elements. Sharing the published dashboard link is the proper way to share the full dashboard experience."
+      },
+      {
+        "texto_opcion": "Export the dashboard as a CSV file.",
+        "es_correcta": false,
+        "explicacion": "Exporting as CSV would only share the data, not the dashboard visualizations and interactivity. The recommended way is to publish and share the dashboard link."
+      },
+      {
+        "texto_opcion": "Take a screenshot of the dashboard and send it.",
+        "es_correcta": false,
+        "explicacion": "A screenshot is a static image and does not allow the colleague to interact with the dashboard or explore the data. Publishing and sharing the link provides full interactive access."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2317 - A data engineer is setting up a SQL alert and wants to customize the notification message. Which template variable can they use to include a link to the alert configuration page?",
+    "opciones": [
+      {
+        "texto_opcion": "`ALERT_URL`",
+        "es_correcta": true,
+        "explicacion": "In custom alert templates, the `ALERT_URL` variable provides the alert page URL. This can be used in the subject or body of the notification to link directly to the alert configuration."
+      },
+      {
+        "texto_opcion": "`QUERY_URL`",
+        "es_correcta": false,
+        "explicacion": "`QUERY_URL` is not a standard template variable for alerts. The correct variable for the alert page URL is `ALERT_URL`."
+      },
+      {
+        "texto_opcion": "`ALERT_NAME`",
+        "es_correcta": false,
+        "explicacion": "`ALERT_NAME` provides the alert name as a string. It does not provide a URL link."
+      },
+      {
+        "texto_opcion": "`DASHBOARD_URL`",
+        "es_correcta": false,
+        "explicacion": "`DASHBOARD_URL` is not a standard template variable for alerts. The correct variable for the alert page URL is `ALERT_URL`."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Alerts"
+    ]
+  },
+  {
+    "pregunta": "2318 - A data engineer is optimizing a SQL query in Databricks SQL. They notice that a join condition is using a non-equi condition with `OR`. According to Databricks best practices, what is the recommended approach to improve performance?",
+    "opciones": [
+      {
+        "texto_opcion": "Rewrite the query using `UNION` with separate equi-join conditions.",
+        "es_correcta": true,
+        "explicacion": "A join with an `OR` condition is a non-equi join that can force a `BroadcastNestedLoopJoin`, which is slow for large datasets. The recommended approach is to use `UNION` with separate equi-join conditions, allowing Spark to use more efficient hash joins for each part."
+      },
+      {
+        "texto_opcion": "Use a `LEFT JOIN` with a `WHERE` clause instead.",
+        "es_correcta": false,
+        "explicacion": "A `LEFT JOIN` with a `WHERE` clause does not fundamentally change the non-equi join issue. The `OR` condition remains inefficient."
+      },
+      {
+        "texto_opcion": "Increase the number of shuffle partitions.",
+        "es_correcta": false,
+        "explicacion": "Increasing shuffle partitions can help with data skew, but it does not address the fundamental inefficiency of a non-equi join with `OR` conditions."
+      },
+      {
+        "texto_opcion": "Disable Photon to use a different join strategy.",
+        "es_correcta": false,
+        "explicacion": "Disabling Photon is not recommended and would likely degrade performance further. The `UNION` rewrite is the proper optimization technique."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2319 - A data analyst is exploring data in the Catalog Explorer. What is required to browse data in the `hive_metastore`?",
+    "opciones": [
+      {
+        "texto_opcion": "No compute is required; data is always accessible.",
+        "es_correcta": false,
+        "explicacion": "You can navigate Unity Catalog-governed database objects in Catalog Explorer without active compute. To explore data in the `hive_metastore` and other catalogs not governed by Unity Catalog, you must attach to compute with appropriate privileges."
+      },
+      {
+        "texto_opcion": "You must attach to a compute resource with appropriate privileges.",
+        "es_correcta": true,
+        "explicacion": "To explore data in the `hive_metastore` and other catalogs not governed by Unity Catalog, you must attach to compute with appropriate privileges."
+      },
+      {
+        "texto_opcion": "Only workspace admins can browse the `hive_metastore`.",
+        "es_correcta": false,
+        "explicacion": "Non-admin users can browse the `hive_metastore` if they have appropriate privileges and attach to compute. It is not restricted to admins only."
+      },
+      {
+        "texto_opcion": "The `hive_metastore` is deprecated and no longer accessible.",
+        "es_correcta": false,
+        "explicacion": "The `hive_metastore` is still accessible in workspaces that use it. You need to attach to compute with appropriate privileges to explore it in Catalog Explorer."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2320 - A data engineer is setting up a SQL warehouse and wants to minimize costs while maintaining performance for a team that runs queries intermittently throughout the day. What auto-stop configuration is recommended?",
+    "opciones": [
+      {
+        "texto_opcion": "Disable auto-stop to keep the warehouse running continuously.",
+        "es_correcta": false,
+        "explicacion": "Disabling auto-stop would keep the warehouse running 24/7, incurring costs even when not in use. This is not cost-effective for intermittent usage."
+      },
+      {
+        "texto_opcion": "Set a short auto-stop time, such as 5 or 10 minutes, to stop the warehouse quickly when idle.",
+        "es_correcta": true,
+        "explicacion": "Setting a short auto-stop time ensures the warehouse stops quickly during idle periods, reducing costs. For serverless SQL warehouses, the default is 10 minutes, and the minimum is 5 minutes in the UI."
+      },
+      {
+        "texto_opcion": "Set a long auto-stop time, such as 2 hours, to avoid frequent restarts.",
+        "es_correcta": false,
+        "explicacion": "A long auto-stop time would keep the warehouse running for extended idle periods, increasing costs. A short auto-stop time is more cost-effective for intermittent usage."
+      },
+      {
+        "texto_opcion": "Auto-stop is not available for serverless SQL warehouses.",
+        "es_correcta": false,
+        "explicacion": "Auto-stop is available for all SQL warehouse types, including serverless. For serverless, the default is 10 minutes, and the minimum is 5 minutes in the UI."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2321 - A data analyst is creating a dashboard and wants to add a date range filter. According to the dashboard tutorial, which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": true,
+        "explicacion": "To create a date range filter, you use the Date range picker filter type. This allows dashboard viewers to select a start and end date to filter the data."
+      },
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": false,
+        "explicacion": "A dropdown (single-select) filter is used for categorical fields, not for date ranges. The date range picker is the appropriate filter type for selecting a date range."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown is for selecting multiple categorical values, not for date ranges. The date range picker is used for date ranges."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input filter requires manual entry and is not ideal for date ranges. The date range picker provides a more user-friendly interface for selecting dates."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2322 - A data engineer is reviewing the query history for a specific query. What information is NOT available in the query history summary panel?",
+    "opciones": [
+      {
+        "texto_opcion": "The complete query statement.",
+        "es_correcta": false,
+        "explicacion": "The query history summary panel includes the complete query statement in the Query statement section."
+      },
+      {
+        "texto_opcion": "The query wall-clock duration.",
+        "es_correcta": false,
+        "explicacion": "The query wall-clock duration is provided as a summary, with a detailed breakdown of scheduling, optimization, and execution time."
+      },
+      {
+        "texto_opcion": "The query results for the most recent run.",
+        "es_correcta": true,
+        "explicacion": "The query history shows details about the query execution, such as status, duration, and performance metrics, but it does not display the query results. The results are shown in the SQL editor when you run the query."
+      },
+      {
+        "texto_opcion": "The user who executed the query.",
+        "es_correcta": false,
+        "explicacion": "The summary panel shows the username and compute details for the query run."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2323 - A data engineer is creating a Databricks SQL alert and wants to use a custom template for the notification. What is true about custom templates?",
+    "opciones": [
+      {
+        "texto_opcion": "Custom templates can only be sent to email notification destinations.",
+        "es_correcta": true,
+        "explicacion": "You can use HTML to format messages in a custom template. Only email notification destinations can render HTML. Other notification destinations may not support HTML formatting."
+      },
+      {
+        "texto_opcion": "Custom templates are available for all notification destinations.",
+        "es_correcta": false,
+        "explicacion": "Only email notification destinations can render HTML. Other destinations may not support the HTML formatting used in custom templates."
+      },
+      {
+        "texto_opcion": "Custom templates cannot include template variables.",
+        "es_correcta": false,
+        "explicacion": "Custom templates can incorporate built-in template variables like `ALERT_STATUS`, `ALERT_NAME`, `ALERT_URL`, and others to dynamically generate notification content."
+      },
+      {
+        "texto_opcion": "Custom templates are disabled by default and require admin approval.",
+        "es_correcta": false,
+        "explicacion": "Custom templates are available when you select 'Use custom template' in the alert configuration. They do not require admin approval to use."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Alerts"
+    ]
+  },
+  {
+    "pregunta": "2324 - A data analyst is creating a dashboard and wants to add a parameter that allows users to select a single value from a list to filter the data. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": true,
+        "explicacion": "A dropdown (single-select) filter allows users to choose a single value from a list of options. This is appropriate for filtering data by a categorical field where only one selection is needed."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown allows users to select multiple values. If the requirement is to select a single value, a single-select dropdown is more appropriate."
+      },
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": false,
+        "explicacion": "A date range picker is used for selecting a range of dates, not for selecting a single categorical value from a list."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires users to manually type a value, which is less user-friendly than a dropdown for selecting from a predefined list of options."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2325 - A data engineer is setting up a SQL warehouse and notices that the serverless option is greyed out. What is a prerequisite for creating a serverless SQL warehouse?",
+    "opciones": [
+      {
+        "texto_opcion": "The workspace must be on the Standard plan.",
+        "es_correcta": false,
+        "explicacion": "Serverless SQL warehouses require the workspace to be on the Premium plan or above. The Standard plan does not have this capability."
+      },
+      {
+        "texto_opcion": "The user must be a workspace admin or have unrestricted cluster creation permissions.",
+        "es_correcta": true,
+        "explicacion": "To create a SQL warehouse (including serverless), a user must be a workspace admin or have unrestricted cluster creation permissions. Most users cannot create SQL warehouses."
+      },
+      {
+        "texto_opcion": "The account must have the serverless Terms of Service accepted in the account console.",
+        "es_correcta": false,
+        "explicacion": "This is also a prerequisite, but it is an account-level setting, not a user permission. If the Terms of Service haven't been accepted, serverless warehouses would be unavailable to everyone."
+      },
+      {
+        "texto_opcion": "The workspace must be in a region that is not supported by serverless.",
+        "es_correcta": false,
+        "explicacion": "If the region is unsupported, the serverless option would not be available. However, the user permission is a necessary prerequisite for any user to create a warehouse."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2326 - A data analyst is using the SQL editor and wants to view a preview of the result table before running the full query. Which option should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Run the query with the Limit 1000 option selected.",
+        "es_correcta": true,
+        "explicacion": "To display the result table, you must run the query. Selecting the Limit 1000 option on the Run menu limits the result table to the first 1000 rows. This is useful for previewing a sample of the results."
+      },
+      {
+        "texto_opcion": "The SQL editor automatically shows a preview of the results.",
+        "es_correcta": false,
+        "explicacion": "The SQL editor does not automatically show a preview. You must run the query to see the results, and you can choose to limit the number of rows returned."
+      },
+      {
+        "texto_opcion": "Click the Save button to generate a preview.",
+        "es_correcta": false,
+        "explicacion": "The Save button saves the query definition, not the results. To see results, you must run the query."
+      },
+      {
+        "texto_opcion": "Use the Explain Plan option to preview the results.",
+        "es_correcta": false,
+        "explicacion": "The Explain Plan option shows the query execution plan, not a preview of the results. It is used for performance analysis, not for viewing data."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2327 - A data engineer is optimizing a SQL query that is performing poorly due to a `COUNT(DISTINCT column)` operation on a high-cardinality column. What is a recommended optimization technique?",
+    "opciones": [
+      {
+        "texto_opcion": "Use `APPROX_COUNT_DISTINCT` for faster, approximate results.",
+        "es_correcta": true,
+        "explicacion": "For large datasets, `COUNT(DISTINCT column)` can be expensive. `APPROX_COUNT_DISTINCT` is a faster alternative that returns an approximate count using HyperLogLog. When you only need an approximate value, this can significantly improve performance."
+      },
+      {
+        "texto_opcion": "Increase the number of shuffle partitions.",
+        "es_correcta": false,
+        "explicacion": "While increasing shuffle partitions can help with data skew, the `COUNT(DISTINCT)` operation is inherently expensive due to the shuffle it requires. Using `APPROX_COUNT_DISTINCT` is a more direct optimization."
+      },
+      {
+        "texto_opcion": "Add a `GROUP BY` clause to reduce the data size.",
+        "es_correcta": false,
+        "explicacion": "Adding a `GROUP BY` does not optimize the `COUNT(DISTINCT)` operation itself; it changes the query structure. The recommended optimization is to use `APPROX_COUNT_DISTINCT` when approximate results are acceptable."
+      },
+      {
+        "texto_opcion": "Use `COUNT(DISTINCT column)` with a `FILTER` clause.",
+        "es_correcta": false,
+        "explicacion": "A `FILTER` clause can improve performance by reducing the data processed, but it does not address the fundamental cost of distinct counting. `APPROX_COUNT_DISTINCT` is the recommended optimization when exact precision is not required."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2328 - A data analyst is creating a dashboard and wants to show the data in a table visualization. What is the recommended way to format numeric values in the table?",
+    "opciones": [
+      {
+        "texto_opcion": "Use the formatting options in the visualization configuration panel.",
+        "es_correcta": true,
+        "explicacion": "When a table is selected, the Visualization configuration panel provides options to format numeric values. You can choose a number format and specify the number of decimal places or use a custom format string."
+      },
+      {
+        "texto_opcion": "Apply formatting using SQL functions like `ROUND()` in the query.",
+        "es_correcta": false,
+        "explicacion": "While you can use SQL functions to format numbers, the visualization configuration panel offers a more flexible and user-friendly way to format displayed values without modifying the underlying query."
+      },
+      {
+        "texto_opcion": "Formatting is not available for table visualizations.",
+        "es_correcta": false,
+        "explicacion": "Table visualizations support formatting options, including number formatting, in the visualization configuration panel."
+      },
+      {
+        "texto_opcion": "Use a custom CSS style sheet to format the table.",
+        "es_correcta": false,
+        "explicacion": "Custom CSS is not a standard way to format table values in Databricks SQL dashboards. The built-in formatting options in the visualization configuration panel are the recommended approach."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2329 - A data engineer is writing a SQL query and wants to see the execution plan to understand performance. Which tool should they use in Databricks SQL?",
+    "opciones": [
+      {
+        "texto_opcion": "Query Profile",
+        "es_correcta": true,
+        "explicacion": "The Query Profile provides a visual representation of the query's execution plan and performance metrics. You can access it from the Query History by clicking on a query and selecting 'View Query Profile'."
+      },
+      {
+        "texto_opcion": "Explain Plan",
+        "es_correcta": false,
+        "explicacion": "While 'Explain Plan' is a standard SQL command, Databricks SQL provides the Query Profile as a more visual and user-friendly tool for understanding query execution and performance."
+      },
+      {
+        "texto_opcion": "Catalog Explorer",
+        "es_correcta": false,
+        "explicacion": "Catalog Explorer is for browsing table metadata and schema, not for viewing query execution plans."
+      },
+      {
+        "texto_opcion": "SQL Editor's Run button",
+        "es_correcta": false,
+        "explicacion": "The Run button executes the query but does not show the execution plan. The Query Profile is the tool for analyzing query performance."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2330 - A data analyst wants to create a dashboard that displays data from multiple queries. What is the correct way to combine data from different queries in a single dashboard?",
+    "opciones": [
+      {
+        "texto_opcion": "Create separate datasets in the Data tab and add visualizations for each on the Canvas tab.",
+        "es_correcta": true,
+        "explicacion": "A dashboard can use one or more datasets. You define each dataset in the Data tab by writing a SQL query or selecting a Unity Catalog table/view. Then, on the Canvas tab, you can add visualizations that use the specific dataset you want to display."
+      },
+      {
+        "texto_opcion": "Combine the data into a single query using UNION ALL and use that as the only dataset.",
+        "es_correcta": false,
+        "explicacion": "While you could combine data in a single query, this is not necessary and may make the dashboard more complex to maintain. Using separate datasets for each data source is the recommended approach."
+      },
+      {
+        "texto_opcion": "Create a separate dashboard for each query and link them together.",
+        "es_correcta": false,
+        "explicacion": "Creating separate dashboards would fragment the view. A single dashboard can support multiple datasets and visualizations, providing a unified view."
+      },
+      {
+        "texto_opcion": "Use a single dataset with multiple filters to display different data.",
+        "es_correcta": false,
+        "explicacion": "Using multiple datasets is the correct approach when you need to display data from different queries. Filters are used to filter data within a dataset, not to combine different data sources."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2331 - A data engineer is configuring a SQL warehouse and wants to improve the performance of selective scan operations. Which feature should they enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Photon Engine",
+        "es_correcta": false,
+        "explicacion": "Photon is a vectorized query engine that speeds up a wide range of queries. Predictive IO is the specific suite of features designed to accelerate selective scan operations."
+      },
+      {
+        "texto_opcion": "Predictive IO",
+        "es_correcta": true,
+        "explicacion": "Predictive IO is a suite of features that speeds up selective scan operations in SQL queries, providing performance benefits for queries that scan a subset of data."
+      },
+      {
+        "texto_opcion": "Intelligent Workload Management (IWM)",
+        "es_correcta": false,
+        "explicacion": "IWM enhances the ability to process large numbers of queries quickly and cost-effectively by dynamically allocating resources. It does not directly speed up selective scans."
+      },
+      {
+        "texto_opcion": "Auto-scaling",
+        "es_correcta": false,
+        "explicacion": "Auto-scaling manages concurrency by adding clusters. It does not directly speed up selective scan operations within a single query."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2332 - A data analyst is creating a visualization and wants to aggregate data by a specific column. Which aggregation type should they use to count the number of occurrences of each unique value?",
+    "opciones": [
+      {
+        "texto_opcion": "Count",
+        "es_correcta": true,
+        "explicacion": "The Count aggregation type counts the number of occurrences of each unique value in a column. This is useful for frequency analysis and bar charts."
+      },
+      {
+        "texto_opcion": "Sum",
+        "es_correcta": false,
+        "explicacion": "Sum is used to add up numeric values, not to count occurrences. Count is the appropriate aggregation for counting frequencies."
+      },
+      {
+        "texto_opcion": "Average",
+        "es_correcta": false,
+        "explicacion": "Average calculates the mean of numeric values. It is not used for counting occurrences."
+      },
+      {
+        "texto_opcion": "Min",
+        "es_correcta": false,
+        "explicacion": "Min finds the minimum value. It is not used for counting occurrences."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Visualization concepts"
+    ]
+  },
+  {
+    "pregunta": "2333 - A data engineer is using the Query History system table to analyze query performance. What is a key consideration when using this table?",
+    "opciones": [
+      {
+        "texto_opcion": "The table provides real-time query data with no retention limit.",
+        "es_correcta": false,
+        "explicacion": "The query history holds query data for the past 30 days, after which it is automatically deleted."
+      },
+      {
+        "texto_opcion": "By default, only admins have access to the query history system table.",
+        "es_correcta": true,
+        "explicacion": "Databricks system tables include a query history table (`system.query.history`) where privileged users can view tabular query history records from across your account. By default, only admins have access to your account's system tables."
+      },
+      {
+        "texto_opcion": "The system table is automatically enabled for all users.",
+        "es_correcta": false,
+        "explicacion": "By default, only admins have access to the system tables. Access must be granted to other users."
+      },
+      {
+        "texto_opcion": "The table only contains query history for the current user.",
+        "es_correcta": false,
+        "explicacion": "The system table provides tabular query history records from across your account, not just for the current user."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2334 - A data analyst is creating a dashboard and wants to add a parameter that allows users to select multiple values from a list to filter the data. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": true,
+        "explicacion": "A dropdown (multi-select) filter allows users to select multiple values from a list of options. This is appropriate for filtering data by a categorical field where multiple selections are allowed."
+      },
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": false,
+        "explicacion": "A single-select dropdown only allows one value to be selected. For multiple selections, a multi-select dropdown is needed."
+      },
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": false,
+        "explicacion": "A date range picker is used for selecting a range of dates, not for selecting multiple categorical values."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires users to manually type values, which is less user-friendly than a multi-select dropdown for selecting from a predefined list."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2336 - A data analyst is creating a bar chart in the SQL editor. They want to show the count of orders by product category. How should they configure the visualization?",
+    "opciones": [
+      {
+        "texto_opcion": "Set X-axis to the product category and Y-axis to the count of orders.",
+        "es_correcta": true,
+        "explicacion": "For a bar chart showing the count of orders by product category, you set the X-axis to the categorical column (product category) and the Y-axis to the aggregated numeric column (count of orders). You can configure the Y-axis aggregation type to Count."
+      },
+      {
+        "texto_opcion": "Set X-axis to the count of orders and Y-axis to the product category.",
+        "es_correcta": false,
+        "explicacion": "This would put the count on the x-axis, which is not typical for a bar chart showing counts by category. The x-axis should be the category, and the y-axis should be the count."
+      },
+      {
+        "texto_opcion": "Set both axes to the product category to show duplicates.",
+        "es_correcta": false,
+        "explicacion": "Setting both axes to the same category would not produce a meaningful chart. The x-axis should be the category, and the y-axis should be the metric you are visualizing."
+      },
+      {
+        "texto_opcion": "The visualization will automatically select the correct fields.",
+        "es_correcta": false,
+        "explicacion": "While the visualization tool provides suggestions, you typically need to manually configure the x and y axes to display the desired data correctly."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Visualization concepts"
+    ]
+  },
+  {
+    "pregunta": "2337 - A data engineer is configuring a SQL warehouse for a team that runs complex queries. They want to improve performance by enabling a vectorized query engine. Which feature should they enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Photon Engine",
+        "es_correcta": true,
+        "explicacion": "Photon is a vectorized query engine that accelerates SQL query execution. It is available on serverless and pro SQL warehouses and can significantly improve performance for complex queries."
+      },
+      {
+        "texto_opcion": "Predictive IO",
+        "es_correcta": false,
+        "explicacion": "Predictive IO speeds up selective scan operations, but Photon is the vectorized engine that accelerates a broader range of query operations."
+      },
+      {
+        "texto_opcion": "Intelligent Workload Management (IWM)",
+        "es_correcta": false,
+        "explicacion": "IWM manages concurrency by dynamically allocating clusters. It does not directly speed up individual query execution."
+      },
+      {
+        "texto_opcion": "Auto-scaling",
+        "es_correcta": false,
+        "explicacion": "Auto-scaling manages concurrency by adding clusters. It does not directly speed up individual query execution."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2338 - A data analyst is creating a dashboard and wants to add a filter that allows users to select a country from a list. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": true,
+        "explicacion": "A dropdown (single-select) filter allows users to choose a single value from a list. This is appropriate for selecting a country from a list."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "If the requirement is to select a single country, a single-select dropdown is more appropriate. A multi-select dropdown would be used if multiple countries can be selected."
+      },
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": false,
+        "explicacion": "A date range picker is used for dates, not for selecting a country from a list."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires manual typing, which is less user-friendly than a dropdown for selecting from a list of countries."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2339 - A data engineer is using the SQL editor and notices that the query results are not displaying. What is the maximum number of rows that can be returned in a SQL query result table?",
+    "opciones": [
+      {
+        "texto_opcion": "1,000 rows",
+        "es_correcta": false,
+        "explicacion": "1,000 rows is the default limit when the Limit 1000 option is selected. The maximum is 64,000 rows."
+      },
+      {
+        "texto_opcion": "64,000 rows",
+        "es_correcta": true,
+        "explicacion": "The maximum number of rows returned in a table is 64,000. To return all rows (up to this limit), deselect Limit 1000 from the Run drop-down menu."
+      },
+      {
+        "texto_opcion": "10,000 rows",
+        "es_correcta": false,
+        "explicacion": "10,000 rows is not the maximum limit. The maximum is 64,000 rows."
+      },
+      {
+        "texto_opcion": "Unlimited",
+        "es_correcta": false,
+        "explicacion": "There is a limit of 64,000 rows for query results in the SQL editor. For larger result sets, you would need to use other methods or add a LIMIT clause."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2340 - A data engineer is setting up a SQL warehouse and wants to grant a team member the ability to monitor query performance but not start or stop the warehouse. Which permission level should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "CAN VIEW",
+        "es_correcta": false,
+        "explicacion": "CAN VIEW allows users to view the SQL warehouse, including query history and query profiles, but they cannot run queries or manage the warehouse."
+      },
+      {
+        "texto_opcion": "CAN USE",
+        "es_correcta": false,
+        "explicacion": "CAN USE allows users to run queries but they cannot see query history and query profiles. For monitoring performance, the user would need CAN MONITOR."
+      },
+      {
+        "texto_opcion": "CAN MONITOR",
+        "es_correcta": true,
+        "explicacion": "CAN MONITOR is for power users for troubleshooting and optimizing query performance. It allows users to run queries and monitor SQL warehouses, including query history and query profiles, but does not allow starting, stopping, or managing the warehouse."
+      },
+      {
+        "texto_opcion": "CAN MANAGE",
+        "es_correcta": false,
+        "explicacion": "CAN MANAGE is for users responsible for SQL warehouse sizing and spend decisions. It provides full administrative control, which is more than what the engineer wants to grant."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2341 - A data analyst is creating a dashboard and wants to add a text box to provide context or instructions. According to the dashboard tutorial, how should they add a text box?",
+    "opciones": [
+      {
+        "texto_opcion": "Use the Add widget menu and select Text box.",
+        "es_correcta": true,
+        "explicacion": "To add a text box to a dashboard, you use the Add widget menu and select Text box. You can then enter the desired text and add the widget to the canvas."
+      },
+      {
+        "texto_opcion": "Add a new dataset with a text field.",
+        "es_correcta": false,
+        "explicacion": "A dataset is used for data from queries, not for adding static text to a dashboard. The Text box widget is the correct tool for adding text."
+      },
+      {
+        "texto_opcion": "Modify the visualization title to include instructions.",
+        "es_correcta": false,
+        "explicacion": "Visualization titles are for naming the visualization, not for providing lengthy instructions or context. The Text box widget is specifically for adding text."
+      },
+      {
+        "texto_opcion": "Use a Markdown widget if available.",
+        "es_correcta": false,
+        "explicacion": "The dashboard tutorial specifically mentions a Text box widget. Markdown widgets are not mentioned as the primary method for adding text."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2342 - A data engineer is creating a SQL function in Databricks SQL and wants to define a parameter with a default value. Which syntax is correct?",
+    "opciones": [
+      {
+        "texto_opcion": "`parameter_name data_type DEFAULT default_value`",
+        "es_correcta": true,
+        "explicacion": "In Databricks SQL, you can specify a default value for a parameter using the `DEFAULT` keyword after the data type. If you specify a default for one parameter, all following parameters must also have a default."
+      },
+      {
+        "texto_opcion": "`parameter_name data_type = default_value`",
+        "es_correcta": false,
+        "explicacion": "The correct syntax uses the `DEFAULT` keyword, not the equals sign. The `DEFAULT` keyword is used to specify the default value."
+      },
+      {
+        "texto_opcion": "`parameter_name data_type OPTIONAL default_value`",
+        "es_correcta": false,
+        "explicacion": "There is no `OPTIONAL` keyword for parameters in SQL functions. The `DEFAULT` keyword is used to specify default values."
+      },
+      {
+        "texto_opcion": "`parameter_name data_type DEFAULT(default_value)`",
+        "es_correcta": false,
+        "explicacion": "The correct syntax is `DEFAULT default_value`, not `DEFAULT(default_value)`. The parentheses are not used."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL functions"
+    ]
+  },
+  {
+    "pregunta": "2343 - A data analyst is using the Query History section and sees a query that took a long time. Which metric should they check to understand the time spent in query planning and optimization?",
+    "opciones": [
+      {
+        "texto_opcion": "Optimization time",
+        "es_correcta": true,
+        "explicacion": "The query history summary includes a breakdown of query wall-clock duration into scheduling, optimization, and execution time. The 'Optimization' metric shows the time spent in query planning and optimization."
+      },
+      {
+        "texto_opcion": "Execution time",
+        "es_correcta": false,
+        "explicacion": "Execution time is the time spent actually running the query after optimization. Optimization time is the metric for query planning and optimization."
+      },
+      {
+        "texto_opcion": "Scheduling time",
+        "es_correcta": false,
+        "explicacion": "Scheduling time is the time spent waiting for resources or scheduling tasks. Optimization time is the metric for query planning and optimization."
+      },
+      {
+        "texto_opcion": "Total wall-clock duration",
+        "es_correcta": false,
+        "explicacion": "Total wall-clock duration is the overall time, which includes scheduling, optimization, and execution. To isolate the planning and optimization phase, you should look at the 'Optimization' metric."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2344 - A data engineer is setting up a SQL warehouse and wants to ensure it automatically starts when a query is submitted. Which feature should they enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Auto-start",
+        "es_correcta": true,
+        "explicacion": "Auto-start automatically starts a stopped warehouse when a query is submitted. This ensures users do not have to manually start the warehouse before running queries."
+      },
+      {
+        "texto_opcion": "Auto-stop",
+        "es_correcta": false,
+        "explicacion": "Auto-stop stops the warehouse after a period of inactivity to minimize costs. Auto-start is the feature that automatically starts the warehouse when needed."
+      },
+      {
+        "texto_opcion": "Auto-scaling",
+        "es_correcta": false,
+        "explicacion": "Auto-scaling manages concurrency by dynamically adjusting the number of clusters. It does not start or stop the warehouse."
+      },
+      {
+        "texto_opcion": "Photon Engine",
+        "es_correcta": false,
+        "explicacion": "Photon is a vectorized query engine that accelerates query performance. It does not control the lifecycle of the warehouse."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2345 - A data engineer is troubleshooting a query that is returning an error. Where can they find the exact error message and details about the execution?",
+    "opciones": [
+      {
+        "texto_opcion": "In the Query History section, by clicking the query text and reviewing the summary panel.",
+        "es_correcta": true,
+        "explicacion": "The Query History section shows queries performed using SQL warehouses. For each query, the summary panel displays the status, including the error message if the query failed, and provides a details page with more information about the execution."
+      },
+      {
+        "texto_opcion": "In the SQL editor, by hovering over the run button.",
+        "es_correcta": false,
+        "explicacion": "Hovering over the run button does not provide error details. The Query History is the correct place to find detailed error information."
+      },
+      {
+        "texto_opcion": "In the Alerts section, by reviewing the alert history.",
+        "es_correcta": false,
+        "explicacion": "The Alerts section shows alert evaluation history, not query execution details. Query history is the correct place to find query error details."
+      },
+      {
+        "texto_opcion": "In the Catalog Explorer, by clicking on the table name.",
+        "es_correcta": false,
+        "explicacion": "Catalog Explorer shows table metadata, not query execution details. Query history is the appropriate place for query error information."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2346 - A data analyst is creating a visualization and wants to show the distribution of sales across different regions. Which chart type is most appropriate for this?",
+    "opciones": [
+      {
+        "texto_opcion": "Bar chart",
+        "es_correcta": true,
+        "explicacion": "A bar chart is commonly used to show the distribution of a categorical variable (like region) against a numeric value (like sales). It allows easy comparison of values across categories."
+      },
+      {
+        "texto_opcion": "Line chart",
+        "es_correcta": false,
+        "explicacion": "A line chart is more appropriate for showing trends over time, not for comparing categorical values across regions."
+      },
+      {
+        "texto_opcion": "Scatter plot",
+        "es_correcta": false,
+        "explicacion": "A scatter plot is used to show the relationship between two numeric variables. It is not the best choice for showing distribution across categories."
+      },
+      {
+        "texto_opcion": "Pie chart",
+        "es_correcta": false,
+        "explicacion": "A pie chart can show proportions, but for comparing multiple regions, a bar chart is often clearer and more effective."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Visualization concepts"
+    ]
+  },
+  {
+    "pregunta": "2347 - A data engineer is optimizing a SQL query and notices that a subquery is being executed multiple times. Which technique can be used to avoid repeated execution?",
+    "opciones": [
+      {
+        "texto_opcion": "Use a Common Table Expression (CTE) with the `WITH` clause to materialize the subquery result.",
+        "es_correcta": true,
+        "explicacion": "A CTE defined with the `WITH` clause can help avoid repeated execution of a subquery by materializing the result once and referencing it multiple times. The Catalyst Optimizer may also perform transformations like subquery decorrelation to optimize the query."
+      },
+      {
+        "texto_opcion": "Use a `VIEW` to encapsulate the subquery.",
+        "es_correcta": false,
+        "explicacion": "While a view can encapsulate the subquery, it does not guarantee that it will be executed only once. CTEs are more directly useful for this purpose."
+      },
+      {
+        "texto_opcion": "Increase the number of shuffle partitions.",
+        "es_correcta": false,
+        "explicacion": "Increasing shuffle partitions can help with data distribution but does not address the issue of repeated subquery execution."
+      },
+      {
+        "texto_opcion": "Disable the Catalyst Optimizer to prevent changes to the query plan.",
+        "es_correcta": false,
+        "explicacion": "Disabling Catalyst would likely degrade performance and is not recommended. The Catalyst Optimizer can sometimes help optimize subqueries, but CTEs are a more direct way to control execution."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2348 - A data analyst is creating a dashboard and wants to add a filter that allows users to select a date range. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": true,
+        "explicacion": "A date range picker is used to select a start and end date. This is the appropriate filter type for filtering data by a date range."
+      },
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": false,
+        "explicacion": "A dropdown (single-select) is used for categorical values, not for date ranges."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown is for selecting multiple categorical values, not for date ranges."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires manual entry and is not ideal for date ranges. The date range picker provides a more user-friendly interface."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2349 - A data engineer is creating a SQL function in Databricks SQL and wants to return a table. Which clause should they use in the function definition?",
+    "opciones": [
+      {
+        "texto_opcion": "`RETURNS TABLE`",
+        "es_correcta": true,
+        "explicacion": "To define a SQL table function that returns a set of rows, you use the `RETURNS TABLE` clause. This is followed by the table schema definition."
+      },
+      {
+        "texto_opcion": "`RETURNS SET`",
+        "es_correcta": false,
+        "explicacion": "`RETURNS SET` is not the correct syntax. The correct clause for returning a table is `RETURNS TABLE`."
+      },
+      {
+        "texto_opcion": "`RETURNS TABLE AS`",
+        "es_correcta": false,
+        "explicacion": "The syntax is `RETURNS TABLE` followed by the table schema, not `RETURNS TABLE AS`. The `AS` is used after the function body."
+      },
+      {
+        "texto_opcion": "`RETURNS ROW`",
+        "es_correcta": false,
+        "explicacion": "`RETURNS ROW` is not the correct syntax for returning a table. The correct clause is `RETURNS TABLE`."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL functions"
+    ]
+  },
+  {
+    "pregunta": "2350 - A data engineer is optimizing a SQL query that uses a `LEFT JOIN` with a `WHERE` clause that filters on the right table. According to Databricks best practices, how should this be rewritten for better performance?",
+    "opciones": [
+      {
+        "texto_opcion": "Move the filter on the right table to the join condition using `AND`.",
+        "es_correcta": true,
+        "explicacion": "When a `WHERE` clause filters on the right table of a `LEFT JOIN`, it effectively converts the join to an `INNER JOIN`. To maintain the `LEFT JOIN` semantics and improve performance, the filter should be moved to the join condition using `AND`. This can allow pushdown optimization."
+      },
+      {
+        "texto_opcion": "Use a `RIGHT JOIN` instead.",
+        "es_correcta": false,
+        "explicacion": "Swapping to a `RIGHT JOIN` would change the query semantics and is not the recommended optimization for this scenario."
+      },
+      {
+        "texto_opcion": "Remove the `WHERE` clause and handle filtering in the application layer.",
+        "es_correcta": false,
+        "explicacion": "Moving filtering to the application layer would increase data transfer and is less efficient than allowing the database to filter the data."
+      },
+      {
+        "texto_opcion": "Use a `CTE` to materialize the filtered right table before the join.",
+        "es_correcta": false,
+        "explicacion": "While a CTE can be used, the recommended approach is to move the filter to the join condition. This allows the optimizer to push down the filter more effectively."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2431 - A data engineer is reviewing a slow SQL query. The query plan shows a stage with a high number of small files. According to Databricks best practices, what is the recommended minimum file size to avoid performance issues?",
+    "opciones": [
+      {
+        "texto_opcion": "1 MB",
+        "es_correcta": false,
+        "explicacion": "1 MB is too small. Databricks recommends files should be at least 8 MB to avoid the small file problem, which causes high task overhead and poor performance."
+      },
+      {
+        "texto_opcion": "8 MB",
+        "es_correcta": true,
+        "explicacion": "Databricks recommends that files should be no less than 8 MB. Writing tens of thousands of files smaller than this threshold indicates a small file problem that can severely impact performance."
+      },
+      {
+        "texto_opcion": "64 MB",
+        "es_correcta": false,
+        "explicacion": "While 64 MB is a common block size in Hadoop, Databricks specifically recommends a minimum file size of 8 MB. Files larger than 8 MB are generally acceptable, but the minimum threshold is 8 MB."
+      },
+      {
+        "texto_opcion": "128 MB",
+        "es_correcta": false,
+        "explicacion": "128 MB is a common HDFS block size but is not the minimum threshold. Databricks recommends a minimum of 8 MB to avoid small file problems."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2432 - A data analyst is creating a dashboard in Databricks SQL. They want to define the underlying data for the dashboard. Which tab should they use to write SQL queries that define the datasets?",
+    "opciones": [
+      {
+        "texto_opcion": "Canvas tab",
+        "es_correcta": false,
+        "explicacion": "The Canvas tab is where you create and edit widgets like visualizations and filters. You must first define the datasets on the Data tab before you can create visualizations."
+      },
+      {
+        "texto_opcion": "Data tab",
+        "es_correcta": true,
+        "explicacion": "The Data tab is for defining the underlying datasets used in your dashboard. You can write SQL queries to define a dataset or, in Unity Catalog-enabled workspaces, select a Unity Catalog table or view as a dataset."
+      },
+      {
+        "texto_opcion": "SQL Editor",
+        "es_correcta": false,
+        "explicacion": "While you can write SQL queries in the SQL Editor, the Data tab within the dashboard is specifically for defining the datasets that power the dashboard's visualizations."
+      },
+      {
+        "texto_opcion": "Query History",
+        "es_correcta": false,
+        "explicacion": "Query History shows past queries, it is not used for defining datasets for a dashboard."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2433 - A data engineer is configuring a SQL warehouse and wants to control the number of concurrent queries. According to Databricks recommendations, what is the suggested ratio for scaling clusters per concurrent query?",
+    "opciones": [
+      {
+        "texto_opcion": "One cluster for every 5 concurrent queries.",
+        "es_correcta": false,
+        "explicacion": "Databricks recommends one cluster for every 10 concurrent queries, not 5. A ratio of 1:10 balances performance and cost."
+      },
+      {
+        "texto_opcion": "One cluster for every 10 concurrent queries.",
+        "es_correcta": true,
+        "explicacion": "Databricks recommends a cluster for every 10 concurrent queries. Configuring the minimum and maximum cluster range allows Intelligent Workload Management to scale the warehouse up and down automatically, balancing performance and cost."
+      },
+      {
+        "texto_opcion": "One cluster for every 50 concurrent queries.",
+        "es_correcta": false,
+        "explicacion": "This ratio would be too high and would likely lead to queuing and poor performance. Databricks recommends one cluster for every 10 concurrent queries."
+      },
+      {
+        "texto_opcion": "One cluster for every 100 concurrent queries.",
+        "es_correcta": false,
+        "explicacion": "This ratio would be too high and would likely lead to queuing and poor performance. Databricks recommends one cluster for every 10 concurrent queries."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2434 - A data analyst wants to monitor a key metric and be notified when it exceeds a threshold. Which Databricks SQL feature should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Alerts",
+        "es_correcta": true,
+        "explicacion": "Databricks SQL alerts are designed for monitoring query results, evaluating conditions, and delivering notifications automatically. You can write a query that returns the metric, and configure the alert to check the condition against that value."
+      },
+      {
+        "texto_opcion": "Dashboards",
+        "es_correcta": false,
+        "explicacion": "Dashboards are for visualizing data in a single view. They do not provide automated notifications when a metric exceeds a threshold."
+      },
+      {
+        "texto_opcion": "Query History",
+        "es_correcta": false,
+        "explicacion": "Query History shows past queries and their execution details. It does not provide automated monitoring or notifications."
+      },
+      {
+        "texto_opcion": "Catalogs",
+        "es_correcta": false,
+        "explicacion": "Catalogs are logical containers for organizing data assets. They do not provide monitoring or notification capabilities."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Alerts"
+    ]
+  },
+  {
+    "pregunta": "2435 - A data engineer is writing a SQL query and wants to see the execution plan to identify performance bottlenecks. Which tool provides a visual representation of the query's execution plan in Databricks SQL?",
+    "opciones": [
+      {
+        "texto_opcion": "Query Profile",
+        "es_correcta": true,
+        "explicacion": "The Query Profile provides a visual representation of the query's execution plan and performance metrics. You can access it from the Query History by clicking on a query and selecting 'View Query Profile'."
+      },
+      {
+        "texto_opcion": "Catalog Explorer",
+        "es_correcta": false,
+        "explicacion": "Catalog Explorer is for browsing table metadata and schema, not for viewing query execution plans."
+      },
+      {
+        "texto_opcion": "Explain Plan",
+        "es_correcta": false,
+        "explicacion": "While 'Explain Plan' is a standard SQL command, Databricks SQL provides the Query Profile as a more visual and user-friendly tool for understanding query execution and performance."
+      },
+      {
+        "texto_opcion": "SQL Editor",
+        "es_correcta": false,
+        "explicacion": "The SQL Editor is for writing and running queries, not for viewing execution plans. The Query Profile is the tool for analyzing query performance."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2436 - A data engineer is setting up a SQL warehouse and wants to grant a user permission to run queries and see query history. Which permission level should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "CAN VIEW",
+        "es_correcta": false,
+        "explicacion": "CAN VIEW allows users to view SQL warehouses, including query history and query profiles, but they cannot run queries on the warehouse."
+      },
+      {
+        "texto_opcion": "CAN USE",
+        "es_correcta": false,
+        "explicacion": "CAN USE allows users to run queries on the warehouse. However, they cannot see query history and query profiles. For that, CAN MONITOR is needed."
+      },
+      {
+        "texto_opcion": "CAN MONITOR",
+        "es_correcta": true,
+        "explicacion": "CAN MONITOR is for power users for troubleshooting and optimizing query performance. It allows users to run queries and monitor SQL warehouses, including query history and query profiles."
+      },
+      {
+        "texto_opcion": "CAN MANAGE",
+        "es_correcta": false,
+        "explicacion": "CAN MANAGE is for users responsible for SQL warehouse sizing and spend decisions. It provides full administrative control, which is more than what the engineer wants to grant."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2437 - A data engineer is creating a dashboard and wants to add a filter that allows users to select a date range. According to the dashboard tutorial, which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": true,
+        "explicacion": "A date range picker is used to select a start and end date. This is the appropriate filter type for filtering data by a date range."
+      },
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": false,
+        "explicacion": "A dropdown (single-select) is used for categorical values, not for date ranges."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown is for selecting multiple categorical values, not for date ranges."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires manual entry and is not ideal for date ranges. The date range picker provides a more user-friendly interface."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2438 - A data engineer is optimizing a SQL query and notices a subquery is being executed multiple times. Which technique can be used to avoid repeated execution?",
+    "opciones": [
+      {
+        "texto_opcion": "Use a Common Table Expression (CTE) with the `WITH` clause to materialize the subquery result.",
+        "es_correcta": true,
+        "explicacion": "A CTE defined with the `WITH` clause can help avoid repeated execution of a subquery by materializing the result once and referencing it multiple times. The Catalyst Optimizer may also perform transformations like subquery decorrelation to optimize the query."
+      },
+      {
+        "texto_opcion": "Use a `VIEW` to encapsulate the subquery.",
+        "es_correcta": false,
+        "explicacion": "While a view can encapsulate the subquery, it does not guarantee that it will be executed only once. CTEs are more directly useful for this purpose."
+      },
+      {
+        "texto_opcion": "Increase the number of shuffle partitions.",
+        "es_correcta": false,
+        "explicacion": "Increasing shuffle partitions can help with data distribution but does not address the issue of repeated subquery execution."
+      },
+      {
+        "texto_opcion": "Disable the Catalyst Optimizer to prevent changes to the query plan.",
+        "es_correcta": false,
+        "explicacion": "Disabling Catalyst would likely degrade performance and is not recommended. The Catalyst Optimizer can sometimes help optimize subqueries, but CTEs are a more direct way to control execution."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query optimization"
+    ]
+  },
+  {
+    "pregunta": "2441 - A data engineer is writing a SQL query and wants to use a table name that contains spaces. How should they reference it in the query?",
+    "opciones": [
+      {
+        "texto_opcion": "Enclose the identifier in square brackets, e.g., `[My Table]`.",
+        "es_correcta": false,
+        "explicacion": "Square brackets are not the correct syntax for escaping identifiers in Databricks SQL. The proper way is to use backticks."
+      },
+      {
+        "texto_opcion": "Enclose the identifier in backticks, e.g., `My Table`.",
+        "es_correcta": true,
+        "explicacion": "If a table or column name includes spaces, you must wrap those identifiers in backticks in your SQL queries. This is the correct way to handle identifiers with special characters in Databricks SQL."
+      },
+      {
+        "texto_opcion": "Use double quotes, e.g., \"My Table\".",
+        "es_correcta": false,
+        "explicacion": "Double quotes are not the standard way to escape identifiers in Databricks SQL. The correct syntax for escaping identifiers is backticks."
+      },
+      {
+        "texto_opcion": "Replace spaces with underscores, e.g., `My_Table`.",
+        "es_correcta": false,
+        "explicacion": "While you can rename the table, the question asks how to reference it in a query with its existing name. The correct way to handle spaces in a name is to use backticks."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2442 - A data engineer is configuring a SQL warehouse and wants to ensure it stops after a period of inactivity to minimize costs. What is the minimum auto-stop time for a serverless SQL warehouse in the UI?",
+    "opciones": [
+      {
+        "texto_opcion": "1 minute",
+        "es_correcta": false,
+        "explicacion": "The minimum auto-stop time in the UI for a serverless SQL warehouse is 5 minutes. The 1-minute value is available only through the SQL Warehouse API."
+      },
+      {
+        "texto_opcion": "5 minutes",
+        "es_correcta": true,
+        "explicacion": "The minimum auto-stop time in the UI for a serverless SQL warehouse is 5 minutes. Through the API, it can be as low as 1 minute."
+      },
+      {
+        "texto_opcion": "10 minutes",
+        "es_correcta": false,
+        "explicacion": "10 minutes is the default auto-stop time for a serverless SQL warehouse, not the minimum. The minimum is 5 minutes in the UI."
+      },
+      {
+        "texto_opcion": "45 minutes",
+        "es_correcta": false,
+        "explicacion": "45 minutes is the default auto-stop time for pro and classic SQL warehouses, not for serverless SQL warehouses."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2443 - A data analyst is creating a dashboard and wants to add a filter that allows users to select a single value from a list. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": true,
+        "explicacion": "A dropdown (single-select) filter allows users to choose a single value from a list of options. This is appropriate for filtering data by a categorical field where only one selection is needed."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown allows users to select multiple values. If the requirement is to select a single value, a single-select dropdown is more appropriate."
+      },
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": false,
+        "explicacion": "A date range picker is used for selecting a range of dates, not for selecting a single categorical value from a list."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires users to manually type a value, which is less user-friendly than a dropdown for selecting from a predefined list of options."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2444 - A data engineer is troubleshooting a slow SQL query. Where can they find detailed information about the query's execution time breakdown?",
+    "opciones": [
+      {
+        "texto_opcion": "In the SQL editor, by hovering over the run button.",
+        "es_correcta": false,
+        "explicacion": "Hovering over the run button does not provide detailed execution time breakdown. The Query History section is the correct place to find this information."
+      },
+      {
+        "texto_opcion": "In the Query History section, by clicking the query text and reviewing the summary panel.",
+        "es_correcta": true,
+        "explicacion": "The Query History section shows queries performed using SQL warehouses. For each query, the summary panel displays a breakdown of query wall-clock duration into scheduling, optimization, and execution time."
+      },
+      {
+        "texto_opcion": "In the Alerts section, by reviewing the alert history.",
+        "es_correcta": false,
+        "explicacion": "The Alerts section shows alert evaluation history, not query execution details. Query history is the correct place to find query performance information."
+      },
+      {
+        "texto_opcion": "In the Catalog Explorer, by clicking on the table name.",
+        "es_correcta": false,
+        "explicacion": "Catalog Explorer shows table metadata, not query execution details. Query history is the appropriate place for query performance information."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2445 - A data engineer is creating a Databricks SQL alert and wants to customize the notification message. Which template variable provides the alert page URL?",
+    "opciones": [
+      {
+        "texto_opcion": "`ALERT_URL`",
+        "es_correcta": true,
+        "explicacion": "In custom alert templates, the `ALERT_URL` variable provides the alert page URL. This can be used in the subject or body of the notification to link directly to the alert configuration."
+      },
+      {
+        "texto_opcion": "`QUERY_URL`",
+        "es_correcta": false,
+        "explicacion": "`QUERY_URL` is not a standard template variable for alerts. The correct variable for the alert page URL is `ALERT_URL`."
+      },
+      {
+        "texto_opcion": "`ALERT_NAME`",
+        "es_correcta": false,
+        "explicacion": "`ALERT_NAME` provides the alert name as a string. It does not provide a URL link."
+      },
+      {
+        "texto_opcion": "`DASHBOARD_URL`",
+        "es_correcta": false,
+        "explicacion": "`DASHBOARD_URL` is not a standard template variable for alerts. The correct variable for the alert page URL is `ALERT_URL`."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Alerts"
+    ]
+  },
+  {
+    "pregunta": "2447 - A data engineer is using the Query History system table to analyze query performance. What is the retention period for query history data?",
+    "opciones": [
+      {
+        "texto_opcion": "7 days",
+        "es_correcta": false,
+        "explicacion": "The query history holds query data for the past 30 days, not 7 days. It is automatically deleted after 30 days."
+      },
+      {
+        "texto_opcion": "30 days",
+        "es_correcta": true,
+        "explicacion": "The query history holds query data for the past 30 days, after which it is automatically deleted."
+      },
+      {
+        "texto_opcion": "90 days",
+        "es_correcta": false,
+        "explicacion": "The query history holds query data for the past 30 days, not 90 days. The retention period is 30 days."
+      },
+      {
+        "texto_opcion": "Unlimited",
+        "es_correcta": false,
+        "explicacion": "The query history is not unlimited. It holds query data for the past 30 days, after which it is automatically deleted."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2448 - A data analyst is creating a dashboard and wants to add a text box to provide context or instructions. Which widget should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Add widget menu and select Text box.",
+        "es_correcta": true,
+        "explicacion": "To add a text box to a dashboard, you use the Add widget menu and select Text box. You can then enter the desired text and add the widget to the canvas."
+      },
+      {
+        "texto_opcion": "Add a new dataset with a text field.",
+        "es_correcta": false,
+        "explicacion": "A dataset is used for data from queries, not for adding static text to a dashboard. The Text box widget is the correct tool for adding text."
+      },
+      {
+        "texto_opcion": "Modify the visualization title to include instructions.",
+        "es_correcta": false,
+        "explicacion": "Visualization titles are for naming the visualization, not for providing lengthy instructions or context. The Text box widget is specifically for adding text."
+      },
+      {
+        "texto_opcion": "Use a Markdown widget if available.",
+        "es_correcta": false,
+        "explicacion": "The dashboard tutorial specifically mentions a Text box widget. Markdown widgets are not mentioned as the primary method for adding text."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2450 - A data engineer is setting up a SQL warehouse and wants to grant a user permission to run queries. Which permission level should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "CAN VIEW",
+        "es_correcta": false,
+        "explicacion": "CAN VIEW allows users to view the SQL warehouse, including query history and query profiles, but they cannot run queries on the warehouse."
+      },
+      {
+        "texto_opcion": "CAN USE",
+        "es_correcta": true,
+        "explicacion": "The CAN USE permission allows users to run queries on the warehouse. This is the minimum permission required to execute queries."
+      },
+      {
+        "texto_opcion": "CAN MONITOR",
+        "es_correcta": false,
+        "explicacion": "CAN MONITOR allows users to run queries and monitor SQL warehouses, including query history and query profiles, but the requirement is only to run queries."
+      },
+      {
+        "texto_opcion": "CAN MANAGE",
+        "es_correcta": false,
+        "explicacion": "CAN MANAGE is for users responsible for SQL warehouse sizing and spend decisions. It provides full administrative control, which is more than what the engineer wants to grant."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2451 - A data engineer is creating a dashboard and wants to add a parameter that allows users to select multiple values from a list. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": false,
+        "explicacion": "A single-select dropdown only allows one value to be selected. For multiple selections, a multi-select dropdown is needed."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": true,
+        "explicacion": "A dropdown (multi-select) filter allows users to select multiple values from a list of options. This is appropriate for filtering data by a categorical field where multiple selections are allowed."
+      },
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": false,
+        "explicacion": "A date range picker is used for selecting a range of dates, not for selecting multiple categorical values."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires users to manually type values, which is less user-friendly than a multi-select dropdown for selecting from a predefined list."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2452 - A data engineer is writing a SQL query in the SQL editor. What is the maximum number of rows that can be returned in a query result table?",
+    "opciones": [
+      {
+        "texto_opcion": "1,000 rows",
+        "es_correcta": false,
+        "explicacion": "1,000 rows is the default limit when the Limit 1000 option is selected. The maximum is 64,000 rows."
+      },
+      {
+        "texto_opcion": "64,000 rows",
+        "es_correcta": true,
+        "explicacion": "The maximum number of rows returned in a table is 64,000. To return all rows (up to this limit), deselect Limit 1000 from the Run drop-down menu."
+      },
+      {
+        "texto_opcion": "10,000 rows",
+        "es_correcta": false,
+        "explicacion": "10,000 rows is not the maximum limit. The maximum is 64,000 rows."
+      },
+      {
+        "texto_opcion": "Unlimited",
+        "es_correcta": false,
+        "explicacion": "There is a limit of 64,000 rows for query results in the SQL editor. For larger result sets, you would need to use other methods or add a LIMIT clause."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2453 - A data engineer is configuring a SQL warehouse and wants to improve query performance. Which feature enables a vectorized query engine?",
+    "opciones": [
+      {
+        "texto_opcion": "Photon Engine",
+        "es_correcta": true,
+        "explicacion": "Photon is a vectorized query engine that accelerates SQL query execution. It is available on serverless and pro SQL warehouses and can significantly improve performance for complex queries."
+      },
+      {
+        "texto_opcion": "Predictive IO",
+        "es_correcta": false,
+        "explicacion": "Predictive IO speeds up selective scan operations, but Photon is the vectorized engine that accelerates a broader range of query operations."
+      },
+      {
+        "texto_opcion": "Intelligent Workload Management (IWM)",
+        "es_correcta": false,
+        "explicacion": "IWM manages concurrency by dynamically allocating clusters. It does not directly speed up individual query execution."
+      },
+      {
+        "texto_opcion": "Auto-scaling",
+        "es_correcta": false,
+        "explicacion": "Auto-scaling manages concurrency by adding clusters. It does not directly speed up individual query execution."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2454 - A data analyst is creating a dashboard and wants to show a visualization. According to the dashboard tutorial, what is the first step to define the data for the dashboard?",
+    "opciones": [
+      {
+        "texto_opcion": "Create visualizations on the Canvas tab.",
+        "es_correcta": false,
+        "explicacion": "The Canvas tab is where you create and edit widgets like visualizations and filters. However, you must first define the datasets on the Data tab before you can create visualizations."
+      },
+      {
+        "texto_opcion": "Define the underlying datasets in the Data tab.",
+        "es_correcta": true,
+        "explicacion": "The Data tab is for defining the underlying datasets used in your dashboard. You can write SQL queries to define a dataset or, in Unity Catalog-enabled workspaces, select a Unity Catalog table or view as a dataset. The Canvas tab is used after datasets are defined to add visualizations and filters."
+      },
+      {
+        "texto_opcion": "Add filters to make the dashboard interactive.",
+        "es_correcta": false,
+        "explicacion": "Filters are added on the Canvas tab after the datasets are defined. You must have a dataset to apply a filter to."
+      },
+      {
+        "texto_opcion": "Publish the dashboard to share it with the team.",
+        "es_correcta": false,
+        "explicacion": "Publishing is the final step after the dashboard is built and configured. You must define datasets and create visualizations before publishing."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2456 - A data engineer is setting up a SQL warehouse and wants to minimize costs for a team that runs queries intermittently. What auto-stop configuration is recommended?",
+    "opciones": [
+      {
+        "texto_opcion": "Disable auto-stop to keep the warehouse running continuously.",
+        "es_correcta": false,
+        "explicacion": "Disabling auto-stop would keep the warehouse running 24/7, incurring costs even when not in use. This is not cost-effective for intermittent usage."
+      },
+      {
+        "texto_opcion": "Set a short auto-stop time, such as 5 or 10 minutes, to stop the warehouse quickly when idle.",
+        "es_correcta": true,
+        "explicacion": "Setting a short auto-stop time ensures the warehouse stops quickly during idle periods, reducing costs. For serverless SQL warehouses, the default is 10 minutes, and the minimum is 5 minutes in the UI."
+      },
+      {
+        "texto_opcion": "Set a long auto-stop time, such as 2 hours, to avoid frequent restarts.",
+        "es_correcta": false,
+        "explicacion": "A long auto-stop time would keep the warehouse running for extended idle periods, increasing costs. A short auto-stop time is more cost-effective for intermittent usage."
+      },
+      {
+        "texto_opcion": "Auto-stop is not available for serverless SQL warehouses.",
+        "es_correcta": false,
+        "explicacion": "Auto-stop is available for all SQL warehouse types, including serverless. For serverless, the default is 10 minutes, and the minimum is 5 minutes in the UI."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2457 - A data engineer is reviewing query history and wants to see the execution plan for a specific query. Where can they find this information?",
+    "opciones": [
+      {
+        "texto_opcion": "In the SQL editor, by clicking the Run button.",
+        "es_correcta": false,
+        "explicacion": "The Run button executes the query but does not show the execution plan. The Query Profile is the tool for analyzing query performance."
+      },
+      {
+        "texto_opcion": "In the Query History section, by clicking the query text and selecting 'View Query Profile'.",
+        "es_correcta": true,
+        "explicacion": "The Query Profile provides a visual representation of the query's execution plan and performance metrics. You can access it from the Query History by clicking on a query and selecting 'View Query Profile'."
+      },
+      {
+        "texto_opcion": "In the Catalog Explorer, by clicking on the table name.",
+        "es_correcta": false,
+        "explicacion": "Catalog Explorer is for browsing table metadata and schema, not for viewing query execution plans."
+      },
+      {
+        "texto_opcion": "In the Alerts section, by reviewing the alert history.",
+        "es_correcta": false,
+        "explicacion": "The Alerts section shows alert evaluation history, not query execution plans."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Query history"
+    ]
+  },
+  {
+    "pregunta": "2458 - A data engineer is creating a dashboard and wants to share it with a colleague. What is the recommended way to share a dashboard?",
+    "opciones": [
+      {
+        "texto_opcion": "Publish the dashboard and use the Share dialog to add the colleague.",
+        "es_correcta": true,
+        "explicacion": "To share a dashboard, you publish it and then use the Share dialog to add users, groups, or service principals, setting appropriate permission levels. After publishing, you can copy the link to share the published dashboard."
+      },
+      {
+        "texto_opcion": "Send the colleague the raw SQL query used in the dashboard.",
+        "es_correcta": false,
+        "explicacion": "Sending the raw SQL query would not share the dashboard's visualizations and interactive elements. Sharing the published dashboard link is the proper way to share the full dashboard experience."
+      },
+      {
+        "texto_opcion": "Export the dashboard as a CSV file.",
+        "es_correcta": false,
+        "explicacion": "Exporting as CSV would only share the data, not the dashboard visualizations and interactivity. The recommended way is to publish and share the dashboard link."
+      },
+      {
+        "texto_opcion": "Take a screenshot of the dashboard and send it.",
+        "es_correcta": false,
+        "explicacion": "A screenshot is a static image and does not allow the colleague to interact with the dashboard or explore the data. Publishing and sharing the link provides full interactive access."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2459 - A data engineer is writing a SQL query and wants to save it. What is the correct way to ensure the query is persisted and can be shared?",
+    "opciones": [
+      {
+        "texto_opcion": "Click Save in the SQL editor.",
+        "es_correcta": true,
+        "explicacion": "The Save button near the top-right of the SQL editor saves your query. When you modify a query but don't explicitly click Save, that state is retained as a query draft for 30 days. To retain your changes and make the query available for sharing, you must explicitly save it."
+      },
+      {
+        "texto_opcion": "The query is automatically saved when you close the browser tab.",
+        "es_correcta": false,
+        "explicacion": "While query drafts are retained for 30 days, they are not considered saved queries. To persist the query and make it shareable, you must explicitly click the Save button."
+      },
+      {
+        "texto_opcion": "Run the query and the results are automatically saved.",
+        "es_correcta": false,
+        "explicacion": "Running a query does not automatically save the query definition. You must explicitly click Save to persist the query and make it available for sharing."
+      },
+      {
+        "texto_opcion": "Add a tag to the query, which automatically saves it.",
+        "es_correcta": false,
+        "explicacion": "Adding a tag helps organize the query, but it does not automatically save it. You must still click Save to persist the query definition."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2460 - A data engineer is creating a dashboard and wants to add a parameter that allows users to select a single value from a list to filter the data. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": true,
+        "explicacion": "A dropdown (single-select) filter allows users to choose a single value from a list of options. This is appropriate for filtering data by a categorical field where only one selection is needed."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown allows users to select multiple values. If the requirement is to select a single value, a single-select dropdown is more appropriate."
+      },
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": false,
+        "explicacion": "A date range picker is used for selecting a range of dates, not for selecting a single categorical value from a list."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires users to manually type a value, which is less user-friendly than a dropdown for selecting from a predefined list of options."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2461 - A data engineer is configuring a SQL warehouse and notices that the serverless option is greyed out. What is a prerequisite for creating a serverless SQL warehouse?",
+    "opciones": [
+      {
+        "texto_opcion": "The workspace must be on the Standard plan.",
+        "es_correcta": false,
+        "explicacion": "Serverless SQL warehouses require the workspace to be on the Premium plan or above. The Standard plan does not have this capability."
+      },
+      {
+        "texto_opcion": "The user must be a workspace admin or have unrestricted cluster creation permissions.",
+        "es_correcta": true,
+        "explicacion": "To create a SQL warehouse (including serverless), a user must be a workspace admin or have unrestricted cluster creation permissions. Most users cannot create SQL warehouses."
+      },
+      {
+        "texto_opcion": "The account must have the serverless Terms of Service accepted in the account console.",
+        "es_correcta": false,
+        "explicacion": "This is also a prerequisite, but it is an account-level setting, not a user permission. If the Terms of Service haven't been accepted, serverless warehouses would be unavailable to everyone."
+      },
+      {
+        "texto_opcion": "The workspace must be in a region that is not supported by serverless.",
+        "es_correcta": false,
+        "explicacion": "If the region is unsupported, the serverless option would not be available. However, the user permission is a necessary prerequisite for any user to create a warehouse."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2488 - A data analyst is exploring a new dataset in Databricks SQL and wants to understand the schema of a table before writing a query. Which interface provides the ability to browse available data and their schemas directly from the SQL editor?",
+    "opciones": [
+      {
+        "texto_opcion": "Catalog Explorer within the SQL editor interface",
+        "es_correcta": true,
+        "explicacion": "The SQL editor allows you to browse available data directly from the interface, providing features like autocomplete that suggest table names, columns, and aliases as you type. This is the integrated way to explore schemas without leaving the query environment."
+      },
+      {
+        "texto_opcion": "Query History, by reviewing past successful queries",
+        "es_correcta": false,
+        "explicacion": "Query History shows past query runs and their execution details. It does not provide an interactive schema browser. It's used for performance analysis and reviewing previous operations, not for exploring available data ."
+      },
+      {
+        "texto_opcion": "The Dashboards interface, by creating a new visualization",
+        "es_correcta": false,
+        "explicacion": "Dashboards are for creating and sharing visualizations from datasets you have already defined. They are not the primary tool for browsing or exploring table schemas before writing a query ."
+      },
+      {
+        "texto_opcion": "The Jobs interface, by examining the output of a scheduled task",
+        "es_correcta": false,
+        "explicacion": "The Jobs interface is for scheduling and monitoring automated workloads, not for interactive schema browsing. It cannot be used to explore the schema of a table before writing a query ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2489 - A data engineer is creating an interactive, AI-assisted dashboard to share insights across their organization. According to the Databricks SQL documentation, which type of dashboard should they create?",
+    "opciones": [
+      {
+        "texto_opcion": "An AI/BI dashboard",
+        "es_correcta": true,
+        "explicacion": "AI/BI dashboards are built with AI-assisted authoring and an enhanced visualization library, designed for creating interactive dashboards to share insights ."
+      },
+      {
+        "texto_opcion": "A standard dashboard with manual configuration",
+        "es_correcta": false,
+        "explicacion": "While Databricks SQL supports standard dashboards, the documentation specifically highlights AI/BI dashboards as the modern way to build interactive, AI-assisted dashboards to share insights ."
+      },
+      {
+        "texto_opcion": "A legacy dashboard for backward compatibility",
+        "es_correcta": false,
+        "explicacion": "The documentation does not mention a 'legacy' dashboard type. The primary focus is on the newer AI/BI dashboards ."
+      },
+      {
+        "texto_opcion": "A dashboard that only displays data from a single dataset",
+        "es_correcta": false,
+        "explicacion": "While a dashboard can use a single dataset, a key feature of AI/BI dashboards is the ability to combine multiple datasets and visualizations for a comprehensive view, not a restriction to only one ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2490 - A data engineer is connecting a Python application to Databricks SQL to run commands directly with minimal setup. Which library is designed for this use case?",
+    "opciones": [
+      {
+        "texto_opcion": "SQL connector for Python",
+        "es_correcta": true,
+        "explicacion": "The SQL connector for Python is designed to run SQL commands directly from Python code with simple setup and minimal dependencies ."
+      },
+      {
+        "texto_opcion": "SQLAlchemy",
+        "es_correcta": false,
+        "explicacion": "SQLAlchemy is used for object-relational mapping to connect Python applications to Databricks, but it may require more setup than the direct SQL connector for simple command execution ."
+      },
+      {
+        "texto_opcion": "JDBC Driver",
+        "es_correcta": false,
+        "explicacion": "The JDBC driver is typically used for Java applications and tools, not as a direct Python library for minimal setup ."
+      },
+      {
+        "texto_opcion": "ODBC Driver",
+        "es_correcta": false,
+        "explicacion": "The ODBC driver provides standard database connectivity but may require more configuration than the Python-specific SQL connector ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL connectors"
+    ]
+  },
+  {
+    "pregunta": "2491 - A data engineer is setting up a SQL warehouse and wants to understand the default behavior of the auto-stop feature for serverless SQL warehouses in the UI. What is the default auto-stop time?",
+    "opciones": [
+      {
+        "texto_opcion": "5 minutes",
+        "es_correcta": false,
+        "explicacion": "5 minutes is the minimum auto-stop time in the UI, not the default. The default is 10 minutes."
+      },
+      {
+        "texto_opcion": "10 minutes",
+        "es_correcta": true,
+        "explicacion": "For serverless SQL warehouses, the default auto-stop time is 10 minutes, which is the recommended setting for typical use."
+      },
+      {
+        "texto_opcion": "45 minutes",
+        "es_correcta": false,
+        "explicacion": "45 minutes is the default auto-stop time for pro and classic SQL warehouses, not for serverless SQL warehouses."
+      },
+      {
+        "texto_opcion": "1 hour",
+        "es_correcta": false,
+        "explicacion": "1 hour is not the default auto-stop time for any SQL warehouse type. The defaults are 10 minutes for serverless and 45 minutes for pro/classic."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2492 - A data engineer is creating a query in the SQL editor and wants to run SQL alongside other code like Python or Scala. Which Databricks SQL interface allows this?",
+    "opciones": [
+      {
+        "texto_opcion": "Notebooks attached to a SQL warehouse.",
+        "es_correcta": true,
+        "explicacion": "Notebooks can be attached to a SQL warehouse to run SQL alongside Python, Scala, or R, providing a multi-language environment ."
+      },
+      {
+        "texto_opcion": "The SQL editor, which only supports SQL queries.",
+        "es_correcta": false,
+        "explicacion": "The SQL editor is designed for writing and running SQL queries only, not for mixing in other programming languages ."
+      },
+      {
+        "texto_opcion": "Dashboards, which are solely for visualization.",
+        "es_correcta": false,
+        "explicacion": "Dashboards are for visualizing and sharing insights, not for executing multi-language code ."
+      },
+      {
+        "texto_opcion": "The Jobs interface, which only supports scheduled tasks.",
+        "es_correcta": false,
+        "explicacion": "The Jobs interface is for scheduling automated workloads, not for interactive multi-language execution ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2493 - A data analyst wants to create a consistent, reusable business metric with a semantic layer for use across multiple queries and dashboards in Databricks SQL. What feature should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Unity Catalog metric views.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog metric views allow you to define business metrics with consistent calculations using a semantic layer, which can be reused across queries and dashboards ."
+      },
+      {
+        "texto_opcion": "SQL Alerts.",
+        "es_correcta": false,
+        "explicacion": "SQL Alerts are used for monitoring query results and delivering notifications, not for defining a semantic layer for metrics ."
+      },
+      {
+        "texto_opcion": "Query History.",
+        "es_correcta": false,
+        "explicacion": "Query History is for reviewing past query runs, not for defining reusable metrics ."
+      },
+      {
+        "texto_opcion": "Dashboards.",
+        "es_correcta": false,
+        "explicacion": "Dashboards are for visualizing data; they consume metrics but do not provide a mechanism to define them as a reusable semantic layer ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2494 - A data engineer is writing a query and wants to understand the behavior of NULL values in Databricks SQL. Which section of the SQL language reference should they consult?",
+    "opciones": [
+      {
+        "texto_opcion": "General reference > Language fundamentals > How NULL values are handled.",
+        "es_correcta": true,
+        "explicacion": "The SQL language reference includes a section in the general reference on language fundamentals that specifically describes how NULL values are handled in Databricks SQL ."
+      },
+      {
+        "texto_opcion": "Data types > Overview of all supported data types.",
+        "es_correcta": false,
+        "explicacion": "While data types are related, the overview focuses on the types themselves, not on the specific handling and semantics of NULL values ."
+      },
+      {
+        "texto_opcion": "Functions > Overview of SQL functions.",
+        "es_correcta": false,
+        "explicacion": "This section covers SQL functions, not the core language handling of NULL values ."
+      },
+      {
+        "texto_opcion": "DML statements > Insert rows into a table.",
+        "es_correcta": false,
+        "explicacion": "This section is about data manipulation, not about the fundamental language behavior of NULL values ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL functions"
+    ]
+  },
+  {
+    "pregunta": "2495 - A data engineer is writing a query and needs to understand the rules for naming database objects (identifiers) in Databricks SQL. Which section of the SQL language reference should they consult?",
+    "opciones": [
+      {
+        "texto_opcion": "General reference > Language fundamentals > Rules for naming database objects.",
+        "es_correcta": true,
+        "explicacion": "The SQL language reference includes a section in the general reference on language fundamentals that describes the rules for naming database objects (identifiers) in Databricks SQL ."
+      },
+      {
+        "texto_opcion": "Data types > Type coercion and conversion rules.",
+        "es_correcta": false,
+        "explicacion": "This covers data type conversion, not identifier naming rules ."
+      },
+      {
+        "texto_opcion": "DDL statements > Create table.",
+        "es_correcta": false,
+        "explicacion": "This covers table creation syntax but may not detail all the broader rules for object naming ."
+      },
+      {
+        "texto_opcion": "Auxiliary statements > Show tables.",
+        "es_correcta": false,
+        "explicacion": "This covers listing objects, not the rules for naming them ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2496 - A data analyst is creating a dashboard and wants to add a filter that allows users to select a date range. According to the dashboard tutorial, which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": true,
+        "explicacion": "A date range picker is used to select a start and end date. This is the appropriate filter type for filtering data by a date range."
+      },
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": false,
+        "explicacion": "A dropdown (single-select) is used for categorical values, not for date ranges."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown is for selecting multiple categorical values, not for date ranges."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires manual entry and is not ideal for date ranges. The date range picker provides a more user-friendly interface."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2497 - A data engineer is setting up a SQL warehouse and wants to grant a user the ability to run queries and see query history and query profiles for troubleshooting. Which permission level should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "CAN VIEW",
+        "es_correcta": false,
+        "explicacion": "CAN VIEW allows users to view SQL warehouses, including query history and query profiles, but they cannot run queries on the warehouse."
+      },
+      {
+        "texto_opcion": "CAN USE",
+        "es_correcta": false,
+        "explicacion": "CAN USE allows users to run queries on the warehouse. However, they cannot see query history and query profiles. For that, CAN MONITOR is needed."
+      },
+      {
+        "texto_opcion": "CAN MONITOR",
+        "es_correcta": true,
+        "explicacion": "CAN MONITOR is for power users for troubleshooting and optimizing query performance. It allows users to run queries and monitor SQL warehouses, including query history and query profiles."
+      },
+      {
+        "texto_opcion": "CAN MANAGE",
+        "es_correcta": false,
+        "explicacion": "CAN MANAGE is for users responsible for SQL warehouse sizing and spend decisions. It provides full administrative control, which is more than what the engineer wants to grant."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2499 - A data engineer is setting up a SQL warehouse and wants to ensure it stops after a period of inactivity to minimize costs. What is the minimum auto-stop time for a serverless SQL warehouse in the UI?",
+    "opciones": [
+      {
+        "texto_opcion": "1 minute",
+        "es_correcta": false,
+        "explicacion": "The minimum auto-stop time in the UI for a serverless SQL warehouse is 5 minutes. The 1-minute value is available only through the SQL Warehouse API."
+      },
+      {
+        "texto_opcion": "5 minutes",
+        "es_correcta": true,
+        "explicacion": "The minimum auto-stop time in the UI for a serverless SQL warehouse is 5 minutes. Through the API, it can be as low as 1 minute."
+      },
+      {
+        "texto_opcion": "10 minutes",
+        "es_correcta": false,
+        "explicacion": "10 minutes is the default auto-stop time for a serverless SQL warehouse, not the minimum. The minimum is 5 minutes in the UI."
+      },
+      {
+        "texto_opcion": "45 minutes",
+        "es_correcta": false,
+        "explicacion": "45 minutes is the default auto-stop time for pro and classic SQL warehouses, not for serverless SQL warehouses."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2503 - A data engineer is creating a dashboard and wants to add a filter that allows users to select a single value from a list to filter the data. Which filter type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Dropdown (single-select)",
+        "es_correcta": true,
+        "explicacion": "A dropdown (single-select) filter allows users to choose a single value from a list of options. This is appropriate for filtering data by a categorical field where only one selection is needed."
+      },
+      {
+        "texto_opcion": "Dropdown (multi-select)",
+        "es_correcta": false,
+        "explicacion": "A multi-select dropdown allows users to select multiple values. If the requirement is to select a single value, a single-select dropdown is more appropriate."
+      },
+      {
+        "texto_opcion": "Date range picker",
+        "es_correcta": false,
+        "explicacion": "A date range picker is used for selecting a range of dates, not for selecting a single categorical value from a list."
+      },
+      {
+        "texto_opcion": "Text input",
+        "es_correcta": false,
+        "explicacion": "A text input requires users to manually type a value, which is less user-friendly than a dropdown for selecting from a predefined list of options."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2504 - A data engineer is writing a SQL query and wants to use the `CREATE TABLE` statement to define a new table. Which section of the SQL language reference should they consult?",
+    "opciones": [
+      {
+        "texto_opcion": "DDL statements > CREATE statements > Create a new table.",
+        "es_correcta": true,
+        "explicacion": "The SQL language reference organizes `CREATE` statements under DDL statements. The specific command for creating a table is found under 'CREATE statements' ."
+      },
+      {
+        "texto_opcion": "DML statements > Insert rows into a table.",
+        "es_correcta": false,
+        "explicacion": "DML statements are for data manipulation (inserting, updating, deleting), not for creating the table structure itself ."
+      },
+      {
+        "texto_opcion": "Data retrieval statements > Query statements.",
+        "es_correcta": false,
+        "explicacion": "Data retrieval statements are for querying data, not for defining new tables ."
+      },
+      {
+        "texto_opcion": "Auxiliary statements > Show tables.",
+        "es_correcta": false,
+        "explicacion": "Auxiliary statements include commands like `SHOW TABLES` to list existing tables, not to create new ones ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL queries"
+    ]
+  },
+  {
+    "pregunta": "2505 - A data analyst is creating a dashboard and wants to define the underlying data for the dashboard. Which tab should they use to define a dataset?",
+    "opciones": [
+      {
+        "texto_opcion": "Data tab",
+        "es_correcta": true,
+        "explicacion": "The Data tab is for defining the underlying datasets used in your dashboard. You can write SQL queries to define a dataset or select a Unity Catalog table or view ."
+      },
+      {
+        "texto_opcion": "Canvas tab",
+        "es_correcta": false,
+        "explicacion": "The Canvas tab is where you create and edit widgets like visualizations and filters. You must first define the datasets on the Data tab before you can create visualizations ."
+      },
+      {
+        "texto_opcion": "SQL Editor",
+        "es_correcta": false,
+        "explicacion": "While you can write SQL queries in the SQL Editor, the Data tab within the dashboard is specifically for defining the datasets that power the dashboard's visualizations ."
+      },
+      {
+        "texto_opcion": "Query History",
+        "es_correcta": false,
+        "explicacion": "Query History shows past queries, it is not used for defining datasets for a dashboard ."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "Dashboards"
+    ]
+  },
+  {
+    "pregunta": "2510 - A data engineer is setting up a SQL warehouse for a team that runs complex queries. They want to improve performance by enabling a vectorized query engine. Which feature should they enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Photon Engine",
+        "es_correcta": true,
+        "explicacion": "Photon is a vectorized query engine that accelerates SQL query execution. It is available on serverless and pro SQL warehouses and can significantly improve performance for complex queries."
+      },
+      {
+        "texto_opcion": "Predictive IO",
+        "es_correcta": false,
+        "explicacion": "Predictive IO speeds up selective scan operations, but Photon is the vectorized engine that accelerates a broader range of query operations."
+      },
+      {
+        "texto_opcion": "Intelligent Workload Management (IWM)",
+        "es_correcta": false,
+        "explicacion": "IWM manages concurrency by dynamically allocating clusters. It does not directly speed up individual query execution."
+      },
+      {
+        "texto_opcion": "Auto-scaling",
+        "es_correcta": false,
+        "explicacion": "Auto-scaling manages concurrency by adding clusters. It does not directly speed up individual query execution."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  },
+  {
+    "pregunta": "2519 - A data engineer is configuring a SQL warehouse and wants to ensure it automatically starts when a query is submitted. Which feature should they enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Auto-start",
+        "es_correcta": true,
+        "explicacion": "Auto-start automatically starts a stopped warehouse when a query is submitted. This ensures users do not have to manually start the warehouse before running queries."
+      },
+      {
+        "texto_opcion": "Auto-stop",
+        "es_correcta": false,
+        "explicacion": "Auto-stop stops the warehouse after a period of inactivity to minimize costs. Auto-start is the feature that automatically starts the warehouse when needed."
+      },
+      {
+        "texto_opcion": "Auto-scaling",
+        "es_correcta": false,
+        "explicacion": "Auto-scaling manages concurrency by dynamically adjusting the number of clusters. It does not start or stop the warehouse."
+      },
+      {
+        "texto_opcion": "Photon Engine",
+        "es_correcta": false,
+        "explicacion": "Photon is a vectorized query engine that accelerates query performance. It does not control the lifecycle of the warehouse."
+      }
+    ],
+    "tags": [
+      "Databricks SQL",
+      "SQL Warehouses"
+    ]
+  }
+]

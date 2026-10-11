@@ -1,0 +1,2409 @@
+[
+  {
+    "pregunta": "2001 - A data engineer is setting up a new Databricks workspace with Unity Catalog enabled. They want to organize data assets for different business units. What is the top-level container in Unity Catalog's three-level namespace?",
+    "opciones": [
+      {
+        "texto_opcion": "Catalogs",
+        "es_correcta": true,
+        "explicacion": "Catalogs are the top-level containers in Unity Catalog's three-level namespace (catalog.schema.table). They provide the highest level of logical data organization and help establish data boundaries for different domains or business units ."
+      },
+      {
+        "texto_opcion": "Schemas",
+        "es_correcta": false,
+        "explicacion": "Schemas are the second level in the three-level namespace (catalog.schema.table). They are used to group tables and views within a catalog, not at the top level."
+      },
+      {
+        "texto_opcion": "Tables",
+        "es_correcta": false,
+        "explicacion": "Tables are the third level in the hierarchy (catalog.schema.table) where the actual data is stored. They are not the top-level container."
+      },
+      {
+        "texto_opcion": "Workspaces",
+        "es_correcta": false,
+        "explicacion": "Workspaces are the Databricks environments where notebooks and jobs run. They are separate from Unity Catalog's data organization hierarchy, which uses catalogs, schemas, and tables."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2002 - A data engineer wants to grant a user the ability to create a new table within a specific schema. What is the minimum permission level required?",
+    "opciones": [
+      {
+        "texto_opcion": "`USE SCHEMA` and `CREATE TABLE` privileges on the schema.",
+        "es_correcta": true,
+        "explicacion": "To create a table in a schema, a user needs both the `USE SCHEMA` privilege to access the schema and the `CREATE TABLE` privilege on that schema. Granular privileges like these enable fine-grained access control."
+      },
+      {
+        "texto_opcion": "`ALL PRIVILEGES` on the catalog.",
+        "es_correcta": false,
+        "explicacion": "Granting `ALL PRIVILEGES` on the catalog would grant administrative-level permissions far beyond what is needed. The principle of least privilege suggests granting only the specific permissions required."
+      },
+      {
+        "texto_opcion": "`SELECT` permission on the schema.",
+        "es_correcta": false,
+        "explicacion": "`SELECT` permission is for reading data, not for creating tables. To create a table, the user needs `CREATE TABLE` and `USE SCHEMA` privileges."
+      },
+      {
+        "texto_opcion": "No permissions are required; any user can create tables in any schema.",
+        "es_correcta": false,
+        "explicacion": "This is incorrect. Unity Catalog enforces fine-grained access control, and users must have the appropriate privileges to create tables in a schema."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2003 - A data engineer needs to create a table that references data stored in an existing cloud storage location. The storage location is not managed by Unity Catalog. Which type of table should they create?",
+    "opciones": [
+      {
+        "texto_opcion": "An external table.",
+        "es_correcta": true,
+        "explicacion": "External tables are registered in Unity Catalog but the underlying files are stored in locations specified by the user, not managed by Unity Catalog. This is suitable when data must remain in specific cloud storage paths ."
+      },
+      {
+        "texto_opcion": "A managed table.",
+        "es_correcta": false,
+        "explicacion": "Managed tables are fully managed by Unity Catalog, which controls the storage location and lifecycle. For data in external locations, external tables are the appropriate choice."
+      },
+      {
+        "texto_opcion": "A global temporary view.",
+        "es_correcta": false,
+        "explicacion": "A global temporary view is a virtual table scoped to a SparkSession. It does not store data and cannot reference external storage locations directly."
+      },
+      {
+        "texto_opcion": "A materialized view.",
+        "es_correcta": false,
+        "explicacion": "A materialized view is a precomputed result set, not a table that references external storage. It would still be stored within Unity Catalog's managed or external table paradigm."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "External tables"
+    ]
+  },
+  {
+    "pregunta": "2004 - A data engineer is configuring a Unity Catalog external location. What is the purpose of a storage credential in this context?",
+    "opciones": [
+      {
+        "texto_opcion": "To authenticate the Databricks workspace with the cloud storage.",
+        "es_correcta": true,
+        "explicacion": "Storage credentials in Unity Catalog are used to authenticate Databricks with the underlying cloud storage (like AWS S3, Azure ADLS) to access external locations. This is a crucial part of Unity Catalog's governance framework for managing data access ."
+      },
+      {
+        "texto_opcion": "To encrypt the data stored in the external location.",
+        "es_correcta": false,
+        "explicacion": "Encryption of data at rest is typically managed by the cloud storage service (e.g., using server-side encryption), not by Unity Catalog storage credentials. Storage credentials are for authentication and access control."
+      },
+      {
+        "texto_opcion": "To define the schema of the data stored in the external location.",
+        "es_correcta": false,
+        "explicacion": "The schema of data is defined at the table level, not by a storage credential. The credential's purpose is to provide secure access to the storage location itself."
+      },
+      {
+        "texto_opcion": "To provide a backup of the data in the external location.",
+        "es_correcta": false,
+        "explicacion": "Storage credentials are not for backup purposes. They are part of the access control and authentication mechanism for connecting to external data sources."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Storage credentials"
+    ]
+  },
+  {
+    "pregunta": "2005 - A data engineer is managing permissions in Unity Catalog. They want to grant a user the ability to read data from a specific table. Which privilege should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "`SELECT`",
+        "es_correcta": true,
+        "explicacion": "The `SELECT` privilege is used to grant read access to data in a table or view. This is the standard privilege for allowing a user to query data."
+      },
+      {
+        "texto_opcion": "`USE TABLE`",
+        "es_correcta": false,
+        "explicacion": "`USE TABLE` is not a standard privilege in Unity Catalog. The privileges for data access are `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `MODIFY`, etc."
+      },
+      {
+        "texto_opcion": "`READ`",
+        "es_correcta": false,
+        "explicacion": "`READ` is not a privilege name used in Unity Catalog for table access. The correct privilege for reading data is `SELECT`."
+      },
+      {
+        "texto_opcion": "`EXECUTE`",
+        "es_correcta": false,
+        "explicacion": "`EXECUTE` is used for executing functions and stored procedures, not for reading table data. `SELECT` is the privilege for data read access."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Privileges"
+    ]
+  },
+  {
+    "pregunta": "2006 - A data engineer needs to track the flow and transformation of data from its source to its final form for compliance auditing. Which Unity Catalog feature provides this capability?",
+    "opciones": [
+      {
+        "texto_opcion": "Data lineage.",
+        "es_correcta": true,
+        "explicacion": "Data lineage in Unity Catalog automatically captures how data flows and is transformed across tables, views, and pipelines. This is crucial for auditing, troubleshooting, and understanding data dependencies."
+      },
+      {
+        "texto_opcion": "Access control.",
+        "es_correcta": false,
+        "explicacion": "Access control governs who can access data but does not track data flow or transformations. Data lineage is the feature for tracking data movement and changes."
+      },
+      {
+        "texto_opcion": "Storage credentials.",
+        "es_correcta": false,
+        "explicacion": "Storage credentials authenticate access to cloud storage. They do not provide data lineage information."
+      },
+      {
+        "texto_opcion": "External locations.",
+        "es_correcta": false,
+        "explicacion": "External locations define where data is stored. They do not capture how data is transformed or moved between tables."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Data lineage"
+    ]
+  },
+  {
+    "pregunta": "2007 - A data engineer is deciding between a managed table and an external table. They want Unity Catalog to fully manage the storage location and lifecycle of the data. Which type of table should they choose?",
+    "opciones": [
+      {
+        "texto_opcion": "A managed table.",
+        "es_correcta": true,
+        "explicacion": "Managed tables are fully managed by Unity Catalog, which controls the storage location and lifecycle. Databricks recommends managed tables for most workloads due to their simplified configuration and governance."
+      },
+      {
+        "texto_opcion": "An external table.",
+        "es_correcta": false,
+        "explicacion": "External tables are registered in Unity Catalog but the underlying files are stored in locations specified by the user, not managed by Unity Catalog. They are recommended only when data must remain in specific storage paths."
+      },
+      {
+        "texto_opcion": "A view.",
+        "es_correcta": false,
+        "explicacion": "A view is a virtual table and does not have its own storage. It cannot be used to store data; it's a query definition over underlying tables."
+      },
+      {
+        "texto_opcion": "A materialized view.",
+        "es_correcta": false,
+        "explicacion": "Materialized views store precomputed results, but in Unity Catalog they still fall under the managed or external table category. The choice between managed and external tables applies to materialized views as well."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Managed tables"
+    ]
+  },
+  {
+    "pregunta": "2008 - A data engineer needs to grant a team permission to create new tables in a specific schema. Which privileges should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "`USE SCHEMA` and `CREATE TABLE` on the schema.",
+        "es_correcta": true,
+        "explicacion": "To create tables in a schema, a user needs both the `USE SCHEMA` privilege to access the schema and the `CREATE TABLE` privilege on that schema. This follows the principle of least privilege."
+      },
+      {
+        "texto_opcion": "`ALL PRIVILEGES` on the catalog.",
+        "es_correcta": false,
+        "explicacion": "Granting `ALL PRIVILEGES` on the catalog would grant administrative-level permissions far beyond what is needed. The principle of least privilege suggests granting only the specific permissions required."
+      },
+      {
+        "texto_opcion": "`SELECT` and `INSERT` on the schema.",
+        "es_correcta": false,
+        "explicacion": "`SELECT` and `INSERT` are data access privileges for reading and writing data, not for creating tables. To create tables, `CREATE TABLE` is required."
+      },
+      {
+        "texto_opcion": "`CREATE SCHEMA` on the catalog.",
+        "es_correcta": false,
+        "explicacion": "`CREATE SCHEMA` allows creating new schemas, not tables within an existing schema. The team already has a specific schema to work with, so they need `USE SCHEMA` and `CREATE TABLE` on it."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2009 - A data engineer is configuring an external location in Unity Catalog for data stored in an AWS S3 bucket. What must be configured to allow Databricks to access this location?",
+    "opciones": [
+      {
+        "texto_opcion": "A storage credential that provides authentication to the S3 bucket.",
+        "es_correcta": true,
+        "explicacion": "Storage credentials in Unity Catalog are used to authenticate Databricks with the underlying cloud storage, such as AWS S3, to access external locations. This is a required component for defining external locations."
+      },
+      {
+        "texto_opcion": "A schema that defines the structure of the data in the S3 bucket.",
+        "es_correcta": false,
+        "explicacion": "The schema of the data is defined at the table level, not by the external location. The external location is a storage path, and the table schema is defined when creating the external table."
+      },
+      {
+        "texto_opcion": "A managed table that references the S3 bucket.",
+        "es_correcta": false,
+        "explicacion": "Managed tables are fully managed by Unity Catalog, not used to reference external S3 buckets. External tables are used for data in user-specified locations."
+      },
+      {
+        "texto_opcion": "A catalog to contain the external location definition.",
+        "es_correcta": false,
+        "explicacion": "While catalogs contain schemas and tables, external locations are standalone objects in Unity Catalog that are referenced by external tables. They are not contained within a catalog."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "External locations"
+    ]
+  },
+  {
+    "pregunta": "2010 - A data engineer wants to grant a user read-only access to all tables in a specific schema. They have already granted `USE SCHEMA`. Which additional privilege should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "`SELECT` on all tables in the schema.",
+        "es_correcta": true,
+        "explicacion": "With `USE SCHEMA` already granted, the user needs `SELECT` privilege on the tables to read data. This can be granted on each table individually or on all tables in the schema using `SELECT ON SCHEMA`."
+      },
+      {
+        "texto_opcion": "`READ` on the schema.",
+        "es_correcta": false,
+        "explicacion": "`READ` is not a standard privilege in Unity Catalog. The correct privilege for read access is `SELECT`."
+      },
+      {
+        "texto_opcion": "`USE CATALOG` on the parent catalog.",
+        "es_correcta": false,
+        "explicacion": "`USE CATALOG` is required to access the catalog, but the user already has `USE SCHEMA`, which implies catalog access. They still need `SELECT` on the tables."
+      },
+      {
+        "texto_opcion": "`INSERT` on the tables.",
+        "es_correcta": false,
+        "explicacion": "`INSERT` is for adding data, not read-only access. The user needs `SELECT` for read-only access."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Privileges"
+    ]
+  },
+  {
+    "pregunta": "2011 - A data engineer is reviewing the permissions structure in Unity Catalog. Which statement correctly describes ownership in Unity Catalog?",
+    "opciones": [
+      {
+        "texto_opcion": "Every securable object in Unity Catalog has an owner who has all privileges on that object.",
+        "es_correcta": true,
+        "explicacion": "In Unity Catalog, every securable object (catalog, schema, table, etc.) has an owner. The owner has all privileges on that object, similar to the concept of ownership in databases."
+      },
+      {
+        "texto_opcion": "Ownership is optional and only applies to catalogs, not to schemas or tables.",
+        "es_correcta": false,
+        "explicacion": "Ownership applies to all securable objects in Unity Catalog, including catalogs, schemas, tables, views, and functions. It is not optional."
+      },
+      {
+        "texto_opcion": "The owner of an object cannot grant permissions to other users.",
+        "es_correcta": false,
+        "explicacion": "The owner of an object in Unity Catalog can grant permissions to other users. The owner has all privileges and can manage access."
+      },
+      {
+        "texto_opcion": "Ownership is automatically transferred when a user leaves the organization.",
+        "es_correcta": false,
+        "explicacion": "Ownership is not automatically transferred when a user leaves. It must be manually reassigned by a user with the appropriate privileges, such as a catalog admin."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Ownership"
+    ]
+  },
+  {
+    "pregunta": "2012 - A data engineer needs to create an external table in Unity Catalog that references a file in cloud storage. What is a prerequisite for this operation?",
+    "opciones": [
+      {
+        "texto_opcion": "An external location must be defined with the appropriate storage credential.",
+        "es_correcta": true,
+        "explicacion": "To create an external table, an external location must first be defined in Unity Catalog. This external location includes the storage path and associated storage credential that authenticates access to the cloud storage."
+      },
+      {
+        "texto_opcion": "A managed table must exist with the same name.",
+        "es_correcta": false,
+        "explicacion": "External tables and managed tables are distinct types. There is no requirement to have a managed table with the same name. The external table is created directly referencing the external location."
+      },
+      {
+        "texto_opcion": "The user must have `CREATE EXTERNAL TABLE` privilege on the catalog.",
+        "es_correcta": false,
+        "explicacion": "In Unity Catalog, the privilege for creating tables is `CREATE TABLE`, not `CREATE EXTERNAL TABLE`. The same privilege is used for both managed and external tables."
+      },
+      {
+        "texto_opcion": "The data file must be in Parquet format.",
+        "es_correcta": false,
+        "explicacion": "External tables in Unity Catalog support various file formats, including Parquet, JSON, CSV, Delta Lake, and others. Parquet is not a mandatory requirement."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "External tables"
+    ]
+  },
+  {
+    "pregunta": "2013 - A data engineer is setting up a new Unity Catalog environment. They want to ensure that all data assets are discoverable and governed from a single location. What is the primary benefit of using Unity Catalog for this purpose?",
+    "opciones": [
+      {
+        "texto_opcion": "It provides centralized governance for all data and AI assets across workspaces.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides centralized governance across all workspaces, enabling fine-grained access control, data lineage, and asset discovery. This simplifies data management and ensures consistency, security, and compliance across the organization ."
+      },
+      {
+        "texto_opcion": "It replaces the need for any data governance policies.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a tool for implementing governance; it does not replace the need for governance policies. Organizations still need to define and enforce governance policies, but Unity Catalog provides the mechanism to implement them."
+      },
+      {
+        "texto_opcion": "It only works for machine learning assets, not for data tables.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides centralized governance for both data and AI assets. It manages tables, views, models, and other assets across the entire data and AI lifecycle ."
+      },
+      {
+        "texto_opcion": "It eliminates the need for access controls.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog does not eliminate the need for access controls; it provides the mechanism to implement fine-grained access controls. Governance policies still define what those controls should be."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2014 - A data engineer is managing an external table in Unity Catalog. What happens to the underlying data files when the external table is dropped?",
+    "opciones": [
+      {
+        "texto_opcion": "The metadata is removed, but the data files are not deleted.",
+        "es_correcta": true,
+        "explicacion": "When an external table is dropped, Unity Catalog removes the table metadata (the entry in the metastore), but the underlying data files in the external location are not deleted. This is a key difference from managed tables ."
+      },
+      {
+        "texto_opcion": "Both the metadata and the data files are deleted.",
+        "es_correcta": false,
+        "explicacion": "This is the behavior of managed tables, not external tables. For external tables, Unity Catalog does not manage the lifecycle of the data files, so they are not deleted when the table is dropped."
+      },
+      {
+        "texto_opcion": "The operation fails because external tables cannot be dropped.",
+        "es_correcta": false,
+        "explicacion": "External tables can be dropped. The operation removes the table definition from the catalog but does not affect the underlying data files."
+      },
+      {
+        "texto_opcion": "The data files are moved to a trash folder for recovery.",
+        "es_correcta": false,
+        "explicacion": "This is the behavior for managed tables when the PURGE option is not specified. External tables' data files are not managed by Unity Catalog, so they are not moved to a trash folder."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "External tables"
+    ]
+  },
+  {
+    "pregunta": "2015 - A data engineer needs to create a view that combines data from two different schemas. What permission is required to create this view?",
+    "opciones": [
+      {
+        "texto_opcion": "`CREATE VIEW` on the target schema and `SELECT` on the source tables.",
+        "es_correcta": true,
+        "explicacion": "To create a view that reads from source tables, the user needs `CREATE VIEW` privilege on the schema where the view will be created, and `SELECT` privilege on each of the source tables referenced in the view definition."
+      },
+      {
+        "texto_opcion": "`SELECT` on the target schema only.",
+        "es_correcta": false,
+        "explicacion": "`SELECT` on the target schema is not sufficient; the user also needs `CREATE VIEW` to create the view. Additionally, `SELECT` on the source tables is required to read the data."
+      },
+      {
+        "texto_opcion": "`CREATE VIEW` on the catalog.",
+        "es_correcta": false,
+        "explicacion": "While `CREATE VIEW` on the catalog might be sufficient in some systems, in Unity Catalog, privileges are more granular. The user needs `CREATE VIEW` on the specific schema where the view is being created."
+      },
+      {
+        "texto_opcion": "`SELECT` on all objects in the catalog.",
+        "es_correcta": false,
+        "explicacion": "Granting `SELECT` on all objects would be overly permissive. The user only needs `SELECT` on the specific source tables used in the view definition and `CREATE VIEW` on the target schema."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Views"
+    ]
+  },
+  {
+    "pregunta": "2016 - A data engineer is reviewing the Unity Catalog data lineage for a specific table. What information can they expect to see?",
+    "opciones": [
+      {
+        "texto_opcion": "The upstream sources and downstream targets of the data, including transformations.",
+        "es_correcta": true,
+        "explicacion": "Data lineage in Unity Catalog provides a view of the data's journey from its source to its final form. It includes information about upstream tables, downstream tables, and the transformations applied along the way ."
+      },
+      {
+        "texto_opcion": "The access control list (ACL) for the table.",
+        "es_correcta": false,
+        "explicacion": "Access control information is managed separately through privileges. Data lineage focuses on data flow and transformation, not on who has access to the data."
+      },
+      {
+        "texto_opcion": "The storage location of the table's data files.",
+        "es_correcta": false,
+        "explicacion": "While storage location is metadata about the table, data lineage specifically tracks the flow and transformation of data, not just its physical storage."
+      },
+      {
+        "texto_opcion": "The query history of all users who accessed the table.",
+        "es_correcta": false,
+        "explicacion": "Query history is a separate audit capability. Data lineage tracks the data relationships and transformations, not the specific queries run by users."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Data lineage"
+    ]
+  },
+  {
+    "pregunta": "2017 - A data engineer is setting up a new schema in Unity Catalog. They want to grant a group of users the ability to query all tables in the schema without granting individual table permissions. What is the recommended approach?",
+    "opciones": [
+      {
+        "texto_opcion": "Grant `SELECT` on the schema to the group.",
+        "es_correcta": true,
+        "explicacion": "In Unity Catalog, you can grant privileges at the schema level, which applies to all current and future objects in the schema. Granting `SELECT` on the schema gives the group read access to all tables and views within that schema."
+      },
+      {
+        "texto_opcion": "Grant `SELECT` on each table individually.",
+        "es_correcta": false,
+        "explicacion": "While this works, it is less efficient and more difficult to manage. Granting `SELECT` at the schema level is the recommended approach for granting permissions on all tables in a schema."
+      },
+      {
+        "texto_opcion": "Grant `USE SCHEMA` to the group.",
+        "es_correcta": false,
+        "explicacion": "`USE SCHEMA` allows the group to access the schema but does not grant any data read permissions. They would still need `SELECT` on the tables to query data."
+      },
+      {
+        "texto_opcion": "Grant `ALL PRIVILEGES` on the schema to the group.",
+        "es_correcta": false,
+        "explicacion": "`ALL PRIVILEGES` would grant more than read access, including the ability to create, modify, or delete tables. The requirement is only to query data, so `SELECT` is the appropriate privilege."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2018 - A data engineer is creating a new catalog in Unity Catalog. What is the primary purpose of creating separate catalogs?",
+    "opciones": [
+      {
+        "texto_opcion": "To logically separate data assets for different teams or business units.",
+        "es_correcta": true,
+        "explicacion": "Catalogs are the top-level containers in Unity Catalog and are used to logically organize data assets. Creating separate catalogs for different teams, projects, or business units helps establish clear governance boundaries and simplifies data discovery."
+      },
+      {
+        "texto_opcion": "To store different file formats in separate containers.",
+        "es_correcta": false,
+        "explicacion": "File formats are managed at the table or file level, not at the catalog level. Catalogs are for logical organization, not for differentiating file formats."
+      },
+      {
+        "texto_opcion": "To improve query performance by isolating data.",
+        "es_correcta": false,
+        "explicacion": "While catalogs provide logical isolation, they are not primarily for performance optimization. Performance is more influenced by table design, partitioning, and optimization techniques."
+      },
+      {
+        "texto_opcion": "To enforce different storage credentials for different data assets.",
+        "es_correcta": false,
+        "explicacion": "Storage credentials are associated with external locations, not with catalogs. Catalogs are for logical organization, not for storage configuration."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2019 - A data engineer is managing permissions in Unity Catalog. They want to grant a user the ability to insert data into a specific table. Which privilege should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "`INSERT`",
+        "es_correcta": true,
+        "explicacion": "The `INSERT` privilege is used to grant permission to add new rows to a table or view in Unity Catalog. This is the standard privilege for write access to insert data."
+      },
+      {
+        "texto_opcion": "`MODIFY`",
+        "es_correcta": false,
+        "explicacion": "`MODIFY` is not a standard privilege name in Unity Catalog. The privileges for data modification are `INSERT`, `UPDATE`, and `DELETE`."
+      },
+      {
+        "texto_opcion": "`WRITE`",
+        "es_correcta": false,
+        "explicacion": "`WRITE` is not a privilege name used in Unity Catalog for table access. The correct privilege for inserting data is `INSERT`."
+      },
+      {
+        "texto_opcion": "`SELECT`",
+        "es_correcta": false,
+        "explicacion": "`SELECT` grants read access, not write access. To insert data, the `INSERT` privilege is required."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Privileges"
+    ]
+  },
+  {
+    "pregunta": "2020 - A data engineer is configuring Unity Catalog for a multi-cloud deployment. They have workspaces on both AWS and Azure. What is a key benefit of using Unity Catalog in this scenario?",
+    "opciones": [
+      {
+        "texto_opcion": "It provides a single governance layer across all workspaces and cloud providers.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides a central governance layer that spans multiple workspaces and cloud providers. This enables unified access control, data lineage, and asset discovery across AWS and Azure workspaces ."
+      },
+      {
+        "texto_opcion": "It automatically replicates data across clouds for disaster recovery.",
+        "es_correcta": false,
+        "explicacion": "Data replication is a separate feature of cloud storage. Unity Catalog is a governance layer, not a data replication tool."
+      },
+      {
+        "texto_opcion": "It eliminates the need for cross-cloud networking.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides unified governance but does not eliminate the need for cross-cloud networking. Data access still requires appropriate network connectivity."
+      },
+      {
+        "texto_opcion": "It creates separate catalogs for each cloud provider automatically.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog does not automatically create catalogs based on cloud providers. Catalogs are logical containers defined by the administrator for organizational purposes."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2021 - A data engineer is configuring Unity Catalog and wants to understand the three-level namespace. What is the correct hierarchy?",
+    "opciones": [
+      {
+        "texto_opcion": "Catalog > Schema > Table",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog uses a three-level namespace (catalog.schema.table) to organize data assets. Catalogs are top-level containers, schemas group tables and views, and tables store the actual data ."
+      },
+      {
+        "texto_opcion": "Schema > Catalog > Table",
+        "es_correcta": false,
+        "explicacion": "The hierarchy is Catalog first, then Schema, then Table. Schemas are contained within catalogs, not the other way around."
+      },
+      {
+        "texto_opcion": "Workspace > Catalog > Table",
+        "es_correcta": false,
+        "explicacion": "Workspaces are the Databricks environments, not part of the Unity Catalog data asset hierarchy. The three-level namespace is catalog.schema.table."
+      },
+      {
+        "texto_opcion": "Catalog > Database > Table",
+        "es_correcta": false,
+        "explicacion": "While 'database' is often used interchangeably with schema, Unity Catalog specifically uses 'schema' in its three-level namespace."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2022 - A data engineer is granting permissions in Unity Catalog. What privilege is required for a user to read data from a table?",
+    "opciones": [
+      {
+        "texto_opcion": "SELECT",
+        "es_correcta": true,
+        "explicacion": "The `SELECT` privilege is used to grant read access to data in a table or view in Unity Catalog. This is the standard privilege for allowing a user to query data ."
+      },
+      {
+        "texto_opcion": "READ",
+        "es_correcta": false,
+        "explicacion": "`READ` is not a standard privilege name in Unity Catalog for table access. The correct privilege for reading data is `SELECT`."
+      },
+      {
+        "texto_opcion": "VIEW",
+        "es_correcta": false,
+        "explicacion": "`VIEW` is not a standard privilege in Unity Catalog. Users need `SELECT` to read data, and `USE SCHEMA` to access the schema."
+      },
+      {
+        "texto_opcion": "USE TABLE",
+        "es_correcta": false,
+        "explicacion": "`USE TABLE` is not a standard privilege in Unity Catalog. The privileges for data access are `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `MODIFY`, etc."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Privileges"
+    ]
+  },
+  {
+    "pregunta": "2023 - A data engineer is creating a table that Unity Catalog should fully manage, including its storage location and lifecycle. Which type of table should they create?",
+    "opciones": [
+      {
+        "texto_opcion": "A managed table.",
+        "es_correcta": true,
+        "explicacion": "Managed tables are fully managed by Unity Catalog, which controls the storage location and lifecycle. Databricks recommends managed tables for most workloads due to their simplified configuration and governance."
+      },
+      {
+        "texto_opcion": "An external table.",
+        "es_correcta": false,
+        "explicacion": "External tables are registered in Unity Catalog, but the underlying files are stored in user-specified locations. They are recommended only when data must remain in specific storage paths."
+      },
+      {
+        "texto_opcion": "A view.",
+        "es_correcta": false,
+        "explicacion": "A view is a virtual table and does not have its own storage. It cannot be used to store data; it is a query definition over underlying tables."
+      },
+      {
+        "texto_opcion": "A materialized view.",
+        "es_correcta": false,
+        "explicacion": "Materialized views store precomputed results, but in Unity Catalog they still fall under the managed or external table category. The choice between managed and external tables applies to materialized views as well."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Managed tables"
+    ]
+  },
+  {
+    "pregunta": "2024 - A data engineer is defining an external location in Unity Catalog. What must be configured to allow Databricks to access this storage location?",
+    "opciones": [
+      {
+        "texto_opcion": "A storage credential that provides authentication to the cloud storage.",
+        "es_correcta": true,
+        "explicacion": "Storage credentials in Unity Catalog are used to authenticate Databricks with the underlying cloud storage (like AWS S3, Azure ADLS) to access external locations. This is a crucial part of Unity Catalog's governance framework for managing data access."
+      },
+      {
+        "texto_opcion": "A schema that defines the structure of the data.",
+        "es_correcta": false,
+        "explicacion": "The schema of the data is defined at the table level, not by the external location. The external location is a storage path, and the table schema is defined when creating the external table."
+      },
+      {
+        "texto_opcion": "A managed table that references the storage location.",
+        "es_correcta": false,
+        "explicacion": "Managed tables are fully managed by Unity Catalog, not used to reference external storage locations. External tables are used for data in user-specified locations."
+      },
+      {
+        "texto_opcion": "A catalog to contain the external location definition.",
+        "es_correcta": false,
+        "explicacion": "While catalogs contain schemas and tables, external locations are standalone objects in Unity Catalog that are referenced by external tables. They are not contained within a catalog."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "External locations"
+    ]
+  },
+  {
+    "pregunta": "2025 - A data engineer wants to track data lineage for a table in Unity Catalog. What information does data lineage provide?",
+    "opciones": [
+      {
+        "texto_opcion": "The upstream sources and downstream targets of the data, including transformations.",
+        "es_correcta": true,
+        "explicacion": "Data lineage in Unity Catalog provides a view of the data's journey from its source to its final form. It includes information about upstream tables, downstream tables, and the transformations applied along the way."
+      },
+      {
+        "texto_opcion": "The access control list (ACL) for the table.",
+        "es_correcta": false,
+        "explicacion": "Access control information is managed separately through privileges. Data lineage focuses on data flow and transformation, not on who has access to the data."
+      },
+      {
+        "texto_opcion": "The storage location of the table's data files.",
+        "es_correcta": false,
+        "explicacion": "While storage location is metadata about the table, data lineage specifically tracks the flow and transformation of data, not just its physical storage."
+      },
+      {
+        "texto_opcion": "The query history of all users who accessed the table.",
+        "es_correcta": false,
+        "explicacion": "Query history is a separate audit capability. Data lineage tracks the data relationships and transformations, not the specific queries run by users."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Data lineage"
+    ]
+  },
+  {
+    "pregunta": "2026 - A data engineer is granting permissions in Unity Catalog. They want to grant a user read access to all tables in a schema. What is the recommended approach?",
+    "opciones": [
+      {
+        "texto_opcion": "Grant SELECT on the schema to the user or group.",
+        "es_correcta": true,
+        "explicacion": "In Unity Catalog, you can grant privileges at the schema level, which applies to all current and future objects in the schema. Granting `SELECT` on the schema gives the user or group read access to all tables and views within that schema."
+      },
+      {
+        "texto_opcion": "Grant SELECT on each table individually.",
+        "es_correcta": false,
+        "explicacion": "While this works, it is less efficient and more difficult to manage. Granting `SELECT` at the schema level is the recommended approach for granting permissions on all tables in a schema."
+      },
+      {
+        "texto_opcion": "Grant USE SCHEMA to the user.",
+        "es_correcta": false,
+        "explicacion": "`USE SCHEMA` allows the user to access the schema but does not grant any data read permissions. They would still need `SELECT` on the tables to query data."
+      },
+      {
+        "texto_opcion": "Grant ALL PRIVILEGES on the schema.",
+        "es_correcta": false,
+        "explicacion": "`ALL PRIVILEGES` would grant more than read access, including the ability to create, modify, or delete tables. The requirement is only to query data, so `SELECT` is the appropriate privilege."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2027 - A data engineer is managing an external table in Unity Catalog. What happens when the external table is dropped?",
+    "opciones": [
+      {
+        "texto_opcion": "The metadata is removed, but the data files are not deleted.",
+        "es_correcta": true,
+        "explicacion": "When an external table is dropped, Unity Catalog removes the table metadata (the entry in the metastore), but the underlying data files in the external location are not deleted. This is a key difference from managed tables ."
+      },
+      {
+        "texto_opcion": "Both the metadata and the data files are deleted.",
+        "es_correcta": false,
+        "explicacion": "This is the behavior of managed tables, not external tables. For external tables, Unity Catalog does not manage the lifecycle of the data files, so they are not deleted when the table is dropped."
+      },
+      {
+        "texto_opcion": "The operation fails because external tables cannot be dropped.",
+        "es_correcta": false,
+        "explicacion": "External tables can be dropped. The operation removes the table definition from the catalog but does not affect the underlying data files."
+      },
+      {
+        "texto_opcion": "The data files are moved to a trash folder for recovery.",
+        "es_correcta": false,
+        "explicacion": "This is the behavior for managed tables when the PURGE option is not specified. External tables' data files are not managed by Unity Catalog, so they are not moved to a trash folder."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "External tables"
+    ]
+  },
+  {
+    "pregunta": "2028 - A data engineer is creating a view in Unity Catalog that references tables from multiple schemas. What permissions are required?",
+    "opciones": [
+      {
+        "texto_opcion": "CREATE VIEW on the target schema and SELECT on the source tables.",
+        "es_correcta": true,
+        "explicacion": "To create a view that reads from source tables, the user needs `CREATE VIEW` privilege on the schema where the view will be created, and `SELECT` privilege on each of the source tables referenced in the view definition."
+      },
+      {
+        "texto_opcion": "SELECT on the target schema only.",
+        "es_correcta": false,
+        "explicacion": "`SELECT` on the target schema is not sufficient; the user also needs `CREATE VIEW` to create the view. Additionally, `SELECT` on the source tables is required to read the data."
+      },
+      {
+        "texto_opcion": "CREATE VIEW on the catalog.",
+        "es_correcta": false,
+        "explicacion": "While `CREATE VIEW` on the catalog might be sufficient in some systems, in Unity Catalog, privileges are more granular. The user needs `CREATE VIEW` on the specific schema where the view is being created."
+      },
+      {
+        "texto_opcion": "SELECT on all objects in the catalog.",
+        "es_correcta": false,
+        "explicacion": "Granting `SELECT` on all objects would be overly permissive. The user only needs `SELECT` on the specific source tables used in the view definition and `CREATE VIEW` on the target schema."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Views"
+    ]
+  },
+  {
+    "pregunta": "2029 - A data engineer is creating separate catalogs for different business units. What is the primary purpose of creating separate catalogs in Unity Catalog?",
+    "opciones": [
+      {
+        "texto_opcion": "To logically separate data assets for different teams or business units.",
+        "es_correcta": true,
+        "explicacion": "Catalogs are the top-level containers in Unity Catalog and are used to logically organize data assets. Creating separate catalogs for different teams, projects, or business units helps establish clear governance boundaries and simplifies data discovery ."
+      },
+      {
+        "texto_opcion": "To store different file formats in separate containers.",
+        "es_correcta": false,
+        "explicacion": "File formats are managed at the table or file level, not at the catalog level. Catalogs are for logical organization, not for differentiating file formats."
+      },
+      {
+        "texto_opcion": "To improve query performance by isolating data.",
+        "es_correcta": false,
+        "explicacion": "While catalogs provide logical isolation, they are not primarily for performance optimization. Performance is more influenced by table design, partitioning, and optimization techniques."
+      },
+      {
+        "texto_opcion": "To enforce different storage credentials for different data assets.",
+        "es_correcta": false,
+        "explicacion": "Storage credentials are associated with external locations, not with catalogs. Catalogs are for logical organization, not for storage configuration."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2031 - A data engineer is setting up Unity Catalog for a multi-cloud environment with workspaces on AWS and Azure. What is a key benefit of Unity Catalog in this scenario?",
+    "opciones": [
+      {
+        "texto_opcion": "It provides a single governance layer across all workspaces and cloud providers.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides a central governance layer that spans multiple workspaces and cloud providers. This enables unified access control, data lineage, and asset discovery across AWS and Azure workspaces ."
+      },
+      {
+        "texto_opcion": "It automatically replicates data across clouds for disaster recovery.",
+        "es_correcta": false,
+        "explicacion": "Data replication is a separate feature of cloud storage. Unity Catalog is a governance layer, not a data replication tool."
+      },
+      {
+        "texto_opcion": "It eliminates the need for cross-cloud networking.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides unified governance but does not eliminate the need for cross-cloud networking. Data access still requires appropriate network connectivity."
+      },
+      {
+        "texto_opcion": "It creates separate catalogs for each cloud provider automatically.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog does not automatically create catalogs based on cloud providers. Catalogs are logical containers defined by the administrator for organizational purposes."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2032 - A data engineer is reviewing Unity Catalog's governance capabilities. Which of the following is a key benefit of centralized governance?",
+    "opciones": [
+      {
+        "texto_opcion": "It helps avoid data silos by providing a single source of truth and unified access controls.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog helps avoid data silos by offering a single unified system to manage, govern, and organize all data and AI assets. Different teams can access this central repository from their favorite platforms and tools, with consistent security and access controls."
+      },
+      {
+        "texto_opcion": "It eliminates the need for any data governance policies.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a tool for implementing governance; it does not replace the need for governance policies. Organizations still need to define and enforce governance policies."
+      },
+      {
+        "texto_opcion": "It only works for machine learning assets.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides centralized governance for both data and AI assets. It manages tables, views, models, and other assets across the entire data and AI lifecycle."
+      },
+      {
+        "texto_opcion": "It requires all teams to use the same tools and languages.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog allows teams to use their favorite tools and languages (like PySpark, DuckDB) to access the centralized data, while maintaining governance and a single source of truth."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2033 - A data engineer is granting permissions in Unity Catalog. What privilege is required for a user to create a new table in a schema?",
+    "opciones": [
+      {
+        "texto_opcion": "CREATE TABLE on the schema and USE SCHEMA.",
+        "es_correcta": true,
+        "explicacion": "To create a table in a schema, a user needs both the `USE SCHEMA` privilege to access the schema and the `CREATE TABLE` privilege on that schema."
+      },
+      {
+        "texto_opcion": "CREATE SCHEMA on the catalog.",
+        "es_correcta": false,
+        "explicacion": "`CREATE SCHEMA` allows creating new schemas, not tables within an existing schema. The user already has a schema to work with, so they need `USE SCHEMA` and `CREATE TABLE` on it."
+      },
+      {
+        "texto_opcion": "SELECT on the schema.",
+        "es_correcta": false,
+        "explicacion": "`SELECT` permission is for reading data, not for creating tables. To create a table, the user needs `CREATE TABLE` and `USE SCHEMA` privileges."
+      },
+      {
+        "texto_opcion": "ALL PRIVILEGES on the catalog.",
+        "es_correcta": false,
+        "explicacion": "Granting `ALL PRIVILEGES` on the catalog would grant administrative-level permissions far beyond what is needed. The principle of least privilege suggests granting only the specific permissions required."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2034 - A data engineer is configuring Unity Catalog and wants to understand the concept of ownership. What is true about ownership in Unity Catalog?",
+    "opciones": [
+      {
+        "texto_opcion": "Every securable object has an owner who has all privileges on that object.",
+        "es_correcta": true,
+        "explicacion": "In Unity Catalog, every securable object (catalog, schema, table, etc.) has an owner. The owner has all privileges on that object, similar to the concept of ownership in databases."
+      },
+      {
+        "texto_opcion": "Ownership is optional and only applies to catalogs.",
+        "es_correcta": false,
+        "explicacion": "Ownership applies to all securable objects in Unity Catalog, including catalogs, schemas, tables, views, and functions. It is not optional."
+      },
+      {
+        "texto_opcion": "The owner of an object cannot grant permissions to other users.",
+        "es_correcta": false,
+        "explicacion": "The owner of an object in Unity Catalog can grant permissions to other users. The owner has all privileges and can manage access."
+      },
+      {
+        "texto_opcion": "Ownership is automatically transferred when a user leaves the organization.",
+        "es_correcta": false,
+        "explicacion": "Ownership is not automatically transferred when a user leaves. It must be manually reassigned by a user with the appropriate privileges, such as a catalog admin."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Ownership"
+    ]
+  },
+  {
+    "pregunta": "2035 - A data engineer is creating a managed table in Unity Catalog. What happens to the data when the table is dropped?",
+    "opciones": [
+      {
+        "texto_opcion": "The data is deleted from cloud storage.",
+        "es_correcta": true,
+        "explicacion": "When a managed table is dropped, Unity Catalog deletes the metadata and the underlying data files from cloud storage. If the PURGE option is not specified, the data may be moved to a trash folder for a defined duration."
+      },
+      {
+        "texto_opcion": "Only the metadata is removed; the data files remain.",
+        "es_correcta": false,
+        "explicacion": "This is the behavior for external tables, not managed tables. For managed tables, Unity Catalog fully manages the data lifecycle, including deletion."
+      },
+      {
+        "texto_opcion": "The operation fails because managed tables cannot be dropped.",
+        "es_correcta": false,
+        "explicacion": "Managed tables can be dropped. The operation removes both the metadata and the data files."
+      },
+      {
+        "texto_opcion": "The data files are moved to a separate archive location.",
+        "es_correcta": false,
+        "explicacion": "While some cloud storage systems support archiving, dropping a managed table in Unity Catalog deletes the data. It does not automatically archive it unless explicitly configured."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Managed tables"
+    ]
+  },
+  {
+    "pregunta": "2036 - A data engineer is setting up Unity Catalog and wants to grant a group access to a specific catalog. What privilege should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "USE CATALOG",
+        "es_correcta": true,
+        "explicacion": "The `USE CATALOG` privilege allows a user or group to access and use a catalog. This is required before they can access any schemas or tables within that catalog."
+      },
+      {
+        "texto_opcion": "SELECT on the catalog.",
+        "es_correcta": false,
+        "explicacion": "`SELECT` is a data access privilege for reading tables, not for accessing the catalog itself. The `USE CATALOG` privilege is required to access the catalog."
+      },
+      {
+        "texto_opcion": "CREATE TABLE on the catalog.",
+        "es_correcta": false,
+        "explicacion": "`CREATE TABLE` is for creating tables within a schema, not for accessing the catalog. `USE CATALOG` is the privilege for catalog access."
+      },
+      {
+        "texto_opcion": "ALL PRIVILEGES on the catalog.",
+        "es_correcta": false,
+        "explicacion": "`ALL PRIVILEGES` would grant more than catalog access. The group only needs to access the catalog, so `USE CATALOG` is the appropriate privilege."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2037 - A data engineer is configuring Unity Catalog for an organization with strict data privacy requirements. They need to control access at the column level. What Unity Catalog feature provides this capability?",
+    "opciones": [
+      {
+        "texto_opcion": "Column-level security with dynamic views.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides column-level security (masking) and row-level security (filters) through dynamic views. This allows fine-grained control over data access."
+      },
+      {
+        "texto_opcion": "Table-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Table-level permissions control access to entire tables. For column-level control, masking and filtering are required."
+      },
+      {
+        "texto_opcion": "Schema-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Schema-level permissions control access to all tables in a schema. They do not provide column-level control."
+      },
+      {
+        "texto_opcion": "Catalog-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Catalog-level permissions control access to entire catalogs. They do not provide the fine-grained column control needed for data privacy."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2038 - A data engineer is reviewing Unity Catalog's governance capabilities. Which capability automatically captures how data flows and is transformed across tables and pipelines?",
+    "opciones": [
+      {
+        "texto_opcion": "Data lineage.",
+        "es_correcta": true,
+        "explicacion": "Data lineage in Unity Catalog automatically captures how data flows and is transformed across tables, views, and pipelines. This is crucial for auditing, troubleshooting, and understanding data dependencies."
+      },
+      {
+        "texto_opcion": "Access control.",
+        "es_correcta": false,
+        "explicacion": "Access control governs who can access data but does not track data flow or transformations. Data lineage is the feature for tracking data movement and changes."
+      },
+      {
+        "texto_opcion": "Data classification.",
+        "es_correcta": false,
+        "explicacion": "Data classification automatically scans and tags sensitive data. It does not track data flow or transformations."
+      },
+      {
+        "texto_opcion": "Governed tags.",
+        "es_correcta": false,
+        "explicacion": "Governed tags define and control tags used to classify and organize securable objects. They do not track data flow or transformations."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Data lineage"
+    ]
+  },
+  {
+    "pregunta": "2039 - A data engineer is managing permissions in Unity Catalog. They want to grant a user the ability to update data in a specific table. Which privilege should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "UPDATE",
+        "es_correcta": true,
+        "explicacion": "The `UPDATE` privilege is used to grant permission to modify existing rows in a table or view in Unity Catalog."
+      },
+      {
+        "texto_opcion": "MODIFY",
+        "es_correcta": false,
+        "explicacion": "`MODIFY` is not a standard privilege name in Unity Catalog. The privileges for data modification are `INSERT`, `UPDATE`, and `DELETE`."
+      },
+      {
+        "texto_opcion": "SELECT",
+        "es_correcta": false,
+        "explicacion": "`SELECT` grants read access, not write access. To update data, the `UPDATE` privilege is required."
+      },
+      {
+        "texto_opcion": "ALTER",
+        "es_correcta": false,
+        "explicacion": "`ALTER` is used for altering the table schema, not for updating data. `UPDATE` is the privilege for modifying data."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Privileges"
+    ]
+  },
+  {
+    "pregunta": "2040 - A data engineer is creating an external table in Unity Catalog. What is a prerequisite for this operation?",
+    "opciones": [
+      {
+        "texto_opcion": "An external location must be defined with the appropriate storage credential.",
+        "es_correcta": true,
+        "explicacion": "To create an external table, an external location must first be defined in Unity Catalog. This external location includes the storage path and associated storage credential that authenticates access to the cloud storage."
+      },
+      {
+        "texto_opcion": "A managed table must exist with the same name.",
+        "es_correcta": false,
+        "explicacion": "External tables and managed tables are distinct types. There is no requirement to have a managed table with the same name."
+      },
+      {
+        "texto_opcion": "The user must have CREATE EXTERNAL TABLE privilege on the catalog.",
+        "es_correcta": false,
+        "explicacion": "In Unity Catalog, the privilege for creating tables is `CREATE TABLE`, not `CREATE EXTERNAL TABLE`. The same privilege is used for both managed and external tables."
+      },
+      {
+        "texto_opcion": "The data file must be in Parquet format.",
+        "es_correcta": false,
+        "explicacion": "External tables in Unity Catalog support various file formats, including Parquet, JSON, CSV, Delta Lake, and others."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "External tables"
+    ]
+  },
+  {
+    "pregunta": "2041 - A data engineer is configuring Unity Catalog and wants to understand the purpose of schemas. What is the role of schemas in Unity Catalog's three-level namespace?",
+    "opciones": [
+      {
+        "texto_opcion": "Schemas group tables and views within a catalog.",
+        "es_correcta": true,
+        "explicacion": "In Unity Catalog's three-level namespace (catalog.schema.table), schemas are the second level. They are used to group tables and views within a catalog."
+      },
+      {
+        "texto_opcion": "Schemas are the top-level containers for data assets.",
+        "es_correcta": false,
+        "explicacion": "Catalogs are the top-level containers. Schemas are contained within catalogs."
+      },
+      {
+        "texto_opcion": "Schemas store the actual data files.",
+        "es_correcta": false,
+        "explicacion": "Tables store the actual data. Schemas are logical groupings of tables and views."
+      },
+      {
+        "texto_opcion": "Schemas define the storage location for data.",
+        "es_correcta": false,
+        "explicacion": "The storage location is defined at the table or external location level, not at the schema level."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Schemas"
+    ]
+  },
+  {
+    "pregunta": "2042 - A data engineer is granting permissions in Unity Catalog. What privilege is required for a user to create a view in a schema?",
+    "opciones": [
+      {
+        "texto_opcion": "CREATE VIEW on the schema and USE SCHEMA.",
+        "es_correcta": true,
+        "explicacion": "To create a view in a schema, a user needs both the `USE SCHEMA` privilege to access the schema and the `CREATE VIEW` privilege on that schema."
+      },
+      {
+        "texto_opcion": "SELECT on the schema.",
+        "es_correcta": false,
+        "explicacion": "`SELECT` permission is for reading data, not for creating views. To create a view, the user needs `CREATE VIEW` and `USE SCHEMA` privileges."
+      },
+      {
+        "texto_opcion": "CREATE TABLE on the schema.",
+        "es_correcta": false,
+        "explicacion": "`CREATE TABLE` is for creating tables, not views. Views require `CREATE VIEW` privilege."
+      },
+      {
+        "texto_opcion": "ALL PRIVILEGES on the catalog.",
+        "es_correcta": false,
+        "explicacion": "Granting `ALL PRIVILEGES` on the catalog would grant administrative-level permissions far beyond what is needed."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Views"
+    ]
+  },
+  {
+    "pregunta": "2043 - A data engineer is managing permissions in Unity Catalog. They want to grant a user the ability to delete data from a specific table. Which privilege should they grant?",
+    "opciones": [
+      {
+        "texto_opcion": "DELETE",
+        "es_correcta": true,
+        "explicacion": "The `DELETE` privilege is used to grant permission to remove rows from a table or view in Unity Catalog."
+      },
+      {
+        "texto_opcion": "MODIFY",
+        "es_correcta": false,
+        "explicacion": "`MODIFY` is not a standard privilege name in Unity Catalog. The privileges for data modification are `INSERT`, `UPDATE`, and `DELETE`."
+      },
+      {
+        "texto_opcion": "TRUNCATE",
+        "es_correcta": false,
+        "explicacion": "`TRUNCATE` is a separate privilege for removing all rows from a table. `DELETE` is for conditional row removal."
+      },
+      {
+        "texto_opcion": "DROP",
+        "es_correcta": false,
+        "explicacion": "`DROP` is for dropping the table itself, not for deleting data from it. `DELETE` is the privilege for removing rows."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Privileges"
+    ]
+  },
+  {
+    "pregunta": "2044 - A data engineer is configuring Unity Catalog and wants to understand the concept of securable objects. Which of the following is a securable object in Unity Catalog?",
+    "opciones": [
+      {
+        "texto_opcion": "Catalogs, schemas, tables, views, and functions.",
+        "es_correcta": true,
+        "explicacion": "In Unity Catalog, securable objects are the assets that can have permissions granted on them. This includes catalogs, schemas, tables, views, and functions."
+      },
+      {
+        "texto_opcion": "Only tables and views.",
+        "es_correcta": false,
+        "explicacion": "Catalogs and schemas are also securable objects. Permissions can be granted at multiple levels in the hierarchy."
+      },
+      {
+        "texto_opcion": "Only catalogs and schemas.",
+        "es_correcta": false,
+        "explicacion": "Tables, views, and functions are also securable objects. The hierarchy extends from catalogs down to individual assets."
+      },
+      {
+        "texto_opcion": "Only external locations and storage credentials.",
+        "es_correcta": false,
+        "explicacion": "External locations and storage credentials are objects in Unity Catalog, but they are not the primary securable objects for data access. Permissions are granted on catalogs, schemas, tables, views, and functions."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2069 - A data engineer is implementing Unity Catalog to avoid data silos. According to best practices, what is a key benefit of using Unity Catalog for this purpose?",
+    "opciones": [
+      {
+        "texto_opcion": "It offers a single unified system to manage, govern, and organize all data and AI assets without vendor lock-in.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog helps avoid data silos by offering a single unified system to manage, govern, and organize all data and AI assets without locking you into a specific table format or query engine. Teams can use their favorite tools while maintaining a single source of truth ."
+      },
+      {
+        "texto_opcion": "It automatically replicates data across all clouds to ensure availability.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a governance layer, not a data replication tool. Data replication is handled by the underlying storage systems ."
+      },
+      {
+        "texto_opcion": "It eliminates the need for any data governance policies.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a tool for implementing governance, not a replacement for governance policies. Organizations still need to define and enforce governance policies ."
+      },
+      {
+        "texto_opcion": "It forces all teams to use the same tools and query engines.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog allows teams to use their favorite tools and languages (like PySpark, DuckDB) to access centralized data, while maintaining governance and a single source of truth ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2070 - A data engineer is configuring Unity Catalog's three-level namespace. What is the correct structure for referencing a table?",
+    "opciones": [
+      {
+        "texto_opcion": "`<catalog>.<schema>.<table>`",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog uses a three-level namespace: catalog, schema, and table. This structure makes it easy to organize data and reference assets across the organization ."
+      },
+      {
+        "texto_opcion": "`<schema>.<catalog>.<table>`",
+        "es_correcta": false,
+        "explicacion": "The hierarchy is catalog first, then schema, then table. Schemas are contained within catalogs, not the other way around ."
+      },
+      {
+        "texto_opcion": "`<workspace>.<catalog>.<table>`",
+        "es_correcta": false,
+        "explicacion": "Workspaces are the Databricks environments, not part of Unity Catalog's three-level namespace for data assets ."
+      },
+      {
+        "texto_opcion": "`<catalog>.<database>.<table>`",
+        "es_correcta": false,
+        "explicacion": "While 'database' is sometimes used interchangeably, Unity Catalog specifically uses 'schema' in its three-level namespace ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2071 - A data engineer is managing Unity Catalog permissions. What is the difference between authentication and authorization?",
+    "opciones": [
+      {
+        "texto_opcion": "Authentication verifies identity; authorization verifies permissions.",
+        "es_correcta": true,
+        "explicacion": "Authentication proves a user's identity, while authorization determines whether that user has permission to perform a specific action. Both are essential steps in Unity Catalog's security flow ."
+      },
+      {
+        "texto_opcion": "Authentication verifies permissions; authorization verifies identity.",
+        "es_correcta": false,
+        "explicacion": "This is the reverse of the correct definitions. Authentication comes first to identify the user, then authorization checks their permissions ."
+      },
+      {
+        "texto_opcion": "Authentication and authorization are the same process in Unity Catalog.",
+        "es_correcta": false,
+        "explicacion": "They are distinct but complementary processes. Authentication asks 'who are you?' and authorization asks 'what can you do?' "
+      },
+      {
+        "texto_opcion": "Authorization is handled by external providers like Okta or Google Auth.",
+        "es_correcta": false,
+        "explicacion": "External providers handle authentication. Authorization is handled internally by Unity Catalog, which checks permissions against its database after authentication succeeds ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2072 - A data engineer is implementing Attribute-Based Access Control (ABAC) in Unity Catalog. What is a key benefit of using ABAC for governance at scale?",
+    "opciones": [
+      {
+        "texto_opcion": "It enables tag-driven policies that cascade down from catalogs to tables, reducing administrative overhead.",
+        "es_correcta": true,
+        "explicacion": "ABAC allows governance teams to define policies at the catalog or schema level that are automatically inherited by all current and future tables and views. This eliminates the need for one-off permissions and reduces administrative overhead ."
+      },
+      {
+        "texto_opcion": "It requires managing permissions on each table individually for fine-grained control.",
+        "es_correcta": false,
+        "explicacion": "ABAC eliminates the need for table-by-table permissions by using inherited, tag-driven policies. Traditional FGAC often requires per-object management, but ABAC solves this ."
+      },
+      {
+        "texto_opcion": "It is only available for column masking, not for row filtering.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog's ABAC supports both column masks and row filters, enabling comprehensive fine-grained access control ."
+      },
+      {
+        "texto_opcion": "It requires manual tagging of every new dataset.",
+        "es_correcta": false,
+        "explicacion": "ABAC can be combined with Data Classification to auto-tag and protect sensitive data automatically, without manual effort, as new datasets are created ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2073 - A data engineer is planning to register an MLflow model in Unity Catalog. What is the correct namespace for the registered model?",
+    "opciones": [
+      {
+        "texto_opcion": "`<catalog>.<schema>.<model>`",
+        "es_correcta": true,
+        "explicacion": "Models registered in Unity Catalog use the same three-level namespace as other assets: catalog, schema, and model. This unified structure makes it easy to organize and govern both data and AI assets ."
+      },
+      {
+        "texto_opcion": "`<model>.<catalog>.<schema>`",
+        "es_correcta": false,
+        "explicacion": "The correct order is catalog, then schema, then model, following the same pattern used for tables ."
+      },
+      {
+        "texto_opcion": "`<workspace>.<catalog>.<model>`",
+        "es_correcta": false,
+        "explicacion": "Workspaces are separate from the Unity Catalog namespace. Models use the catalog.schema.model structure ."
+      },
+      {
+        "texto_opcion": "`<catalog>.<model>`",
+        "es_correcta": false,
+        "explicacion": "Models use the full three-level namespace (catalog.schema.model), not just two levels ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2074 - A data engineer is implementing Unity Catalog governance for AI assets. Which combination of tools provides model governance?",
+    "opciones": [
+      {
+        "texto_opcion": "MLflow for experiment tracking and Unity Catalog for model registry and access control.",
+        "es_correcta": true,
+        "explicacion": "MLflow is used for experimentation and tracking model runs, while Unity Catalog provides the governance layer for registered models, including access control, lineage, and auditing. This combination enables secure MLOps and LLMOps at scale ."
+      },
+      {
+        "texto_opcion": "Unity Catalog alone, which replaces MLflow for model tracking.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog and MLflow are complementary. MLflow handles experimentation and tracking, while Unity Catalog provides governance for models after they are registered ."
+      },
+      {
+        "texto_opcion": "MLflow alone, which provides all needed governance for models.",
+        "es_correcta": false,
+        "explicacion": "While MLflow has some security features, Unity Catalog extends governance to all data and AI assets with a unified access control and lineage model ."
+      },
+      {
+        "texto_opcion": "Only Data Classification and ABAC policies.",
+        "es_correcta": false,
+        "explicacion": "Data Classification and ABAC are important governance capabilities, but they do not replace the need for MLflow's experiment tracking and model lifecycle management ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2075 - A data engineer is configuring Unity Catalog to control access to data and AI assets. What does Unity Catalog's access control model allow?",
+    "opciones": [
+      {
+        "texto_opcion": "Fine-grained access control with privileges, Attribute-Based Access Control, and row filters and column masks.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides multiple access control mechanisms: traditional privileges, Attribute-Based Access Control (ABAC) with governed tags, and row filters and column masks for fine-grained data protection ."
+      },
+      {
+        "texto_opcion": "Only table-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multiple levels of access control, including catalog, schema, table, and even column-level security through masks and row filters ."
+      },
+      {
+        "texto_opcion": "Only catalog-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides granular permissions at multiple levels—catalog, schema, table, and column—not just at the catalog level ."
+      },
+      {
+        "texto_opcion": "Only Schema-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Permissions can be granted at catalog, schema, table, view, and function levels, providing flexibility for least-privilege access ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2076 - A data engineer is reviewing Unity Catalog's governance capabilities. Which capabilities help users discover data assets?",
+    "opciones": [
+      {
+        "texto_opcion": "Data discovery with Catalog Explorer, AI-generated comments, and certified and deprecated tags.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides data discovery features including Catalog Explorer, AI-generated comments on assets, and the ability to mark assets as certified or deprecated to help users find the data they need ."
+      },
+      {
+        "texto_opcion": "Only data lineage.",
+        "es_correcta": false,
+        "explicacion": "Data lineage is one capability, but data discovery also includes Catalog Explorer, AI comments, and tags ."
+      },
+      {
+        "texto_opcion": "Only governed tags.",
+        "es_correcta": false,
+        "explicacion": "Governed tags are part of discovery, but the full discovery capability includes Catalog Explorer and AI-generated comments as well ."
+      },
+      {
+        "texto_opcion": "Data quality monitoring.",
+        "es_correcta": false,
+        "explicacion": "Data quality monitoring is a separate governance capability for detecting anomalies and profiling tables ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2077 - A data engineer is configuring Attribute-Based Access Control (ABAC) in Unity Catalog. What is the relationship between governed tags and ABAC?",
+    "opciones": [
+      {
+        "texto_opcion": "Governed tags define attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": true,
+        "explicacion": "ABAC policies leverage governed tags to make access decisions. Governance teams define standardized tags at the account level, and ABAC uses these tags to enforce row- and column-level security. This enables consistent, scalable access control ."
+      },
+      {
+        "texto_opcion": "Governed tags replace ABAC policies.",
+        "es_correcta": false,
+        "explicacion": "Governed tags and ABAC policies are complementary. Tags provide the attributes, and ABAC policies define the access rules based on those attributes. They work together ."
+      },
+      {
+        "texto_opcion": "ABAC policies replace the need for governed tags.",
+        "es_correcta": false,
+        "explicacion": "ABAC policies depend on attributes defined by governed tags. Without tags, ABAC would have no attributes to evaluate ."
+      },
+      {
+        "texto_opcion": "Governed tags are only used for data discovery, not for access control.",
+        "es_correcta": false,
+        "explicacion": "Governed tags serve a dual purpose: they help with data discovery and are also used by ABAC to enforce access control policies ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2078 - A data engineer is implementing data governance with Unity Catalog. What is the purpose of data lineage?",
+    "opciones": [
+      {
+        "texto_opcion": "To capture and visualize how data flows through the organization, down to the column level.",
+        "es_correcta": true,
+        "explicacion": "Data lineage in Unity Catalog captures and visualizes how data flows through your organization, down to the column level. This helps with auditing, troubleshooting, and understanding data dependencies ."
+      },
+      {
+        "texto_opcion": "To automatically scan and tag sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification, not data lineage. Data classification automatically scans and tags sensitive data ."
+      },
+      {
+        "texto_opcion": "To monitor the statistical properties of tables.",
+        "es_correcta": false,
+        "explicacion": "This describes data quality monitoring, which detects anomalies across a catalog or schema ."
+      },
+      {
+        "texto_opcion": "To share data securely across organizations.",
+        "es_correcta": false,
+        "explicacion": "This describes data sharing capabilities like OpenSharing, not data lineage ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Data lineage"
+    ]
+  },
+  {
+    "pregunta": "2079 - A data engineer is configuring Unity Catalog for data sharing. Which feature allows secure sharing of data across organizations?",
+    "opciones": [
+      {
+        "texto_opcion": "OpenSharing, Clean Rooms, and Databricks Marketplace.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog supports data sharing through OpenSharing, Clean Rooms, and Databricks Marketplace, allowing organizations to securely share data and AI assets across platforms and organizations ."
+      },
+      {
+        "texto_opcion": "Only OpenSharing.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog offers multiple sharing mechanisms: OpenSharing, Clean Rooms, and Databricks Marketplace, not just OpenSharing ."
+      },
+      {
+        "texto_opcion": "Only ABAC policies.",
+        "es_correcta": false,
+        "explicacion": "ABAC policies control access internally. Data sharing across organizations is a separate capability ."
+      },
+      {
+        "texto_opcion": "Only governed tags and data classification.",
+        "es_correcta": false,
+        "explicacion": "Governed tags and data classification are for internal governance and discovery, not for sharing data across organizations ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2080 - A data engineer is implementing Unity Catalog for AI governance. What is a key benefit of registering MLflow models in Unity Catalog?",
+    "opciones": [
+      {
+        "texto_opcion": "It enables unified governance of models with data assets using the same access controls and lineage.",
+        "es_correcta": true,
+        "explicacion": "Registering MLflow models in Unity Catalog extends the same governance structure used for data assets to AI models. This enables unified access control, lineage, and auditing across all data and AI assets ."
+      },
+      {
+        "texto_opcion": "It replaces the need for MLflow for experiment tracking.",
+        "es_correcta": false,
+        "explicacion": "MLflow is still used for experiment tracking and model development. Unity Catalog provides the governance layer for registered models ."
+      },
+      {
+        "texto_opcion": "It eliminates the need for any model versioning.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides versioning and governance, but it does not eliminate the need for versioning; it enhances it ."
+      },
+      {
+        "texto_opcion": "It limits model access to only data scientists.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog enables fine-grained access control, allowing different teams and users appropriate access levels, not just data scientists ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2081 - A data engineer is implementing a data governance strategy with Unity Catalog. What is the purpose of implementing fine-grained access controls?",
+    "opciones": [
+      {
+        "texto_opcion": "To ensure that only authorized users have access to sensitive data and models, protecting intellectual property and maintaining compliance.",
+        "es_correcta": true,
+        "explicacion": "Fine-grained access controls in Unity Catalog ensure that only authorized users have access to sensitive data and models. This protects intellectual property and maintains compliance with data privacy regulations ."
+      },
+      {
+        "texto_opcion": "To automatically discover and tag sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification, which automatically scans and tags sensitive data, not access control enforcement."
+      },
+      {
+        "texto_opcion": "To track changes and access to data and models for auditing purposes.",
+        "es_correcta": false,
+        "explicacion": "This describes auditing capabilities, which provide a clear audit trail for troubleshooting and accountability, not access control itself."
+      },
+      {
+        "texto_opcion": "To provide a shared platform for accessing and managing machine learning assets.",
+        "es_correcta": false,
+        "explicacion": "This describes collaboration capabilities, which facilitate teamwork on projects, not access control."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2082 - A data engineer is setting up Unity Catalog for LLMOps workflows. According to Microsoft documentation, what is a benefit of using Unity Catalog to manage models?",
+    "opciones": [
+      {
+        "texto_opcion": "It allows you to manage all data and AI assets in a single, centralized location, simplifying tracking and organization.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog allows you to manage all your data and AI assets in a single, centralized location. This simplifies the process of tracking and organizing machine learning models, datasets, and other resources ."
+      },
+      {
+        "texto_opcion": "It automatically trains and deploys machine learning models without user intervention.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides governance for models but does not automatically train or deploy them. It provides centralized governance for all data and AI assets, including Large Language Models (LLMs) ."
+      },
+      {
+        "texto_opcion": "It eliminates the need for MLflow for experiment tracking.",
+        "es_correcta": false,
+        "explicacion": "MLflow is still used for experimentation and tracking model runs. Unity Catalog provides the governance layer for registered models ."
+      },
+      {
+        "texto_opcion": "It ensures consistency, security, and compliance across your organization .",
+        "es_correcta": false,
+        "explicacion": "While this is true, the question asks for a specific benefit. The key benefit described is centralized management of all assets, which is the primary purpose of Unity Catalog for LLMOps ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2083 - A data engineer is configuring Unity Catalog for an organization. What is the relationship between catalogs, schemas, and tables in Unity Catalog's three-level namespace?",
+    "opciones": [
+      {
+        "texto_opcion": "Catalogs contain schemas, which contain tables.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog uses a three-level namespace: catalogs are top-level containers, schemas group tables and views within a catalog, and tables store the actual data ."
+      },
+      {
+        "texto_opcion": "Schemas contain catalogs, which contain tables.",
+        "es_correcta": false,
+        "explicacion": "The hierarchy is catalog first, then schema, then table. Schemas are contained within catalogs, not the other way around."
+      },
+      {
+        "texto_opcion": "Tables contain schemas, which contain catalogs.",
+        "es_correcta": false,
+        "explicacion": "This is the reverse of the correct hierarchy. Tables are contained in schemas, which are contained in catalogs ."
+      },
+      {
+        "texto_opcion": "Catalogs, schemas, and tables are independent containers with no hierarchical relationship.",
+        "es_correcta": false,
+        "explicacion": "They are organized in a strict hierarchy: catalog.schema.table. This structure makes it easy to organize data and reference assets across the organization ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2084 - A data engineer is reviewing Unity Catalog's governance capabilities. What does the \"multimodal\" capability of Unity Catalog enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Support for all data and AI assets, including tables, files, functions, and AI models.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog supports all your data and AI assets, including tables, files, functions, AI models. This multimodal interface supports any format, engine, and asset ."
+      },
+      {
+        "texto_opcion": "Support for only tabular data and SQL queries.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multiple asset types, not just tables. It is multimodal, supporting all data and AI assets ."
+      },
+      {
+        "texto_opcion": "Support for only Delta Lake tables.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multi-format data, including Delta Lake, Apache Iceberg, Apache Hudi, Parquet, JSON, CSV, and many others ."
+      },
+      {
+        "texto_opcion": "Support for only AI models and not for data tables.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides centralized governance for both data and AI assets. It is multimodal, supporting all data and AI assets including tables, files, functions, and AI models ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2085 - A data engineer is implementing Unity Catalog for data and AI governance. According to Microsoft documentation, how does Unity Catalog facilitate collaboration among teams?",
+    "opciones": [
+      {
+        "texto_opcion": "By providing a shared platform for accessing and managing machine learning assets, promoting transparency and effective teamwork.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog facilitates collaboration among data scientists, engineers, and other stakeholders by providing a shared platform for accessing and managing machine learning assets. Such collaboration promotes transparency and enables teams to work together more effectively ."
+      },
+      {
+        "texto_opcion": "By automatically merging changes from multiple users without conflict.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog does not automatically merge changes. It provides a shared platform for collaboration, but conflict resolution is handled by users."
+      },
+      {
+        "texto_opcion": "By replacing version control systems like Git for AI assets.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a governance layer, not a version control system. It works alongside tools like Git for source code management."
+      },
+      {
+        "texto_opcion": "By limiting access to only data scientists.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog enables fine-grained access controls, allowing different teams and users appropriate access levels, not just data scientists ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2086 - A data engineer is configuring Unity Catalog for an organization. What is the primary benefit of Unity Catalog's centralized governance for data and AI assets?",
+    "opciones": [
+      {
+        "texto_opcion": "It ensures consistency, security, and compliance across your organization .",
+        "es_correcta": true,
+        "explicacion": "Centralized governance with Unity Catalog ensures consistency, security, and compliance across your organization. It allows you to streamline the management of machine learning models, datasets, and other related assets ."
+      },
+      {
+        "texto_opcion": "It automatically discovers and tags sensitive data.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification, which is a separate capability within Unity Catalog's governance framework."
+      },
+      {
+        "texto_opcion": "It tracks changes and access to data for auditing purposes.",
+        "es_correcta": false,
+        "explicacion": "This describes auditing capabilities, which are part of Unity Catalog's governance but not the primary benefit of centralized governance."
+      },
+      {
+        "texto_opcion": "It replaces the need for any data governance policies.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a tool for implementing governance; it does not replace the need for governance policies. Organizations still need to define and enforce governance policies ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2087 - A data engineer is implementing Unity Catalog and wants to ensure comprehensive auditing capabilities. What does Unity Catalog's auditing provide?",
+    "opciones": [
+      {
+        "texto_opcion": "A clear audit trail for troubleshooting and accountability, tracking changes and access to data and models.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides comprehensive auditing capabilities, allowing you to track changes and access to your data and models. Monitoring ensures compliance with regulatory requirements and internal policies, while also providing a clear audit trail for troubleshooting and accountability ."
+      },
+      {
+        "texto_opcion": "Automatic data quality monitoring and anomaly detection.",
+        "es_correcta": false,
+        "explicacion": "Data quality monitoring is a separate governance capability. Auditing focuses on tracking changes and access for compliance and accountability."
+      },
+      {
+        "texto_opcion": "Column-level security with dynamic views.",
+        "es_correcta": false,
+        "explicacion": "Column-level security is part of fine-grained access control. Auditing is a separate capability for tracking actions and changes."
+      },
+      {
+        "texto_opcion": "Automated data classification and tagging.",
+        "es_correcta": false,
+        "explicacion": "Data classification is a separate capability. Auditing tracks changes and access but does not automatically classify data."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2088 - A data engineer is reviewing Unity Catalog's support for different compute engines. What does Unity Catalog's open API and implementation enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Many leading compute engines to read data cataloged in Unity, enabling multi-engine support.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog's open APIs allow many leading compute engines to read data cataloged in Unity. This multi-engine support enables flexibility and prevents vendor lock-in ."
+      },
+      {
+        "texto_opcion": "Only Databricks compute engines to access the data.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is open and supports multiple compute engines, not just Databricks. Its open APIs allow many leading compute engines to read data cataloged in Unity ."
+      },
+      {
+        "texto_opcion": "Only Apache Spark to access the data.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog's open APIs allow many leading compute engines to read data cataloged in Unity, not just Apache Spark. It is compatible with Apache Hive's metastore API and Apache Iceberg's REST catalog API ."
+      },
+      {
+        "texto_opcion": "Only SQL-based query engines to access the data.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multiple compute engines, including but not limited to SQL-based engines. Its multi-engine support allows flexibility for various workloads ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2089 - A data engineer is implementing Unity Catalog and wants to understand the purpose of governed tags. According to the documentation, what is a key benefit of using governed tags?",
+    "opciones": [
+      {
+        "texto_opcion": "They define attributes that ABAC policies use to enforce access controls and help with data discovery.",
+        "es_correcta": true,
+        "explicacion": "Governed tags serve a dual purpose in Unity Catalog: they help with data discovery by marking assets (e.g., as 'sensitive' or 'deprecated') and they are used by Attribute-Based Access Control (ABAC) policies to enforce access controls. This enables consistent, scalable governance."
+      },
+      {
+        "texto_opcion": "They automatically scan and tag sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification, which is a separate governance capability. Data classification automatically scans and tags sensitive data, while governed tags are defined by governance teams and applied manually or through automation."
+      },
+      {
+        "texto_opcion": "They replace the need for ABAC policies.",
+        "es_correcta": false,
+        "explicacion": "Governed tags and ABAC policies are complementary. Tags provide the attributes, and ABAC policies define the access rules based on those attributes. They work together and are not interchangeable."
+      },
+      {
+        "texto_opcion": "They are only used for data discovery and not for access control.",
+        "es_correcta": false,
+        "explicacion": "Governed tags serve a dual purpose: they help with data discovery and are also used by ABAC to enforce access control policies. They are not limited to discovery only."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2090 - A data engineer is reviewing Unity Catalog's governance capabilities. What does the \"multi-engine support\" enable?",
+    "opciones": [
+      {
+        "texto_opcion": "Many leading compute engines to read data cataloged in Unity, enabling flexibility and preventing vendor lock-in.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog's open APIs allow many leading compute engines to read data cataloged in Unity. This multi-engine support enables flexibility and prevents vendor lock-in ."
+      },
+      {
+        "texto_opcion": "Only Databricks compute engines to access the data.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is open and supports multiple compute engines, not just Databricks. Its open APIs allow many leading compute engines to read data cataloged in Unity ."
+      },
+      {
+        "texto_opcion": "Only Apache Spark to access the data.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog's open APIs allow many leading compute engines to read data cataloged in Unity, not just Apache Spark. It is compatible with Apache Hive's metastore API and Apache Iceberg's REST catalog API ."
+      },
+      {
+        "texto_opcion": "Only SQL-based query engines to access the data.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multiple compute engines, including but not limited to SQL-based engines. Its multi-engine support allows flexibility for various workloads ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Catalogs"
+    ]
+  },
+  {
+    "pregunta": "2091 - A data engineer is implementing Unity Catalog for data governance. What is the purpose of implementing data quality monitoring?",
+    "opciones": [
+      {
+        "texto_opcion": "To detect anomalies and profile data quality across tables in a catalog or schema.",
+        "es_correcta": true,
+        "explicacion": "Data quality monitoring in Unity Catalog allows you to detect anomalies and profile the statistical properties of tables. This helps ensure data quality and reliability."
+      },
+      {
+        "texto_opcion": "To automatically classify and tag sensitive data.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification, which automatically scans and tags sensitive data such as PII, not data quality monitoring."
+      },
+      {
+        "texto_opcion": "To enforce fine-grained access controls on tables.",
+        "es_correcta": false,
+        "explicacion": "This describes access control and permissions. Data quality monitoring is a separate capability focused on data quality metrics."
+      },
+      {
+        "texto_opcion": "To create a unified governance layer for data and AI assets.",
+        "es_correcta": false,
+        "explicacion": "This describes the overall purpose of Unity Catalog's centralized governance, not specifically data quality monitoring."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2092 - A data engineer is configuring Unity Catalog for an organization. What is the relationship between governed tags and ABAC in Unity Catalog?",
+    "opciones": [
+      {
+        "texto_opcion": "Governed tags define attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": true,
+        "explicacion": "ABAC policies leverage governed tags to make access decisions. Governance teams define standardized tags at the account level, and ABAC uses these tags to enforce row- and column-level security. This enables consistent, scalable access control."
+      },
+      {
+        "texto_opcion": "Governed tags replace ABAC policies.",
+        "es_correcta": false,
+        "explicacion": "Governed tags and ABAC policies are complementary. Tags provide the attributes, and ABAC policies define the access rules based on those attributes. They work together."
+      },
+      {
+        "texto_opcion": "ABAC policies replace the need for governed tags.",
+        "es_correcta": false,
+        "explicacion": "ABAC policies depend on attributes defined by governed tags. Without tags, ABAC would have no attributes to evaluate."
+      },
+      {
+        "texto_opcion": "Governed tags are only used for data discovery, not for access control.",
+        "es_correcta": false,
+        "explicacion": "Governed tags serve a dual purpose: they help with data discovery and are also used by ABAC to enforce access control policies."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2093 - A data engineer is implementing Unity Catalog for data and AI governance. According to the documentation, what is a key benefit of Unity Catalog's \"multimodal\" interface?",
+    "opciones": [
+      {
+        "texto_opcion": "It supports all data and AI assets, including tables, files, functions, and AI models.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog is multimodal, meaning it supports all your data and AI assets, including tables, files, functions, and AI models. This multimodal interface supports any format, engine, and asset ."
+      },
+      {
+        "texto_opcion": "It supports only tabular data and SQL queries.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multiple asset types, not just tables. It is multimodal, supporting all data and AI assets ."
+      },
+      {
+        "texto_opcion": "It supports only Delta Lake tables.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multi-format data, including Delta Lake, Apache Iceberg, Apache Hudi, Parquet, JSON, CSV, and many others ."
+      },
+      {
+        "texto_opcion": "It supports only AI models and not for data tables.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides centralized governance for both data and AI assets. It is multimodal, supporting all data and AI assets including tables, files, functions, and AI models ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2103 - A data engineer is implementing Unity Catalog and wants to understand how to avoid data silos. According to the documentation, what is a key benefit of using Unity Catalog for this purpose?",
+    "opciones": [
+      {
+        "texto_opcion": "It offers a single unified system to manage, govern, and organize all data and AI assets without vendor lock-in.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog helps avoid data silos by offering a single unified system to manage, govern, and organize all data and AI assets without locking you into a specific table format or query engine . Teams can use their favorite tools while maintaining a single source of truth ."
+      },
+      {
+        "texto_opcion": "It automatically replicates data across all clouds to ensure availability.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a governance layer, not a data replication tool. Data replication is handled by the underlying storage systems."
+      },
+      {
+        "texto_opcion": "It eliminates the need for any data governance policies.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a tool for implementing governance, not a replacement for governance policies. Organizations still need to define and enforce governance policies ."
+      },
+      {
+        "texto_opcion": "It forces all teams to use the same tools and query engines.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog allows teams to use their favorite tools and languages (like PySpark, DuckDB) to access centralized data, while maintaining governance and a single source of truth ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2112 - A data engineer is implementing Unity Catalog for data governance. What is the purpose of implementing fine-grained access controls?",
+    "opciones": [
+      {
+        "texto_opcion": "To ensure that only authorized users have access to sensitive data and models, protecting intellectual property and maintaining compliance.",
+        "es_correcta": true,
+        "explicacion": "Fine-grained access controls in Unity Catalog ensure that only authorized users have access to sensitive data and models. This protects intellectual property and maintains compliance with data privacy regulations ."
+      },
+      {
+        "texto_opcion": "To automatically discover and tag sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification, which automatically scans and tags sensitive data, not access control enforcement ."
+      },
+      {
+        "texto_opcion": "To track changes and access to data and models for auditing purposes.",
+        "es_correcta": false,
+        "explicacion": "This describes auditing capabilities, which provide a clear audit trail for troubleshooting and accountability, not access control itself ."
+      },
+      {
+        "texto_opcion": "To provide a shared platform for accessing and managing machine learning assets.",
+        "es_correcta": false,
+        "explicacion": "This describes collaboration capabilities, which facilitate teamwork on projects, not access control ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2168 - A data engineer is implementing Unity Catalog and wants to understand the concept of ownership. What is true about ownership in Unity Catalog?",
+    "opciones": [
+      {
+        "texto_opcion": "Every securable object has an owner who has all privileges on that object.",
+        "es_correcta": true,
+        "explicacion": "In Unity Catalog, every securable object (catalog, schema, table, etc.) has an owner. The owner has all privileges on that object, similar to the concept of ownership in databases."
+      },
+      {
+        "texto_opcion": "Ownership is optional and only applies to catalogs.",
+        "es_correcta": false,
+        "explicacion": "Ownership applies to all securable objects in Unity Catalog, including catalogs, schemas, tables, views, and functions. It is not optional."
+      },
+      {
+        "texto_opcion": "The owner of an object cannot grant permissions to other users.",
+        "es_correcta": false,
+        "explicacion": "The owner of an object in Unity Catalog can grant permissions to other users. The owner has all privileges and can manage access."
+      },
+      {
+        "texto_opcion": "Ownership is automatically transferred when a user leaves the organization.",
+        "es_correcta": false,
+        "explicacion": "Ownership is not automatically transferred when a user leaves. It must be manually reassigned by a user with the appropriate privileges, such as a catalog admin."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Ownership"
+    ]
+  },
+  {
+    "pregunta": "2182 - A data engineer is implementing Unity Catalog and wants to understand the purpose of data classification. According to the documentation, what is a key benefit of using data classification?",
+    "opciones": [
+      {
+        "texto_opcion": "It automatically scans and tags sensitive data, such as PII, across tables.",
+        "es_correcta": true,
+        "explicacion": "Data classification in Unity Catalog automatically scans and tags sensitive data, such as PII, across tables in Unity Catalog. This helps in identifying and protecting sensitive information and can be used as a foundation for ABAC policies ."
+      },
+      {
+        "texto_opcion": "It defines attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": false,
+        "explicacion": "This describes governed tags. Governed tags define the attributes, while data classification automates the tagging process. They are complementary capabilities ."
+      },
+      {
+        "texto_opcion": "It helps users find the data and AI assets they need.",
+        "es_correcta": false,
+        "explicacion": "This describes data discovery, which includes Catalog Explorer, AI-generated comments, and tags. Data classification is specifically for identifying and tagging sensitive data ."
+      },
+      {
+        "texto_opcion": "It captures and visualizes how data flows through your organization.",
+        "es_correcta": false,
+        "explicacion": "This describes data lineage. Data classification is the process of automatically identifying and tagging sensitive data based on its content ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2183 - A data engineer is implementing Unity Catalog and wants to understand the purpose of data lineage. According to the documentation, what is a key benefit of using data lineage?",
+    "opciones": [
+      {
+        "texto_opcion": "It captures and visualizes how data flows through your organization, down to the column level.",
+        "es_correcta": true,
+        "explicacion": "Data lineage in Unity Catalog captures and visualizes how data flows through your organization, down to the column level. This helps with auditing, troubleshooting, and understanding data dependencies ."
+      },
+      {
+        "texto_opcion": "It automatically scans and tags sensitive data, such as PII, across tables.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification. Data lineage tracks the flow and transformation of data, not the identification of sensitive data ."
+      },
+      {
+        "texto_opcion": "It defines attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": false,
+        "explicacion": "This describes governed tags. Data lineage is about tracking data movement, not defining attributes for access control ."
+      },
+      {
+        "texto_opcion": "It helps users find the data and AI assets they need.",
+        "es_correcta": false,
+        "explicacion": "This describes data discovery. Data lineage shows the transformation journey of data, which is different from helping users discover assets ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Data lineage"
+    ]
+  },
+  {
+    "pregunta": "2184 - A data engineer is implementing Unity Catalog and wants to understand the purpose of data discovery. According to the documentation, what is a key benefit of using data discovery?",
+    "opciones": [
+      {
+        "texto_opcion": "It helps users find the data and AI assets they need with Catalog Explorer, AI-generated comments, and certified and deprecated tags.",
+        "es_correcta": true,
+        "explicacion": "Data discovery in Unity Catalog helps users find the data and AI assets they need. It includes features like Catalog Explorer, AI-generated comments, and the ability to mark assets as certified or deprecated ."
+      },
+      {
+        "texto_opcion": "It automatically scans and tags sensitive data, such as PII, across tables.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification. Data discovery focuses on helping users locate and understand assets, not on identifying sensitive data ."
+      },
+      {
+        "texto_opcion": "It captures and visualizes how data flows through your organization.",
+        "es_correcta": false,
+        "explicacion": "This describes data lineage. Data discovery is about asset findability, not about tracking data movement ."
+      },
+      {
+        "texto_opcion": "It defines and controls the tags used to classify and organize securable objects.",
+        "es_correcta": false,
+        "explicacion": "This describes governed tags. Governed tags are a tool used in data discovery, but they are not the discovery feature itself ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2186 - A data engineer is implementing Unity Catalog and wants to understand the purpose of auditing. According to the documentation, what is a key benefit of using auditing?",
+    "opciones": [
+      {
+        "texto_opcion": "It provides a clear audit trail for troubleshooting and accountability, tracking changes and access to data and models.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides comprehensive auditing capabilities, allowing you to track changes and access to your data and models. Monitoring ensures compliance with regulatory requirements and internal policies, while also providing a clear audit trail for troubleshooting and accountability ."
+      },
+      {
+        "texto_opcion": "It automatically scans and tags sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification. Auditing tracks changes and access for compliance and accountability ."
+      },
+      {
+        "texto_opcion": "It captures and visualizes how data flows through your organization.",
+        "es_correcta": false,
+        "explicacion": "This describes data lineage. Auditing focuses on tracking actions and changes, not on data flow ."
+      },
+      {
+        "texto_opcion": "It defines attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": false,
+        "explicacion": "This describes governed tags. Auditing is a separate capability for tracking actions and changes ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2187 - A data engineer is implementing Unity Catalog and wants to understand the purpose of data sharing. According to the documentation, what is a key benefit of using data sharing?",
+    "opciones": [
+      {
+        "texto_opcion": "It allows you to share data and AI assets securely across organizations and platforms with OpenSharing, Clean Rooms, and Databricks Marketplace.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog supports data sharing through OpenSharing, Clean Rooms, and Databricks Marketplace, allowing organizations to securely share data and AI assets across platforms and organizations ."
+      },
+      {
+        "texto_opcion": "It automatically scans and tags sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification. Data sharing is about sharing assets across organizations, not about identifying sensitive data ."
+      },
+      {
+        "texto_opcion": "It captures and visualizes how data flows through your organization.",
+        "es_correcta": false,
+        "explicacion": "This describes data lineage. Data sharing is about securely sharing assets externally, not tracking data movement ."
+      },
+      {
+        "texto_opcion": "It defines attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": false,
+        "explicacion": "This describes governed tags. Data sharing is a separate capability for sharing assets across organizations ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2188 - A data engineer is implementing Unity Catalog and wants to understand the purpose of AI governance. According to the documentation, what is a key benefit of using AI governance?",
+    "opciones": [
+      {
+        "texto_opcion": "It extends Unity Catalog access control, lineage, and auditing to AI assets and AI traffic.",
+        "es_correcta": true,
+        "explicacion": "AI governance in Unity Catalog extends access control, lineage, and auditing to AI assets and AI traffic. This provides unified governance across both data and AI assets ."
+      },
+      {
+        "texto_opcion": "It automatically scans and tags sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification. AI governance is about governing AI assets, not about identifying sensitive data ."
+      },
+      {
+        "texto_opcion": "It captures and visualizes how data flows through your organization.",
+        "es_correcta": false,
+        "explicacion": "This describes data lineage. AI governance extends governance to AI assets, not just data flow ."
+      },
+      {
+        "texto_opcion": "It defines attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": false,
+        "explicacion": "This describes governed tags. AI governance is about governing AI assets, not defining attributes for access control ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2189 - A data engineer is implementing Unity Catalog and wants to understand the purpose of Access Control. According to the documentation, what does Unity Catalog's access control model allow?",
+    "opciones": [
+      {
+        "texto_opcion": "Fine-grained access control with privileges, Attribute-Based Access Control, and row filters and column masks.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog provides multiple access control mechanisms: traditional privileges, Attribute-Based Access Control (ABAC) with governed tags, and row filters and column masks for fine-grained data protection ."
+      },
+      {
+        "texto_opcion": "Only table-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog supports multiple levels of access control, including catalog, schema, table, and even column-level security through masks and row filters ."
+      },
+      {
+        "texto_opcion": "Only catalog-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog provides granular permissions at multiple levels, not just at the catalog level ."
+      },
+      {
+        "texto_opcion": "Only Schema-level permissions.",
+        "es_correcta": false,
+        "explicacion": "Permissions can be granted at catalog, schema, table, view, and function levels, providing flexibility for least-privilege access ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2190 - A data engineer is implementing Unity Catalog and wants to understand the purpose of data quality monitoring. According to the documentation, what is a key benefit of using data quality monitoring?",
+    "opciones": [
+      {
+        "texto_opcion": "It detects anomalies and profiles data quality across tables in a catalog or schema.",
+        "es_correcta": true,
+        "explicacion": "Data quality monitoring in Unity Catalog allows you to detect anomalies and profile the statistical properties of tables. This helps ensure data quality and reliability ."
+      },
+      {
+        "texto_opcion": "It automatically scans and tags sensitive data such as PII.",
+        "es_correcta": false,
+        "explicacion": "This describes data classification, which automatically scans and tags sensitive data such as PII, not data quality monitoring ."
+      },
+      {
+        "texto_opcion": "It captures and visualizes how data flows through your organization.",
+        "es_correcta": false,
+        "explicacion": "This describes data lineage. Data quality monitoring focuses on data quality metrics, not data flow ."
+      },
+      {
+        "texto_opcion": "It defines attributes that ABAC policies use to enforce access controls.",
+        "es_correcta": false,
+        "explicacion": "This describes governed tags. Data quality monitoring is a separate capability focused on data quality metrics ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2191 - A data engineer is implementing Unity Catalog and wants to understand the concept of a single source of truth. According to the documentation, what is a key benefit of using Unity Catalog to establish a single source of truth?",
+    "opciones": [
+      {
+        "texto_opcion": "It helps avoid data silos by offering a single unified system to manage, govern, and organize all data and AI assets.",
+        "es_correcta": true,
+        "explicacion": "Unity Catalog helps avoid data silos by offering a single unified system to manage, govern, and organize all data and AI assets without locking you into a specific table format or query engine. Teams can use their favorite tools while maintaining a single source of truth ."
+      },
+      {
+        "texto_opcion": "It automatically replicates data across all clouds to ensure availability.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a governance layer, not a data replication tool. Data replication is handled by the underlying storage systems ."
+      },
+      {
+        "texto_opcion": "It eliminates the need for any data governance policies.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog is a tool for implementing governance, not a replacement for governance policies. Organizations still need to define and enforce governance policies ."
+      },
+      {
+        "texto_opcion": "It forces all teams to use the same tools and query engines.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog allows teams to use their favorite tools and languages (like PySpark, DuckDB) to access centralized data, while maintaining governance and a single source of truth ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  },
+  {
+    "pregunta": "2205 - A data engineer is implementing Unity Catalog and wants to understand the difference between a managed table and an external table. According to the documentation, what is the key difference?",
+    "opciones": [
+      {
+        "texto_opcion": "Managed tables are fully managed by Unity Catalog, while external tables are only governed by Unity Catalog.",
+        "es_correcta": true,
+        "explicacion": "Managed tables are fully managed by Unity Catalog, which controls both governance and the underlying file storage lifecycle. External tables are only governed by Unity Catalog, while the underlying storage is managed elsewhere ."
+      },
+      {
+        "texto_opcion": "External tables are fully managed by Unity Catalog, while managed tables are only governed.",
+        "es_correcta": false,
+        "explicacion": "This is the reverse of the correct definition. Managed tables are fully managed, while external tables are only governed by Unity Catalog ."
+      },
+      {
+        "texto_opcion": "There is no difference; they are interchangeable terms.",
+        "es_correcta": false,
+        "explicacion": "They are distinct types of tables. The choice between managed and external depends on whether Unity Catalog should manage the storage lifecycle ."
+      },
+      {
+        "texto_opcion": "External tables have better performance than managed tables.",
+        "es_correcta": false,
+        "explicacion": "Performance is not the primary differentiator. The key difference is who manages the storage lifecycle. Unity Catalog manages storage for managed tables, while external tables rely on user-managed storage ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Managed tables"
+    ]
+  },
+  {
+    "pregunta": "2219 - A data engineer is implementing Unity Catalog and wants to understand the difference between authentication and authorization. What is the correct distinction?",
+    "opciones": [
+      {
+        "texto_opcion": "Authentication verifies identity; authorization verifies permissions.",
+        "es_correcta": true,
+        "explicacion": "Authentication proves a user's identity, while authorization determines whether that user has permission to perform a specific action. Both are essential steps in Unity Catalog's security flow ."
+      },
+      {
+        "texto_opcion": "Authentication verifies permissions; authorization verifies identity.",
+        "es_correcta": false,
+        "explicacion": "This is the reverse of the correct definitions. Authentication comes first to identify the user, then authorization checks their permissions ."
+      },
+      {
+        "texto_opcion": "Authentication and authorization are the same process in Unity Catalog.",
+        "es_correcta": false,
+        "explicacion": "They are distinct but complementary processes. Authentication asks 'who are you?' and authorization asks 'what can you do?' "
+      },
+      {
+        "texto_opcion": "Authorization is handled by external providers like Okta or Google Auth.",
+        "es_correcta": false,
+        "explicacion": "External providers handle authentication. Authorization is handled internally by Unity Catalog, which checks permissions against its database after authentication succeeds ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Permissions"
+    ]
+  },
+  {
+    "pregunta": "2220 - A data engineer is implementing Unity Catalog and wants to understand the purpose of Attribute-Based Access Control (ABAC). According to the documentation, what is a key benefit of using ABAC?",
+    "opciones": [
+      {
+        "texto_opcion": "It enables tag-driven policies that cascade down from catalogs to tables, reducing administrative overhead.",
+        "es_correcta": true,
+        "explicacion": "ABAC allows governance teams to define policies at the catalog or schema level that are automatically inherited by all current and future tables and views. This eliminates the need for one-off permissions and reduces administrative overhead ."
+      },
+      {
+        "texto_opcion": "It requires managing permissions on each table individually for fine-grained control.",
+        "es_correcta": false,
+        "explicacion": "ABAC eliminates the need for table-by-table permissions by using inherited, tag-driven policies. Traditional FGAC often requires per-object management, but ABAC solves this ."
+      },
+      {
+        "texto_opcion": "It is only available for column masking, not for row filtering.",
+        "es_correcta": false,
+        "explicacion": "Unity Catalog's ABAC supports both column masks and row filters, enabling comprehensive fine-grained access control ."
+      },
+      {
+        "texto_opcion": "It requires manual tagging of every new dataset.",
+        "es_correcta": false,
+        "explicacion": "ABAC can be combined with Data Classification to auto-tag and protect sensitive data automatically, without manual effort, as new datasets are created ."
+      }
+    ],
+    "tags": [
+      "Unity Catalog and Data Governance",
+      "Governance best practices"
+    ]
+  }
+]

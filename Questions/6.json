@@ -1,0 +1,2641 @@
+[
+  {
+    "pregunta": "1711 - A data engineer needs to schedule a nightly ETL job that runs a Python script. They want the job to be saved in the workspace and appear in the UI for monitoring. Which method should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Use the Jobs API `POST /api/2.2/jobs/create` to create a saved job with a schedule.",
+        "es_correcta": true,
+        "explicacion": "To create a job that is saved, appears in the UI, and can be scheduled, you must use the `POST /jobs/create` endpoint. Jobs created this way persist in the workspace and can be managed, scheduled, and monitored ."
+      },
+      {
+        "texto_opcion": "Use the Jobs API `POST /api/2.2/jobs/runs/submit` to submit a one-time run.",
+        "es_correcta": false,
+        "explicacion": "The `runs/submit` endpoint is used for submitting a one-time workload without creating a saved job. Runs submitted this way do not appear in the UI and cannot be scheduled or retried automatically ."
+      },
+      {
+        "texto_opcion": "Manually run the Python script from a notebook using `dbutils.notebook.run()`.",
+        "es_correcta": false,
+        "explicacion": "While you can run a Python script from a notebook, this is not the recommended way to create a scheduled, managed job. Jobs provide built-in scheduling, monitoring, and retry capabilities that manual notebook runs lack."
+      },
+      {
+        "texto_opcion": "Use the Jobs API `POST /api/2.2/jobs/run-now` to trigger a run.",
+        "es_correcta": false,
+        "explicacion": "`run-now` is used to trigger an immediate run of an existing saved job. It does not create a new job; it executes a job that already exists ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1712 - A data engineer is configuring a complex workflow with multiple tasks. They need Task B to start only after Task A has completed successfully. How should they configure the task dependency?",
+    "opciones": [
+      {
+        "texto_opcion": "Set a `depends_on` clause in Task B specifying Task A with the default `ALL_SUCCESS` condition.",
+        "es_correcta": true,
+        "explicacion": "In Databricks Jobs, dependencies are configured using the `depends_on` field within a task definition. The default condition is `ALL_SUCCESS`, meaning Task B will only run if Task A completes successfully ."
+      },
+      {
+        "texto_opcion": "Configure Task B to run in parallel with Task A, as tasks are always independent.",
+        "es_correcta": false,
+        "explicacion": "By default, tasks do not have dependencies and can run in parallel. To enforce a sequence, you must explicitly define a dependency. Tasks are not always independent; they can be ordered ."
+      },
+      {
+        "texto_opcion": "Use a `For each` loop to iterate over the tasks and ensure sequential execution.",
+        "es_correcta": false,
+        "explicacion": "A `For each` loop is used to run a task multiple times with different parameters. It is not the mechanism for creating a simple sequential dependency between two different tasks ."
+      },
+      {
+        "texto_opcion": "Place both tasks in the same job and set `max_concurrent_runs` to 1.",
+        "es_correcta": false,
+        "explicacion": "`max_concurrent_runs` controls how many runs of the entire job can run concurrently. It does not control the execution order of tasks within a single run. Task dependencies are used for ordering ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1713 - A data engineer has a job that runs a notebook task. They want to pass a parameter to the notebook to control which date is processed. How can they pass this parameter?",
+    "opciones": [
+      {
+        "texto_opcion": "Use `notebook_params` in the API call or UI when triggering the job.",
+        "es_correcta": true,
+        "explicacion": "For notebook tasks, parameters can be passed using `notebook_params`. This is a map of key-value pairs that is accessible within the notebook via `dbutils.widgets.get()`. This can be set in the job definition or when triggering a run ."
+      },
+      {
+        "texto_opcion": "Use `jar_params` to pass parameters to the notebook task.",
+        "es_correcta": false,
+        "explicacion": "`jar_params` is used for passing parameters to JAR tasks, not notebook tasks. Notebook tasks use `notebook_params` ."
+      },
+      {
+        "texto_opcion": "Hardcode the date in the notebook and update it manually for each run.",
+        "es_correcta": false,
+        "explicacion": "Hardcoding is not a scalable or maintainable way to handle parameters. It defeats the purpose of job parameters and requires manual intervention."
+      },
+      {
+        "texto_opcion": "Set the parameter as an environment variable on the cluster.",
+        "es_correcta": false,
+        "explicacion": "While environment variables can be set on clusters, they are not the primary or recommended way to pass task-specific parameters. Using `notebook_params` is the standard and more secure approach."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Parameters"
+    ]
+  },
+  {
+    "pregunta": "1714 - A data engineer is creating a job and wants to ensure it runs only on a specific, long-running cluster that is already provisioned. Which compute option should they select?",
+    "opciones": [
+      {
+        "texto_opcion": "Existing cluster",
+        "es_correcta": true,
+        "explicacion": "A job can be configured to run on an `existing_cluster_id`. This is useful when you have a cluster set up for multiple purposes. However, you must manually handle cluster failures and restarts ."
+      },
+      {
+        "texto_opcion": "New job cluster",
+        "es_correcta": false,
+        "explicacion": "A `new_cluster` is created for each job run and terminated after the job completes. This is the recommended approach for production jobs due to better reliability and isolation ."
+      },
+      {
+        "texto_opcion": "Serverless SQL warehouse",
+        "es_correcta": false,
+        "explicacion": "A SQL warehouse is used for SQL workloads, not for general-purpose jobs. Jobs can run on job clusters or all-purpose clusters, and serverless compute options are available for specific task types ."
+      },
+      {
+        "texto_opcion": "No compute is required for jobs.",
+        "es_correcta": false,
+        "explicacion": "All jobs require compute to execute the task logic. The compute can be a job cluster, an existing cluster, or serverless compute, but it is a mandatory component ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Job clusters"
+    ]
+  },
+  {
+    "pregunta": "1715 - A data engineer is configuring a job that may fail due to transient errors. They want the job to automatically retry up to 3 times. Which setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Set `max_retries` to 3.",
+        "es_correcta": true,
+        "explicacion": "The `max_retries` field defines how many times a task should be retried if it fails. Setting it to 3 means the task will be retried up to 3 times after the initial failure, for a total of 4 attempts ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` to 3.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` sets a maximum duration for a job run. It does not control retries. If the job exceeds the timeout, it will fail, and retries can be configured separately with `retry_on_timeout` ."
+      },
+      {
+        "texto_opcion": "Set `concurrency` to 3.",
+        "es_correcta": false,
+        "explicacion": "`max_concurrent_runs` controls how many runs of the same job can execute in parallel. It is not related to retries ."
+      },
+      {
+        "texto_opcion": "Retries are automatically handled by Databricks and cannot be configured.",
+        "es_correcta": false,
+        "explicacion": "Retries are configurable. You can set the `max_retries` parameter to control the number of retry attempts. The default is to never retry ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Retries"
+    ]
+  },
+  {
+    "pregunta": "1716 - A data engineer wants to create a job that runs a notebook. They need to specify the source of the notebook. Which field in the task definition is used for this?",
+    "opciones": [
+      {
+        "texto_opcion": "The `notebook_task` field with the `notebook_path`.",
+        "es_correcta": true,
+        "explicacion": "The `notebook_task` is used to define a notebook task. It requires the `notebook_path`, which specifies the location of the notebook in the workspace ."
+      },
+      {
+        "texto_opcion": "The `spark_jar_task` field with the `main_class_name`.",
+        "es_correcta": false,
+        "explicacion": "`spark_jar_task` is used for JAR tasks. It requires the `main_class_name` to be specified ."
+      },
+      {
+        "texto_opcion": "The `spark_python_task` field with the `python_file`.",
+        "es_correcta": false,
+        "explicacion": "`spark_python_task` is used for Python file tasks. It requires the `python_file` path. This is not for notebook tasks ."
+      },
+      {
+        "texto_opcion": "The `pipeline_task` field with the `pipeline_id`.",
+        "es_correcta": false,
+        "explicacion": "`pipeline_task` is used to run a Delta Live Tables pipeline. It is not for notebook tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1717 - A data engineer needs to monitor the status of a job run programmatically. Which Jobs API endpoint should they use to get the details of a specific run?",
+    "opciones": [
+      {
+        "texto_opcion": "`GET /api/2.2/jobs/runs/get`",
+        "es_correcta": true,
+        "explicacion": "The `runs/get` endpoint is used to retrieve detailed information about a specific job run, including its status, metrics, and other metadata ."
+      },
+      {
+        "texto_opcion": "`POST /api/2.2/jobs/runs/submit`",
+        "es_correcta": false,
+        "explicacion": "This endpoint is used to submit a new one-time run. It does not retrieve information about existing runs ."
+      },
+      {
+        "texto_opcion": "`GET /api/2.2/jobs/list`",
+        "es_correcta": false,
+        "explicacion": "`jobs/list` returns a list of saved jobs, not details about individual runs. To get details of a specific run, you use `runs/get`."
+      },
+      {
+        "texto_opcion": "`POST /api/2.2/jobs/run-now`",
+        "es_correcta": false,
+        "explicacion": "`run-now` is used to trigger a new run of an existing job. It does not retrieve information about past runs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Monitoring"
+    ]
+  },
+  {
+    "pregunta": "1718 - A data engineer wants to run a SQL alert as part of a job workflow. They want the alert to send notifications to a specific user when the alert condition is triggered. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "The SQL Alert task.",
+        "es_correcta": true,
+        "explicacion": "The SQL Alert task type is specifically designed to evaluate a Databricks SQL alert as part of a job. It executes the alert's query and sends notifications to configured subscribers based on the alert outcome ."
+      },
+      {
+        "texto_opcion": "The Notebook task.",
+        "es_correcta": false,
+        "explicacion": "A notebook task runs a Databricks notebook. It is not specifically designed for evaluating SQL alerts, though you could build a notebook to check conditions manually. The SQL Alert task provides built-in alert functionality ."
+      },
+      {
+        "texto_opcion": "The Run Job task.",
+        "es_correcta": false,
+        "explicacion": "A Run Job task triggers another job. It does not evaluate SQL alerts. The SQL Alert task is the correct choice for this use case ."
+      },
+      {
+        "texto_opcion": "The SQL task.",
+        "es_correcta": false,
+        "explicacion": "A general SQL task executes a SQL statement. While you could use it to run a query, it does not have the built-in alert evaluation and notification logic that the SQL Alert task provides ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1719 - A data engineer has a job with multiple tasks. They want Task C to run only if Task A fails or Task B fails. Which `run_if` condition should they use for Task C?",
+    "opciones": [
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": true,
+        "explicacion": "The `AT_LEAST_ONE_FAILED` condition triggers the task if at least one of its dependencies has failed. This is the correct condition for running Task C when either Task A or Task B fails ."
+      },
+      {
+        "texto_opcion": "`ALL_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`ALL_FAILED` would only trigger Task C if both Task A and Task B fail. The requirement is for either of them to fail, which is `AT_LEAST_ONE_FAILED` ."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`NONE_FAILED` would trigger Task C only if none of its dependencies failed. This is the opposite of the desired behavior ."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "`ALL_SUCCESS` would trigger Task C only if both Task A and Task B succeeded. This is not the requirement for this scenario ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1720 - A data engineer wants to add branching logic to a job based on a condition. They want to run Task X if a task value exceeds 10, and Task Y otherwise. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "The `If/else` condition task.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` condition task is designed to add boolean conditional logic to task graphs. It evaluates a condition and allows you to configure tasks that run based on `true` or `false` results. Task values can be used as operands in the condition ."
+      },
+      {
+        "texto_opcion": "The `Run if` conditional task.",
+        "es_correcta": false,
+        "explicacion": "`Run if` conditionals control when a downstream task runs based on the status of upstream tasks. `If/else` tasks control branching logic based on a boolean expression evaluated from task values or parameters ."
+      },
+      {
+        "texto_opcion": "The `For each` task.",
+        "es_correcta": false,
+        "explicacion": "`For each` is used to run a task in a loop, passing different parameters to each iteration. It is not used for conditional branching ."
+      },
+      {
+        "texto_opcion": "The SQL Alert task.",
+        "es_correcta": false,
+        "explicacion": "The SQL Alert task is used to evaluate a Databricks SQL alert. It does not provide general conditional branching logic for tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1721 - A data engineer is setting up a job with multiple tasks. They want to share context and state information between tasks. What feature should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Task values",
+        "es_correcta": true,
+        "explicacion": "Task values allow you to pass information between scheduled tasks. You can define them in your logic to return results of computation or state from a task to the job environment. They can be referenced in downstream tasks ."
+      },
+      {
+        "texto_opcion": "Job parameters",
+        "es_correcta": false,
+        "explicacion": "Job parameters are runtime parameters that are pushed to tasks within the job. They are set at the job level and are static for a given run. Task values are dynamic and set by tasks ."
+      },
+      {
+        "texto_opcion": "Environment variables",
+        "es_correcta": false,
+        "explicacion": "Environment variables are set at the cluster level and are not designed for dynamic task-to-task communication. Task values are the specific feature for this purpose."
+      },
+      {
+        "texto_opcion": "Git repository",
+        "es_correcta": false,
+        "explicacion": "A Git repository is used for source code version control, not for passing runtime context between tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1722 - A data engineer wants to run a job that processes data only when new files arrive in cloud storage. Which type of trigger should they configure?",
+    "opciones": [
+      {
+        "texto_opcion": "Event-based trigger",
+        "es_correcta": true,
+        "explicacion": "Event-based triggers initiate a job run based on specific conditions or events, such as new data arriving in cloud storage. This is an alternative to time-based schedules ."
+      },
+      {
+        "texto_opcion": "Time-based trigger (schedule)",
+        "es_correcta": false,
+        "explicacion": "A time-based trigger runs the job at a specific time (e.g., every day at 2 AM). It is not event-based and cannot be triggered by file arrivals ."
+      },
+      {
+        "texto_opcion": "Manual trigger",
+        "es_correcta": false,
+        "explicacion": "A manual trigger requires a user to click 'Run now' or make an API call. It is not automatic and cannot be based on file events ."
+      },
+      {
+        "texto_opcion": "Continuous trigger",
+        "es_correcta": false,
+        "explicacion": "Continuous trigger is for streaming workloads that run indefinitely. It is not triggered by file events; it runs continuously and processes data as it arrives ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Scheduling"
+    ]
+  },
+  {
+    "pregunta": "1723 - A data engineer is configuring a job and wants to set up email notifications for failures. They want to be notified only when the job fails, not when it starts or succeeds. Which notification settings should they configure?",
+    "opciones": [
+      {
+        "texto_opcion": "Configure the `on_failure` email notifications.",
+        "es_correcta": true,
+        "explicacion": "The `on_failure` field specifies email addresses to be notified when a run unsuccessfully completes, which includes states like `FAILED`, `INTERNAL_ERROR`, or `TIMED_OUT` ."
+      },
+      {
+        "texto_opcion": "Configure the `on_start` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_start` emails are sent when a run begins. The requirement is to only get failure notifications ."
+      },
+      {
+        "texto_opcion": "Configure the `on_success` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_success` emails are sent when a run successfully completes. The requirement is for failure notifications ."
+      },
+      {
+        "texto_opcion": "Set `no_alert_for_skipped_runs` to true.",
+        "es_correcta": false,
+        "explicacion": "This setting controls whether notifications are sent for skipped runs. It does not affect `on_failure` notifications ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1724 - A data engineer needs to run a job that is part of a larger workflow managed by Apache Airflow. They want to trigger the Databricks job from Airflow. Which Databricks capability is best suited for this?",
+    "opciones": [
+      {
+        "texto_opcion": "Invoking the Jobs API `run-now` endpoint from Airflow.",
+        "es_correcta": true,
+        "explicacion": "Databricks Jobs provides REST APIs, including `run-now`, which can be invoked by external orchestration tools like Apache Airflow to trigger job runs programmatically ."
+      },
+      {
+        "texto_opcion": "Using the Databricks UI to manually run the job.",
+        "es_correcta": false,
+        "explicacion": "Manual runs require user intervention and are not suitable for automated, programmatic triggers from Airflow ."
+      },
+      {
+        "texto_opcion": "Scheduling the job with a time-based trigger in Databricks.",
+        "es_correcta": false,
+        "explicacion": "This would use Databricks' internal scheduler, which is not integrated with Airflow's workflow management. Airflow is the orchestrator in this scenario ."
+      },
+      {
+        "texto_opcion": "Using the `runs/submit` API for one-time runs.",
+        "es_correcta": false,
+        "explicacion": "`runs/submit` creates a one-time run that is not saved as a job. For regular orchestration, you typically create a saved job and use `run-now` to trigger it ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1725 - A data engineer is creating a job that contains 150 tasks. Is this configuration allowed?",
+    "opciones": [
+      {
+        "texto_opcion": "No, because a job can contain at most 100 tasks.",
+        "es_correcta": true,
+        "explicacion": "The maximum number of tasks per job is 100. This is a documented limitation of the Databricks Jobs service ."
+      },
+      {
+        "texto_opcion": "Yes, there is no limit on the number of tasks in a job.",
+        "es_correcta": false,
+        "explicacion": "There is a limit of 100 tasks per job. This is an explicit limitation ."
+      },
+      {
+        "texto_opcion": "Yes, but only if the job uses serverless compute.",
+        "es_correcta": false,
+        "explicacion": "The task limit applies regardless of the compute type used. It is a job-level limitation ."
+      },
+      {
+        "texto_opcion": "No, because the maximum is 50 tasks.",
+        "es_correcta": false,
+        "explicacion": "The documented limit is 100 tasks per job. 150 tasks would exceed this limit ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1726 - A data engineer wants to create a job that runs a dbt project. They have the dbt commands defined in a repository. Which Databricks task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "dbt task",
+        "es_correcta": true,
+        "explicacion": "The `dbt_task` is a specific task type designed for running one or more dbt commands as part of a Databricks job. It requires a serverless or pro SQL warehouse and can be integrated with version-controlled source code ."
+      },
+      {
+        "texto_opcion": "Python script task",
+        "es_correcta": false,
+        "explicacion": "While you could run dbt from a Python script, the `dbt_task` provides native integration and is designed specifically for this purpose. It simplifies the configuration ."
+      },
+      {
+        "texto_opcion": "Notebook task",
+        "es_correcta": false,
+        "explicacion": "You could run dbt commands from a notebook using `%sh` or `!`, but the `dbt_task` is the recommended and officially supported way to run dbt jobs ."
+      },
+      {
+        "texto_opcion": "SQL alert task",
+        "es_correcta": false,
+        "explicacion": "The SQL alert task is for evaluating Databricks SQL alerts, not for running dbt transformations ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1727 - A data engineer has a job that is scheduled to run every hour. The previous run is still in progress when the next run is due. By default, what happens to the scheduled run?",
+    "opciones": [
+      {
+        "texto_opcion": "The new run is skipped.",
+        "es_correcta": true,
+        "explicacion": "By default, jobs have a `max_concurrent_runs` of 1. This means if a run is still in progress when the next is scheduled, the new run will be skipped to prevent overlapping runs ."
+      },
+      {
+        "texto_opcion": "The new run starts, and both runs run concurrently.",
+        "es_correcta": false,
+        "explicacion": "This behavior would only occur if `max_concurrent_runs` was set to a value greater than 1. The default is 1, so concurrent runs are not allowed ."
+      },
+      {
+        "texto_opcion": "The new run is queued and waits for the previous one to finish.",
+        "es_correcta": false,
+        "explicacion": "Jobs do not queue runs by default. If a run is in progress, a new run is skipped. You can configure concurrency to allow multiple runs, but they are not queued; they run concurrently ."
+      },
+      {
+        "texto_opcion": "The previous run is terminated, and the new run starts.",
+        "es_correcta": false,
+        "explicacion": "Databricks does not automatically terminate an in-progress run to start a new one. It skips the new run to avoid conflicts ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Scheduling"
+    ]
+  },
+  {
+    "pregunta": "1728 - A data engineer is configuring a job and wants to set a timeout of 1 hour. If the job exceeds this time, it should fail. Which setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`timeout_seconds` set to 3600.",
+        "es_correcta": true,
+        "explicacion": "The `timeout_seconds` parameter allows you to set a maximum duration for a run. If the run exceeds this time, it will be terminated. The value is in seconds, so 3600 seconds is 1 hour ."
+      },
+      {
+        "texto_opcion": "`max_retries` set to 3.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls how many times a task is retried after a failure. It does not set a time limit. A timeout is a separate configuration ."
+      },
+      {
+        "texto_opcion": "`schedule` with a quartz cron expression.",
+        "es_correcta": false,
+        "explicacion": "The schedule defines when the job runs, not for how long. It does not impose a runtime limit ."
+      },
+      {
+        "texto_opcion": "`retry_on_timeout` set to true.",
+        "es_correcta": false,
+        "explicacion": "`retry_on_timeout` controls whether to retry a job that has timed out. It does not set the timeout duration. You need `timeout_seconds` to define the duration ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1729 - A data engineer is creating a job and wants to use a Git repository for the source code of the tasks. Which field in the job definition is used to specify the Git repository?",
+    "opciones": [
+      {
+        "texto_opcion": "`git_source`",
+        "es_correcta": true,
+        "explicacion": "The `git_source` field is an optional specification for a remote Git repository containing the source code used by tasks. It allows tasks to retrieve files from the repository ."
+      },
+      {
+        "texto_opcion": "`libraries`",
+        "es_correcta": false,
+        "explicacion": "`libraries` is used to specify libraries (e.g., JARs, PyPI packages) to be installed on the cluster, not the source code repository ."
+      },
+      {
+        "texto_opcion": "`environments`",
+        "es_correcta": false,
+        "explicacion": "`environments` is used for specifying task execution environments, such as Python and Java dependencies for serverless tasks. It is not for Git repository configuration ."
+      },
+      {
+        "texto_opcion": "`source`",
+        "es_correcta": false,
+        "explicacion": "`source` is a field that can override the source location for a task (e.g., using workspace source instead of Git). The `git_source` field is used to define the Git repository itself ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1730 - A data engineer needs to run a task 100 times, each time with a different parameter value from a list. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`For each` task",
+        "es_correcta": true,
+        "explicacion": "The `For each` task is used to run another task in a loop, passing a different set of parameters to each iteration. This is ideal for scenarios where you need to perform the same operation for multiple values ."
+      },
+      {
+        "texto_opcion": "`If/else` condition task",
+        "es_correcta": false,
+        "explicacion": "`If/else` is for conditional branching, not for looping. It evaluates a condition and runs one of two branches ."
+      },
+      {
+        "texto_opcion": "`Run if` conditional task",
+        "es_correcta": false,
+        "explicacion": "`Run if` controls task execution based on the status of upstream dependencies, not for looping ."
+      },
+      {
+        "texto_opcion": "You cannot loop tasks in Databricks Jobs.",
+        "es_correcta": false,
+        "explicacion": "The `For each` task is specifically designed to support looping functionality in Databricks Jobs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1731 - A data engineer wants to monitor the cost of their Databricks jobs across their account. Where can they find this information?",
+    "opciones": [
+      {
+        "texto_opcion": "Using the `lakeflow` system tables joined with billing tables.",
+        "es_correcta": true,
+        "explicacion": "Databricks provides system tables, including a `lakeflow` schema that records job activity. You can join these with billing tables to monitor the cost of jobs across your account ."
+      },
+      {
+        "texto_opcion": "By viewing the job run details in the Jobs UI.",
+        "es_correcta": false,
+        "explicacion": "The Jobs UI provides details about job runs and status, but it does not provide aggregated cost data across the account. For cost analysis, you need to query system tables ."
+      },
+      {
+        "texto_opcion": "By checking the `timeout_seconds` setting.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` is a configuration setting that limits job runtime, not a place to view cost information ."
+      },
+      {
+        "texto_opcion": "Cost data is not available for Databricks jobs.",
+        "es_correcta": false,
+        "explicacion": "Cost data is available through system tables. You can monitor job costs by analyzing the data in the `lakeflow` schema and joining with billing tables ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Monitoring"
+    ]
+  },
+  {
+    "pregunta": "1732 - A data engineer is configuring a job and wants to set a notification for when a job run exceeds a certain duration, such as 30 minutes. Which notification setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`health` with a `RUN_DURATION_SECONDS` rule.",
+        "es_correcta": true,
+        "explicacion": "The `health` field allows you to define health rules for a job, including a `RUN_DURATION_SECONDS` metric. If the duration exceeds a threshold, notifications can be sent to the specified `on_duration_warning_threshold_exceeded` email addresses ."
+      },
+      {
+        "texto_opcion": "`on_failure` notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_failure` sends notifications only when a job run fails. A duration threshold exceeding a limit is not necessarily a failure; it's a performance warning ."
+      },
+      {
+        "texto_opcion": "`on_success` notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_success` sends notifications when a job run completes successfully. It does not trigger on duration warnings ."
+      },
+      {
+        "texto_opcion": "`timeout_seconds` with a value of 1800.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` will fail the job after the specified time. The `health` rule provides a warning without failing the job. Both can be used, but the health rule is for warning notifications ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1733 - A data engineer is building a complex job workflow with multiple tasks. They need to pass a dynamically generated value, such as a record count or a list of IDs, from one task to another. According to Databricks best practices, which feature should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Task values",
+        "es_correcta": true,
+        "explicacion": "Task values are the recommended feature for passing arbitrary, dynamically generated values between tasks in a Databricks job. A task can use `dbutils.jobs.taskValues.set()` to store a key-value pair, and downstream tasks can reference it using the syntax `{{tasks.<task_name>.values.<key>}}` ."
+      },
+      {
+        "texto_opcion": "Job parameters",
+        "es_correcta": false,
+        "explicacion": "Job parameters are static values defined at the job level and pushed down to all tasks. They cannot be dynamically generated by a task during a run. Task values are specifically designed for dynamic, task-generated values ."
+      },
+      {
+        "texto_opcion": "Environment variables",
+        "es_correcta": false,
+        "explicacion": "Environment variables are set at the cluster level and are not designed for dynamic, task-to-task communication. They are not the standard feature for this use case."
+      },
+      {
+        "texto_opcion": "The `dbutils.notebook` API",
+        "es_correcta": false,
+        "explicacion": "The `dbutils.notebook` API is used to run notebooks from within another notebook. While it can be used in a job, it is not the primary mechanism for passing values between distinct tasks in a workflow. Task values are the dedicated feature for this purpose ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1734 - A data engineer is designing a job that reads a configuration table to determine a list of tables to process. They want to run a set of transformations for each table in this list. Which combination of task types should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "A SQL task to read the configuration table, followed by a `For each` task that iterates over the results.",
+        "es_correcta": true,
+        "explicacion": "This is a recommended pattern for dynamic workflows. A SQL task reads the config table and makes the output available as a JSON array of rows. A `For each` task then iterates over this array, passing each row as parameters to a nested task. This avoids hardcoding values in the job definition ."
+      },
+      {
+        "texto_opcion": "A notebook task to read the configuration and generate task values, followed by a `Run job` task for each table.",
+        "es_correcta": false,
+        "explicacion": "While a notebook could generate a list, using a `For each` task with a SQL lookup is a more integrated and efficient pattern. The `For each` task is specifically designed to run a nested task in a loop, and it can be driven by the output of a preceding SQL task ."
+      },
+      {
+        "texto_opcion": "A single `For each` task with a hardcoded list of table names.",
+        "es_correcta": false,
+        "explicacion": "Hardcoding the list in the job means you have to update and redeploy the job every time the list changes. The recommended approach is to use a configuration table that can be updated independently ."
+      },
+      {
+        "texto_opcion": "A pipeline task to orchestrate the dynamic processing.",
+        "es_correcta": false,
+        "explicacion": "A pipeline task is used to trigger a Delta Live Tables pipeline, not for dynamic iteration over a list of values. The `For each` task is the correct choice for this pattern ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1735 - A data engineer is configuring a `For each` task in a job. The input for the `For each` task is a large array of values from a preceding task. The UI Inputs field is limited to 5,000 characters. How can they pass a larger array?",
+    "opciones": [
+      {
+        "texto_opcion": "Use a task value reference, which allows values up to 48 KB.",
+        "es_correcta": true,
+        "explicacion": "The Inputs field in the UI is limited to 5,000 characters for a direct JSON array. However, you can reference task values using `{{tasks.<task_name>.values.<value_name>}}`. The task values themselves can be up to 48 KB, allowing you to pass larger arrays ."
+      },
+      {
+        "texto_opcion": "Increase the `concurrency` of the `For each` task to handle larger arrays.",
+        "es_correcta": false,
+        "explicacion": "The `concurrency` setting controls how many iterations run in parallel, not the size of the input array. The input size limit is a limitation of the UI Inputs field ."
+      },
+      {
+        "texto_opcion": "Split the array across multiple `For each` tasks.",
+        "es_correcta": false,
+        "explicacion": "This would create a complex workflow and is not the recommended solution. Using a task value reference to pass a larger array is the standard and supported approach ."
+      },
+      {
+        "texto_opcion": "Use a `Run if` task to conditionally process different parts of the array.",
+        "es_correcta": false,
+        "explicacion": "`Run if` is for conditional execution based on task status, not for iterating over a list of values. The `For each` task is the correct tool for looping ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1736 - A data engineer is creating a job and wants to limit the maximum number of concurrent runs of that job to 2. Which setting should they configure?",
+    "opciones": [
+      {
+        "texto_opcion": "`max_concurrent_runs`",
+        "es_correcta": true,
+        "explicacion": "The `max_concurrent_runs` parameter controls the maximum number of concurrent runs of a job. By default, it is 1 (to prevent overlapping runs). Setting it to 2 allows up to two runs of the same job to execute simultaneously ."
+      },
+      {
+        "texto_opcion": "`timeout_seconds`",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` sets a maximum duration for a single job run. It does not control the number of concurrent runs of the job ."
+      },
+      {
+        "texto_opcion": "`max_retries`",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls how many times a task is retried after a failure. It is not related to concurrent run limits ."
+      },
+      {
+        "texto_opcion": "`queue`",
+        "es_correcta": false,
+        "explicacion": "`queue` is a parameter that determines if the job should be queued when it is triggered. It does not set a limit on concurrent runs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1737 - A data engineer is configuring a complex workflow and needs to share context and state information between tasks. They want Task A to pass a value to Task B, and Task B to use that value in its logic. According to Databricks best practices, how should they achieve this?",
+    "opciones": [
+      {
+        "texto_opcion": "Use task values with `dbutils.jobs.taskValues.set()` and reference them with `{{tasks.TaskA.values.key}}`.",
+        "es_correcta": true,
+        "explicacion": "Task values are the recommended way to pass dynamic values between tasks. Task A can set a value using `dbutils.jobs.taskValues.set(key, value)`, and Task B can reference it as a parameter using the dynamic value reference pattern `{{tasks.TaskA.values.key}}` ."
+      },
+      {
+        "texto_opcion": "Use job parameters that are defined at the job level.",
+        "es_correcta": false,
+        "explicacion": "Job parameters are static and defined before the job run. They cannot be set dynamically by a task during execution. Task values are for dynamic, inter-task communication ."
+      },
+      {
+        "texto_opcion": "Write the value to a temporary table and have the downstream task read it.",
+        "es_correcta": false,
+        "explicacion": "While this is a possible workaround, it is not recommended. It creates unnecessary I/O and complexity. Task values are designed for this purpose and are more efficient and easier to manage ."
+      },
+      {
+        "texto_opcion": "Use the `dbutils.notebook.run()` API to pass values back and forth.",
+        "es_correcta": false,
+        "explicacion": "`dbutils.notebook.run()` is for running notebooks from within a notebook. Task values are the standard mechanism for passing data between separate tasks in a Databricks job ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1738 - A data engineer wants to create a job that runs a dbt project stored in a Git repository. Which task type should they use to run the dbt commands?",
+    "opciones": [
+      {
+        "texto_opcion": "dbt task",
+        "es_correcta": true,
+        "explicacion": "The `dbt_task` is a specific task type designed to run one or more dbt commands as part of a Databricks job. It is the recommended and integrated way to run dbt projects, and it supports serverless and pro SQL warehouses ."
+      },
+      {
+        "texto_opcion": "Python script task",
+        "es_correcta": false,
+        "explicacion": "While you could use a Python script to run dbt, the `dbt_task` provides native integration and is specifically designed for this purpose. Using a Python script would require manual setup of the dbt environment ."
+      },
+      {
+        "texto_opcion": "Notebook task",
+        "es_correcta": false,
+        "explicacion": "You could run dbt commands from a notebook using shell commands, but the `dbt_task` is the officially supported and more robust method ."
+      },
+      {
+        "texto_opcion": "SQL task",
+        "es_correcta": false,
+        "explicacion": "The SQL task is for running SQL queries, not for executing dbt commands or transformation projects ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1739 - A data engineer is configuring a job and wants to run a specific task only if a previous task fails. Which `run_if` condition should they use for the task?",
+    "opciones": [
+      {
+        "texto_opcion": "`ALL_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`ALL_FAILED` triggers the task only if all of its dependencies have failed. The requirement is to run if a previous task fails, which is `AT_LEAST_ONE_FAILED` ."
+      },
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": true,
+        "explicacion": "The `AT_LEAST_ONE_FAILED` condition triggers the task if at least one of its dependencies has failed. This is the correct condition for running a task when a previous task fails, such as for sending failure alerts ."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "`ALL_SUCCESS` would run the task only if all dependencies succeeded. This is the default behavior and is the opposite of the requirement ."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`NONE_FAILED` triggers the task only if none of its dependencies failed. This is not the desired behavior for running a task on failure ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1740 - A data engineer wants to set up a job that runs a notebook task. They need to pass a parameter to the notebook to control which date is processed. How should they pass this parameter?",
+    "opciones": [
+      {
+        "texto_opcion": "Use `notebook_params` in the task definition.",
+        "es_correcta": true,
+        "explicacion": "For notebook tasks, parameters are passed using `notebook_params`. This is a map of key-value pairs that is accessible within the notebook via `dbutils.widgets.get()`. This is the standard method for parameterizing notebook tasks ."
+      },
+      {
+        "texto_opcion": "Use `base_parameters` in the task definition.",
+        "es_correcta": false,
+        "explicacion": "`base_parameters` is the correct field name for passing parameters to a notebook task. The question asks for the method, and `base_parameters` is the specific field used ."
+      },
+      {
+        "texto_opcion": "Use `jar_params` to pass parameters to the notebook task.",
+        "es_correcta": false,
+        "explicacion": "`jar_params` is used for JAR tasks, not notebook tasks. Notebook tasks use `base_parameters` or `notebook_params` ."
+      },
+      {
+        "texto_opcion": "Set an environment variable on the job cluster.",
+        "es_correcta": false,
+        "explicacion": "While environment variables can be used, they are not the standard way to pass task-specific parameters to notebooks. Using `base_parameters` with `dbutils.widgets.get()` is the recommended and more flexible approach ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Parameters"
+    ]
+  },
+  {
+    "pregunta": "1741 - A data engineer is creating a job and wants to include an `If/else` task to add conditional branching logic. What is the correct way to configure the condition for an `If/else` task?",
+    "opciones": [
+      {
+        "texto_opcion": "It evaluates a boolean condition that can reference job parameters or task values.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` task is designed to add boolean conditional logic to task graphs. It evaluates a condition that can use operands such as task values or job parameters. Based on the result, it runs a set of tasks defined in the `if` or `else` branches ."
+      },
+      {
+        "texto_opcion": "It evaluates the status of upstream tasks (success, failure, skipped).",
+        "es_correcta": false,
+        "explicacion": "Evaluating the status of upstream tasks is the purpose of the `run_if` condition on a task. The `If/else` task evaluates a boolean expression based on data or parameters ."
+      },
+      {
+        "texto_opcion": "It runs a separate job and checks its completion status.",
+        "es_correcta": false,
+        "explicacion": "This is not how an `If/else` task works. It evaluates a condition within the workflow itself. To check another job's status, you would use a `Run job` task and then another task with a `run_if` condition."
+      },
+      {
+        "texto_opcion": "It is configured by defining `depends_on` with a `run_if` clause.",
+        "es_correcta": false,
+        "explicacion": "`depends_on` with `run_if` controls when a task runs based on the status of its dependencies. The `If/else` task itself is a separate task type that evaluates a boolean condition for branching ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1742 - A data engineer has a job with a long-running task. They want to receive a warning email if the task runs for more than 90 minutes, without necessarily failing the task. Which configuration should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Configure a `health` rule with `RUN_DURATION_SECONDS` and set `on_duration_warning_threshold_exceeded` emails.",
+        "es_correcta": true,
+        "explicacion": "The `health` block allows you to define rules for job run health. A `RUN_DURATION_SECONDS` rule with a threshold will trigger a warning if the run exceeds that duration. This warning can be sent to specified email addresses using `on_duration_warning_threshold_exceeded` ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` to 5400.",
+        "es_correcta": false,
+        "explicacion": "Setting `timeout_seconds` will fail the job if it exceeds the duration, which is not the desired behavior. The `health` rule provides a warning without failing the job ."
+      },
+      {
+        "texto_opcion": "Configure `on_failure` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_failure` sends notifications only when a task fails, not when it takes too long. The duration warning is a separate notification setting ."
+      },
+      {
+        "texto_opcion": "Use the `health` rule with `STREAMING_BACKLOG_BYTES`.",
+        "es_correcta": false,
+        "explicacion": "`STREAMING_BACKLOG_BYTES` is a streaming-specific metric for health rules. For a duration warning, you need to use `RUN_DURATION_SECONDS` ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1743 - A data engineer is configuring a job and wants to ensure that if a task fails due to a timeout, it is retried automatically. Which settings should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Set `timeout_seconds` and `retry_on_timeout` to `true`.",
+        "es_correcta": true,
+        "explicacion": "To retry a task when it times out, you need to set two configurations. First, `timeout_seconds` defines the duration after which the task is considered timed out. Second, `retry_on_timeout` must be set to `true` to enable retries on timeout ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` and `max_retries` to a value greater than 0.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls retries for failures due to errors, but it does not automatically retry on timeout. For timeout retries, you must explicitly set `retry_on_timeout` to `true` ."
+      },
+      {
+        "texto_opcion": "Set `min_retry_interval_millis` to a high value.",
+        "es_correcta": false,
+        "explicacion": "`min_retry_interval_millis` controls the minimum interval between retries. It does not enable retries on timeout; that is controlled by `retry_on_timeout` ."
+      },
+      {
+        "texto_opcion": "Set `max_retries` to -1.",
+        "es_correcta": false,
+        "explicacion": "Setting `max_retries` to -1 retries indefinitely, but only on task failure. To retry on timeout, you need `retry_on_timeout` ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Retries"
+    ]
+  },
+  {
+    "pregunta": "1744 - A data engineer is using the Jobs API to programmatically create a job. They need to define the source of a notebook task as being from a Git repository. Which field should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`git_source`",
+        "es_correcta": true,
+        "explicacion": "The `git_source` field is used to specify a remote Git repository containing the source code for the job's tasks. This allows the job to retrieve files, such as notebooks, from the repository ."
+      },
+      {
+        "texto_opcion": "`source`",
+        "es_correcta": false,
+        "explicacion": "The `source` field is used to override the source location for a task, such as `WORKSPACE` or `GIT`. The `git_source` field defines the Git repository itself ."
+      },
+      {
+        "texto_opcion": "`libraries`",
+        "es_correcta": false,
+        "explicacion": "`libraries` is used to specify JARs or PyPI packages to be installed on the cluster, not for defining the source code repository ."
+      },
+      {
+        "texto_opcion": "`environments`",
+        "es_correcta": false,
+        "explicacion": "`environments` is for specifying task execution environments. It is not used for Git repository configuration ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1745 - A data engineer is creating a job with multiple tasks. They want Task C to run only if both Task A and Task B have completed successfully. What is the default `run_if` behavior, and is it suitable for this scenario?",
+    "opciones": [
+      {
+        "texto_opcion": "The default is `ALL_SUCCESS`, which is suitable.",
+        "es_correcta": true,
+        "explicacion": "The default `run_if` condition for a task is `ALL_SUCCESS`. This means the task will run only if all of its dependencies have completed successfully. This is exactly the behavior required for Task C to run after both Task A and Task B succeed ."
+      },
+      {
+        "texto_opcion": "The default is `AT_LEAST_ONE_FAILED`, which is not suitable.",
+        "es_correcta": false,
+        "explicacion": "The default is `ALL_SUCCESS`, not `AT_LEAST_ONE_FAILED`. `AT_LEAST_ONE_FAILED` would run the task if any dependency failed, which is the opposite of the requirement ."
+      },
+      {
+        "texto_opcion": "The default is `NONE_FAILED`, which is suitable.",
+        "es_correcta": false,
+        "explicacion": "`NONE_FAILED` is not the default condition. The default is `ALL_SUCCESS`. While `NONE_FAILED` is similar, `ALL_SUCCESS` is the standard default ."
+      },
+      {
+        "texto_opcion": "The default is `ALL_FAILED`, which is not suitable.",
+        "es_correcta": false,
+        "explicacion": "The default is `ALL_SUCCESS`, not `ALL_FAILED`. `ALL_FAILED` would only run if all dependencies failed, which does not match the requirement ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1746 - A data engineer is configuring a job that may run for a long time due to large data volumes. They want to set a maximum runtime for the entire job. Which setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`timeout_seconds`",
+        "es_correcta": true,
+        "explicacion": "The `timeout_seconds` parameter is used to set a maximum duration for a run of a job. If the run exceeds this time, it is terminated. This is the correct setting to limit the overall runtime of a job ."
+      },
+      {
+        "texto_opcion": "`max_retries`",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls how many times a task is retried upon failure. It does not set a time limit. A runtime limit is enforced by `timeout_seconds` ."
+      },
+      {
+        "texto_opcion": "`schedule` with a quartz cron expression.",
+        "es_correcta": false,
+        "explicacion": "The schedule defines when the job runs, not for how long. It does not impose a runtime limit ."
+      },
+      {
+        "texto_opcion": "`retry_on_timeout`",
+        "es_correcta": false,
+        "explicacion": "`retry_on_timeout` controls whether to retry a job that has timed out. It does not set the timeout duration. You need `timeout_seconds` to define the duration ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1747 - A data engineer is using a `For each` task and wants to set the `concurrency` to 5. What does this setting control?",
+    "opciones": [
+      {
+        "texto_opcion": "The number of iterations of the `For each` task that can run in parallel.",
+        "es_correcta": true,
+        "explicacion": "The `concurrency` setting for a `For each` task controls how many iterations of the nested task can run simultaneously. The default value is 1, meaning iterations run sequentially. Setting it to 5 allows up to 5 iterations to run in parallel ."
+      },
+      {
+        "texto_opcion": "The total number of iterations the `For each` task will execute.",
+        "es_correcta": false,
+        "explicacion": "The total number of iterations is determined by the length of the input array. `Concurrency` only controls the parallelism of those iterations, not the total count ."
+      },
+      {
+        "texto_opcion": "The number of times the entire `For each` task will be retried if it fails.",
+        "es_correcta": false,
+        "explicacion": "`Concurrency` is not related to retries. Retries for the task as a whole can be configured in the task's general settings. `Concurrency` is about parallel execution ."
+      },
+      {
+        "texto_opcion": "The maximum number of tasks that can be in the job.",
+        "es_correcta": false,
+        "explicacion": "`Concurrency` applies specifically to the `For each` task's iterations. The overall job's task limit is a separate limitation ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1748 - A data engineer is setting up a job that runs a complex workflow with multiple tasks. They want to be able to monitor the cost of each job run. Where can they find this information?",
+    "opciones": [
+      {
+        "texto_opcion": "By querying system tables that record job activity and joining with billing data.",
+        "es_correcta": true,
+        "explicacion": "Cost data for Databricks jobs can be monitored by analyzing the operational data available in system tables. This information can be joined with billing data to track costs across your account ."
+      },
+      {
+        "texto_opcion": "By checking the `timeout_seconds` setting.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` is a configuration setting for job runtime, not a source of cost information ."
+      },
+      {
+        "texto_opcion": "By viewing the job run details in the Jobs UI.",
+        "es_correcta": false,
+        "explicacion": "The Jobs UI provides details on run status, but it does not provide aggregated cost data across the account. For cost analysis, you need to use system tables and billing integration ."
+      },
+      {
+        "texto_opcion": "Cost data is not available for Databricks jobs.",
+        "es_correcta": false,
+        "explicacion": "Cost data is available through system tables. You can monitor job costs by analyzing the data in the operational system tables ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Monitoring"
+    ]
+  },
+  {
+    "pregunta": "1749 - A data engineer is configuring a job and wants to set a notification for when a job run exceeds a certain duration, such as 30 minutes. They are using a CI/CD pipeline with infrastructure-as-code. How should they define this notification to persist across deployments?",
+    "opciones": [
+      {
+        "texto_opcion": "Include the `health` rules and `on_duration_warning_threshold_exceeded` email notifications in the job definition code.",
+        "es_correcta": true,
+        "explicacion": "Health rules and duration warning notifications are part of the job definition. To persist them across deployments, you must include the `health` block and the `email_notifications` field with `on_duration_warning_threshold_exceeded` in your job-as-code configuration (e.g., JSON, YAML, or Terraform). Manual UI changes will be overwritten by the code on the next deployment ."
+      },
+      {
+        "texto_opcion": "Configure them manually in the UI after each deployment.",
+        "es_correcta": false,
+        "explicacion": "Manual UI configurations will be overwritten when the job is redeployed via infrastructure-as-code. The correct approach is to define these settings in the code itself ."
+      },
+      {
+        "texto_opcion": "Use the `on_failure` email notifications, as they will trigger on a duration warning.",
+        "es_correcta": false,
+        "explicacion": "`on_failure` sends notifications when a job fails, not when a duration threshold is exceeded. Duration warnings are a separate notification using `on_duration_warning_threshold_exceeded` ."
+      },
+      {
+        "texto_opcion": "Duration warnings cannot be set via code and must be set in the UI.",
+        "es_correcta": false,
+        "explicacion": "Duration warnings are fully configurable via code. They can be set using the `health` field and the `on_duration_warning_threshold_exceeded` email field in the job definition ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1750 - A data engineer is configuring a job and wants to use serverless compute for a notebook task. According to Databricks best practices, which compute option should they select?",
+    "opciones": [
+      {
+        "texto_opcion": "Serverless job compute",
+        "es_correcta": true,
+        "explicacion": "Serverless job compute is the recommended compute option for most automated workloads, including notebook tasks. It provides rapid startup, automatic scaling, and is fully managed by Databricks, reducing operational overhead ."
+      },
+      {
+        "texto_opcion": "Existing cluster",
+        "es_correcta": false,
+        "explicacion": "While you can run jobs on an existing cluster, it requires manual management of cluster lifecycle and scaling. Serverless compute is generally recommended for automated jobs due to its ease of use and management ."
+      },
+      {
+        "texto_opcion": "New job cluster",
+        "es_correcta": false,
+        "explicacion": "A new job cluster is created for each run and terminated afterward. This is a good option, but serverless compute is the recommended choice for most workloads due to its instant startup and automatic scaling."
+      },
+      {
+        "texto_opcion": "SQL warehouse",
+        "es_correcta": false,
+        "explicacion": "A SQL warehouse is designed for SQL tasks and queries, not for general-purpose notebook tasks. Notebook tasks require a job cluster or serverless compute ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Job clusters"
+    ]
+  },
+  {
+    "pregunta": "1751 - A data engineer is designing a job with a complex workflow. They need Task C to run only if Task A succeeded, regardless of Task B's status. Which `run_if` condition should they configure for Task C's dependency?",
+    "opciones": [
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": true,
+        "explicacion": "The `NONE_FAILED` condition triggers the task if none of its dependencies have failed. This means it will run if all dependencies have succeeded or have been skipped. If Task A succeeded and Task B was skipped or succeeded, the condition is met ."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "`ALL_SUCCESS` requires both Task A and Task B to succeed. If Task B fails or is skipped, Task C will not run, which is not the requirement."
+      },
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This condition triggers when any dependency fails, which is the opposite of the requirement. Task C should run when Task A succeeds, not when it fails."
+      },
+      {
+        "texto_opcion": "`ALL_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`ALL_FAILED` would only trigger Task C if both Task A and Task B failed. The requirement is to run when Task A succeeds."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1752 - A data engineer needs to pass a dynamically generated list of table names from a SQL task to a `For each` task. The list is too large for the UI Inputs field. According to Databricks documentation, how should they pass this list?",
+    "opciones": [
+      {
+        "texto_opcion": "Use a task value reference (`{{tasks.<task_name>.values.<value_name>}}`) which supports larger payloads.",
+        "es_correcta": true,
+        "explicacion": "The UI Inputs field is limited to 5,000 characters. To pass larger arrays, you can use task values, which can store up to 48 KB. The SQL task can set the list as a task value, and the `For each` task can reference it using the dynamic value syntax `{{tasks.<task_name>.values.<value_name>}}` ."
+      },
+      {
+        "texto_opcion": "Split the list across multiple `For each` tasks.",
+        "es_correcta": false,
+        "explicacion": "This would create a complex and difficult-to-manage workflow. Using a task value reference is the standard and supported approach for passing larger data between tasks ."
+      },
+      {
+        "texto_opcion": "Increase the concurrency of the `For each` task.",
+        "es_correcta": false,
+        "explicacion": "The `concurrency` setting controls how many iterations run in parallel, not the size of the input array. It does not affect the size limit of the Inputs field ."
+      },
+      {
+        "texto_opcion": "Hardcode the list in the job definition.",
+        "es_correcta": false,
+        "explicacion": "Hardcoding the list in the job definition would require updating and redeploying the job every time the list changes. This defeats the purpose of dynamic workflow generation and is not a best practice ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1753 - A data engineer is creating a job and wants to set a timeout for a specific task. If the task exceeds the timeout, it should fail and not be retried on timeout. Which configuration should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Set `timeout_seconds` and leave `retry_on_timeout` as `false`.",
+        "es_correcta": true,
+        "explicacion": "`timeout_seconds` defines the maximum duration for the task. By default, `retry_on_timeout` is `false`, meaning if a task times out, it will fail immediately without retrying. This meets the requirement ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` and `max_retries` to a value greater than 0.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls retries on task failure (e.g., due to errors). It does not automatically retry on timeout. For retries on timeout, you must explicitly set `retry_on_timeout` to `true`, which is not desired here ."
+      },
+      {
+        "texto_opcion": "Set `min_retry_interval_millis` to a high value.",
+        "es_correcta": false,
+        "explicacion": "`min_retry_interval_millis` controls the minimum interval between retries. It does not enable retries on timeout or set the timeout duration ."
+      },
+      {
+        "texto_opcion": "Set `max_retries` to -1.",
+        "es_correcta": false,
+        "explicacion": "Setting `max_retries` to -1 retries indefinitely, but only on task failure. To retry on timeout, you need `retry_on_timeout`, which is not desired here ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Retries"
+    ]
+  },
+  {
+    "pregunta": "1754 - A data engineer is configuring a job and wants to set up email notifications for when a job run takes longer than expected but does not necessarily fail. Which notification setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Configure a `health` rule with `RUN_DURATION_SECONDS` and set `on_duration_warning_threshold_exceeded` emails.",
+        "es_correcta": true,
+        "explicacion": "Health rules allow you to define conditions that trigger warnings. A `RUN_DURATION_SECONDS` rule with a threshold will send a warning notification to the specified email addresses if the run exceeds that duration, without failing the job ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` and configure `on_failure` notifications.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` would fail the job, not just send a warning. `on_failure` sends notifications only on failure, not on a duration threshold being exceeded ."
+      },
+      {
+        "texto_opcion": "Configure `on_success` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_success` sends notifications when a job completes successfully. It does not trigger on a duration warning ."
+      },
+      {
+        "texto_opcion": "Use `on_start` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_start` sends notifications when a job begins. It does not provide duration-based warnings ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1755 - A data engineer is using the Jobs API to create a job. They need to define the source of a Python file task as being from a Git repository. Which field should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`git_source`",
+        "es_correcta": true,
+        "explicacion": "The `git_source` field is used to specify a remote Git repository containing the source code for the job's tasks. This allows the job to retrieve files, such as Python scripts, from the repository ."
+      },
+      {
+        "texto_opcion": "`source`",
+        "es_correcta": false,
+        "explicacion": "The `source` field is used to override the source location for a task, such as `WORKSPACE` or `GIT`. The `git_source` field defines the Git repository itself ."
+      },
+      {
+        "texto_opcion": "`libraries`",
+        "es_correcta": false,
+        "explicacion": "`libraries` is used to specify JARs or PyPI packages to be installed on the cluster, not for defining the source code repository ."
+      },
+      {
+        "texto_opcion": "`environments`",
+        "es_correcta": false,
+        "explicacion": "`environments` is for specifying task execution environments. It is not used for Git repository configuration ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1756 - A data engineer is configuring a job and wants to limit the maximum number of concurrent runs of that job to 3. Which setting should they configure?",
+    "opciones": [
+      {
+        "texto_opcion": "`max_concurrent_runs` set to 3.",
+        "es_correcta": true,
+        "explicacion": "The `max_concurrent_runs` parameter controls the maximum number of concurrent runs of a job. By default, it is 1 (to prevent overlapping runs). Setting it to 3 allows up to three runs of the same job to execute simultaneously ."
+      },
+      {
+        "texto_opcion": "`timeout_seconds` set to 3.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` sets a maximum duration for a single job run. It does not control the number of concurrent runs of the job ."
+      },
+      {
+        "texto_opcion": "`max_retries` set to 3.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls how many times a task is retried after a failure. It is not related to concurrent run limits ."
+      },
+      {
+        "texto_opcion": "`queue` set to `true`.",
+        "es_correcta": false,
+        "explicacion": "`queue` determines if the job should be queued when it is triggered. It does not set a limit on concurrent runs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1757 - A data engineer is creating a job and wants to run a notebook task. They need to pass a parameter to the notebook to specify the processing date. They want to use the parameter in the notebook with `dbutils.widgets.get()`. How should they pass this parameter?",
+    "opciones": [
+      {
+        "texto_opcion": "Use `base_parameters` in the task definition.",
+        "es_correcta": true,
+        "explicacion": "For notebook tasks, parameters are passed using `base_parameters` (or `notebook_params`). This is a map of key-value pairs that is accessible within the notebook via `dbutils.widgets.get()`. This is the standard method for parameterizing notebook tasks ."
+      },
+      {
+        "texto_opcion": "Use `jar_params` to pass parameters to the notebook task.",
+        "es_correcta": false,
+        "explicacion": "`jar_params` is used for JAR tasks, not notebook tasks. Notebook tasks use `base_parameters` ."
+      },
+      {
+        "texto_opcion": "Set an environment variable on the job cluster.",
+        "es_correcta": false,
+        "explicacion": "While environment variables can be used, they are not the standard way to pass task-specific parameters to notebooks. Using `base_parameters` with `dbutils.widgets.get()` is the recommended and more flexible approach ."
+      },
+      {
+        "texto_opcion": "Use `spark_python_task` with `parameters`.",
+        "es_correcta": false,
+        "explicacion": "`spark_python_task` is used for Python script tasks. Notebook tasks have their own parameter passing mechanism via `base_parameters` ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Parameters"
+    ]
+  },
+  {
+    "pregunta": "1758 - A data engineer is configuring a job and wants to run a SQL task that reads a configuration table. The output of this task will be used to drive a `For each` task. What is the recommended way to make the SQL task's output available as input to the `For each` task?",
+    "opciones": [
+      {
+        "texto_opcion": "The SQL task returns a JSON array of rows, which can be referenced by the `For each` task as a task value.",
+        "es_correcta": true,
+        "explicacion": "SQL tasks in Databricks Jobs output their results as a JSON array of rows. This output can be used as a task value and referenced in downstream tasks, such as a `For each` task, to dynamically define the iterations ."
+      },
+      {
+        "texto_opcion": "The SQL task must write the results to a temporary table, and the `For each` task must read from that table.",
+        "es_correcta": false,
+        "explicacion": "While this is a possible workaround, it is not the recommended approach. The SQL task's direct output as a task value is the standard and more efficient way to pass data between tasks ."
+      },
+      {
+        "texto_opcion": "The `For each` task can directly read from the configuration table using its own SQL query.",
+        "es_correcta": false,
+        "explicacion": "The `For each` task is not designed to execute SQL queries directly. It iterates over an input array provided by a task value. The SQL task is the correct way to read the configuration data ."
+      },
+      {
+        "texto_opcion": "The SQL task's results are not accessible to other tasks; it must be a notebook task.",
+        "es_correcta": false,
+        "explicacion": "SQL tasks do produce output that can be used by other tasks via task values. This is a core feature for building dynamic workflows ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1759 - A data engineer is creating a job and wants to include an `If/else` task. The condition for the `If/else` task should evaluate a task value from a previous task. Which syntax should they use for the condition?",
+    "opciones": [
+      {
+        "texto_opcion": "Use `{{tasks.<task_name>.values.<value_name>}}` to reference the task value in the condition.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` task evaluates a boolean condition that can reference task values. The syntax `{{tasks.<task_name>.values.<value_name>}}` is used to dynamically insert the value of a task value from another task into the condition ."
+      },
+      {
+        "texto_opcion": "Use `{{parameters.<parameter_name>}}` to reference a job parameter.",
+        "es_correcta": false,
+        "explicacion": "While job parameters can also be used in `If/else` conditions, the question specifies using a task value from a previous task. The correct syntax for task values is `{{tasks.<task_name>.values.<value_name>}}` ."
+      },
+      {
+        "texto_opcion": "Use `{{run.task_values.<key>}}` to reference the task value.",
+        "es_correcta": false,
+        "explicacion": "The correct syntax for referencing task values in conditions is `{{tasks.<task_name>.values.<value_name>}}`. `{{run.task_values.<key>}}` is not the standard syntax ."
+      },
+      {
+        "texto_opcion": "Use `{{dbutils.jobs.taskValues.get()}}` in the condition.",
+        "es_correcta": false,
+        "explicacion": "`dbutils.jobs.taskValues.get()` is used within a notebook task to retrieve a task value. For an `If/else` task condition, you use the dynamic value reference syntax `{{tasks.<task_name>.values.<value_name>}}` ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1762 - A data engineer is configuring a job and wants to set a maximum runtime for the entire job. Which setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`timeout_seconds`",
+        "es_correcta": true,
+        "explicacion": "The `timeout_seconds` parameter is used to set a maximum duration for a run of a job. If the run exceeds this time, it is terminated. This is the correct setting to limit the overall runtime of a job ."
+      },
+      {
+        "texto_opcion": "`max_retries`",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls how many times a task is retried upon failure. It does not set a time limit. A runtime limit is enforced by `timeout_seconds` ."
+      },
+      {
+        "texto_opcion": "`schedule` with a quartz cron expression.",
+        "es_correcta": false,
+        "explicacion": "The schedule defines when the job runs, not for how long. It does not impose a runtime limit ."
+      },
+      {
+        "texto_opcion": "`retry_on_timeout`",
+        "es_correcta": false,
+        "explicacion": "`retry_on_timeout` controls whether to retry a job that has timed out. It does not set the timeout duration. You need `timeout_seconds` to define the duration ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1767 - A data engineer is creating a job and wants to run a SQL alert as part of the workflow. They want the alert to send notifications to a specific user when the alert condition is triggered. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "The SQL Alert task.",
+        "es_correcta": true,
+        "explicacion": "The SQL Alert task type is specifically designed to evaluate a Databricks SQL alert as part of a job. It executes the alert's query and sends notifications to configured subscribers based on the alert outcome ."
+      },
+      {
+        "texto_opcion": "The Notebook task.",
+        "es_correcta": false,
+        "explicacion": "A notebook task runs a Databricks notebook. It is not specifically designed for evaluating SQL alerts, though you could build a notebook to check conditions manually. The SQL Alert task provides built-in alert functionality ."
+      },
+      {
+        "texto_opcion": "The Run Job task.",
+        "es_correcta": false,
+        "explicacion": "A Run Job task triggers another job. It does not evaluate SQL alerts. The SQL Alert task is the correct choice for this use case ."
+      },
+      {
+        "texto_opcion": "The SQL task.",
+        "es_correcta": false,
+        "explicacion": "A general SQL task executes a SQL statement. While you could use it to run a query, it does not have the built-in alert evaluation and notification logic that the SQL Alert task provides ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1769 - A data engineer is creating a job with a task that depends on another task. They want to specify that the dependent task should run if the upstream task fails. Which `run_if` condition should they use for the dependent task?",
+    "opciones": [
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": true,
+        "explicacion": "The `AT_LEAST_ONE_FAILED` condition triggers the task if at least one of its dependencies has failed. This is the correct condition for running a task when a previous task fails, such as for sending failure alerts ."
+      },
+      {
+        "texto_opcion": "`ALL_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`ALL_FAILED` triggers the task only if all of its dependencies have failed. The requirement is to run if a previous task fails, which is `AT_LEAST_ONE_FAILED` ."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "`ALL_SUCCESS` would run the task only if all dependencies succeeded. This is the default behavior and is the opposite of the requirement ."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`NONE_FAILED` triggers the task only if none of its dependencies failed. This is not the desired behavior for running a task on failure ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1770 - A data engineer is creating a job and wants to run a task that evaluates a boolean condition and branches the workflow accordingly. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`If/else` condition task.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` condition task is designed to add boolean conditional logic to task graphs. It evaluates a condition and allows you to configure tasks that run based on `true` or `false` results ."
+      },
+      {
+        "texto_opcion": "`Run if` conditional task.",
+        "es_correcta": false,
+        "explicacion": "`Run if` conditionals control when a downstream task runs based on the status of upstream tasks. `If/else` tasks control branching logic based on a boolean expression evaluated from task values or parameters ."
+      },
+      {
+        "texto_opcion": "`For each` task.",
+        "es_correcta": false,
+        "explicacion": "`For each` is used to run a task in a loop, passing different parameters to each iteration. It is not used for conditional branching ."
+      },
+      {
+        "texto_opcion": "The SQL Alert task.",
+        "es_correcta": false,
+        "explicacion": "The SQL Alert task is used to evaluate a Databricks SQL alert. It does not provide general conditional branching logic for tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1774 - A data engineer is creating a job and wants to run a notebook task. They need to specify the source of the notebook. Which field in the task definition is used for this?",
+    "opciones": [
+      {
+        "texto_opcion": "The `notebook_task` field with the `notebook_path`.",
+        "es_correcta": true,
+        "explicacion": "The `notebook_task` is used to define a notebook task. It requires the `notebook_path`, which specifies the location of the notebook in the workspace ."
+      },
+      {
+        "texto_opcion": "The `spark_jar_task` field with the `main_class_name`.",
+        "es_correcta": false,
+        "explicacion": "`spark_jar_task` is used for JAR tasks. It requires the `main_class_name` to be specified ."
+      },
+      {
+        "texto_opcion": "The `spark_python_task` field with the `python_file`.",
+        "es_correcta": false,
+        "explicacion": "`spark_python_task` is used for Python file tasks. It requires the `python_file` path. This is not for notebook tasks ."
+      },
+      {
+        "texto_opcion": "The `pipeline_task` field with the `pipeline_id`.",
+        "es_correcta": false,
+        "explicacion": "`pipeline_task` is used to run a Delta Live Tables pipeline. It is not for notebook tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1775 - A data engineer has a job with multiple tasks. They want to share context and state information between tasks. What feature should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Task values",
+        "es_correcta": true,
+        "explicacion": "Task values allow you to pass information between scheduled tasks. You can define them in your logic to return results of computation or state from a task to the job environment. They can be referenced in downstream tasks ."
+      },
+      {
+        "texto_opcion": "Job parameters",
+        "es_correcta": false,
+        "explicacion": "Job parameters are runtime parameters that are pushed to tasks within the job. They are set at the job level and are static for a given run. Task values are dynamic and set by tasks ."
+      },
+      {
+        "texto_opcion": "Environment variables",
+        "es_correcta": false,
+        "explicacion": "Environment variables are set at the cluster level and are not designed for dynamic task-to-task communication. Task values are the specific feature for this purpose ."
+      },
+      {
+        "texto_opcion": "Git repository",
+        "es_correcta": false,
+        "explicacion": "A Git repository is used for source code version control, not for passing runtime context between tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1776 - A data engineer is creating a job with a complex workflow. They want to run Task B only if Task A fails, to send a failure alert. Which `run_if` condition should they configure for Task B?",
+    "opciones": [
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": true,
+        "explicacion": "The `AT_LEAST_ONE_FAILED` condition is the correct choice to trigger a task when a dependency fails. This ensures Task B runs if Task A fails, making it suitable for failure alert tasks ."
+      },
+      {
+        "texto_opcion": "`ALL_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`ALL_FAILED` would only run Task B if all dependencies failed. The requirement is to run if a single dependency fails ."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "This would run Task B only if Task A succeeds, which is the opposite of the desired behavior ."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This condition would run Task B if no dependencies failed, which does not match the requirement of running on Task A's failure ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1777 - A data engineer is configuring a job and wants to set a maximum runtime of 2 hours for the entire job. Which setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`timeout_seconds`",
+        "es_correcta": true,
+        "explicacion": "The `timeout_seconds` parameter is the correct setting to limit the overall runtime of a job. A value of 7200 seconds (2 hours) would terminate the run if it exceeds this duration ."
+      },
+      {
+        "texto_opcion": "`max_retries`",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls the number of times a task is retried upon failure, not the total runtime limit ."
+      },
+      {
+        "texto_opcion": "`schedule`",
+        "es_correcta": false,
+        "explicacion": "The `schedule` defines when the job runs, not its maximum duration ."
+      },
+      {
+        "texto_opcion": "`retry_on_timeout`",
+        "es_correcta": false,
+        "explicacion": "This setting controls whether a timed-out job is retried. It does not set the timeout duration itself ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1778 - A data engineer wants to pass a JSON array of table names from a SQL task to a `For each` task to process each table. The array is too large for the UI input field. According to Databricks documentation, how should they pass this list?",
+    "opciones": [
+      {
+        "texto_opcion": "Use a task value reference (`{{tasks.<task_name>.values.<value_name>}}`), which supports larger payloads.",
+        "es_correcta": true,
+        "explicacion": "Task values can be used to pass larger data (up to 48 KB) between tasks. A SQL task can output a JSON array as a task value, and the `For each` task can reference it using the dynamic value syntax to iterate over it. This bypasses the UI's character limit ."
+      },
+      {
+        "texto_opcion": "Split the list across multiple `For each` tasks.",
+        "es_correcta": false,
+        "explicacion": "This would make the workflow complex and difficult to manage. Using task value references is the standard and supported approach for passing larger data between tasks ."
+      },
+      {
+        "texto_opcion": "Increase the concurrency of the `For each` task.",
+        "es_correcta": false,
+        "explicacion": "`Concurrency` controls parallel execution of iterations, not the size of the input array. It does not affect the character limit of the input field ."
+      },
+      {
+        "texto_opcion": "Hardcode the list in the job definition.",
+        "es_correcta": false,
+        "explicacion": "Hardcoding the list defeats the purpose of dynamic workflow generation and is not a best practice as it requires manual updates for any changes ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1779 - A data engineer is configuring a job and wants to set up email notifications for job failures. They only want to be notified when the job fails, not on start or success. Which notification setting should they configure?",
+    "opciones": [
+      {
+        "texto_opcion": "`on_failure` email notifications.",
+        "es_correcta": true,
+        "explicacion": "The `on_failure` field is used to specify email addresses for notifications when a job run fails, which includes states like `FAILED`, `INTERNAL_ERROR`, or `TIMED_OUT` ."
+      },
+      {
+        "texto_opcion": "`on_start` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_start` emails are sent when a job run begins, which is not the desired event for this requirement ."
+      },
+      {
+        "texto_opcion": "`on_success` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_success` emails are sent when a job completes successfully, which is not the desired event ."
+      },
+      {
+        "texto_opcion": "`no_alert_for_skipped_runs`",
+        "es_correcta": false,
+        "explicacion": "This setting controls whether notifications are muted for skipped runs, not the type of event (start, success, failure) that triggers a notification ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1780 - A data engineer is creating a job and wants to run a task that evaluates a boolean condition based on a task value from a previous task. Which task type should they use to implement this branching logic?",
+    "opciones": [
+      {
+        "texto_opcion": "The `If/else` condition task.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` task is specifically designed to add boolean conditional logic to task graphs. It evaluates a condition that can reference task values, job parameters, or dynamic values, and then runs tasks defined in the `if` or `else` branches ."
+      },
+      {
+        "texto_opcion": "The `Run if` conditional task.",
+        "es_correcta": false,
+        "explicacion": "`Run if` conditionals control when a downstream task runs based on the status (success, failure) of upstream tasks, not a boolean expression based on data or parameters ."
+      },
+      {
+        "texto_opcion": "The `For each` task.",
+        "es_correcta": false,
+        "explicacion": "`For each` is used for looping, not for conditional branching ."
+      },
+      {
+        "texto_opcion": "The SQL Alert task.",
+        "es_correcta": false,
+        "explicacion": "The SQL Alert task is used to evaluate a Databricks SQL alert, not for general conditional branching logic ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1781 - A data engineer needs to run a task 100 times, each time with a different parameter value from a list generated by a preceding SQL query. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "A `For each` task that iterates over the SQL query output.",
+        "es_correcta": true,
+        "explicacion": "The `For each` task is designed to run another task in a loop with different parameters. The input for the loop can be generated dynamically by a preceding SQL task, making it ideal for iterating over query results ."
+      },
+      {
+        "texto_opcion": "A `Run if` conditional task for each table.",
+        "es_correcta": false,
+        "explicacion": "`Run if` controls execution based on dependency status, not for iterating over a list. It would require creating a separate task for each iteration and is not suitable for a variable-sized list ."
+      },
+      {
+        "texto_opcion": "An `If/else` condition task.",
+        "es_correcta": false,
+        "explicacion": "`If/else` is for branching logic, not for looping over a list of values ."
+      },
+      {
+        "texto_opcion": "You cannot loop tasks in Databricks Jobs.",
+        "es_correcta": false,
+        "explicacion": "The `For each` task is specifically designed to support looping functionality in Databricks Jobs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1783 - A data engineer is configuring a job and wants to receive a warning notification if a run exceeds a certain duration, such as 30 minutes. Which notification setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "A `health` rule with `RUN_DURATION_SECONDS` and `on_duration_warning_threshold_exceeded` email notifications.",
+        "es_correcta": true,
+        "explicacion": "The `health` field allows defining rules for job run health. A `RUN_DURATION_SECONDS` rule with a threshold will trigger a warning if the run exceeds that duration, and this warning can be sent via `on_duration_warning_threshold_exceeded` emails ."
+      },
+      {
+        "texto_opcion": "`on_failure` notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_failure` sends notifications only when a job run fails, not when it exceeds a duration threshold ."
+      },
+      {
+        "texto_opcion": "`on_success` notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_success` sends notifications when a job completes successfully, which does not meet the requirement of a duration warning ."
+      },
+      {
+        "texto_opcion": "`timeout_seconds` with a value of 1800.",
+        "es_correcta": false,
+        "explicacion": "This setting would fail the job after the specified time, not just send a warning. A `health` rule is for warning notifications without failing the job ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1784 - A data engineer is creating a job and wants to run a notebook task. They need to specify the path to the notebook. Which field in the task definition is used for this?",
+    "opciones": [
+      {
+        "texto_opcion": "The `notebook_task` field with the `notebook_path`.",
+        "es_correcta": true,
+        "explicacion": "The `notebook_task` is used to define a notebook task, and it requires the `notebook_path` to specify the location of the notebook in the workspace ."
+      },
+      {
+        "texto_opcion": "The `spark_jar_task` field with the `main_class_name`.",
+        "es_correcta": false,
+        "explicacion": "`spark_jar_task` is for JAR tasks, requiring the `main_class_name` ."
+      },
+      {
+        "texto_opcion": "The `spark_python_task` field with the `python_file`.",
+        "es_correcta": false,
+        "explicacion": "`spark_python_task` is for Python script tasks, requiring the `python_file` path ."
+      },
+      {
+        "texto_opcion": "The `pipeline_task` field with the `pipeline_id`.",
+        "es_correcta": false,
+        "explicacion": "`pipeline_task` is used to run a Delta Live Tables pipeline and is not for notebook tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1785 - A data engineer has a job with multiple tasks. They want to capture and share the result of a computation, such as a record count, from one task to another for conditional logic. Which Databricks feature should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Task values.",
+        "es_correcta": true,
+        "explicacion": "Task values are specifically designed to allow tasks to capture and share state or results of computations with downstream tasks. They can be referenced in downstream tasks using dynamic value references, enabling conditional logic based on task outputs ."
+      },
+      {
+        "texto_opcion": "Job parameters.",
+        "es_correcta": false,
+        "explicacion": "Job parameters are static values defined at the job level and pushed down to tasks. They cannot be dynamically generated by a task during a run ."
+      },
+      {
+        "texto_opcion": "Environment variables.",
+        "es_correcta": false,
+        "explicacion": "Environment variables are set at the cluster level and are not designed for dynamic, task-to-task communication ."
+      },
+      {
+        "texto_opcion": "The `dbutils.notebook` API.",
+        "es_correcta": false,
+        "explicacion": "While notebooks can be run programmatically, the task values feature is the standard and dedicated mechanism for passing information between distinct tasks in a Databricks job ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1787 - A data engineer is creating a job with multiple tasks. They want Task C to run after both Task A and Task B have completed, but they do not care whether Task A or Task B succeeded or failed. Which `run_if` condition should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`ALL_DONE`",
+        "es_correcta": true,
+        "explicacion": "The `ALL_DONE` condition triggers the task after all its dependencies have run, regardless of their success or failure status. This is the correct choice for running a task after dependencies complete, irrespective of outcome ."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "This would require both Task A and Task B to succeed, which is not the requirement ."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This would run if none of the dependencies failed. If Task A fails, this condition would not be met ."
+      },
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This would only run if at least one dependency failed, which is not the requirement ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1788 - A data engineer is configuring a job and wants to use serverless compute for a notebook task to minimize management overhead. According to Databricks best practices, which compute option should they select?",
+    "opciones": [
+      {
+        "texto_opcion": "Serverless job compute.",
+        "es_correcta": true,
+        "explicacion": "Serverless job compute is the recommended compute option for most automated workloads, including notebook tasks. It provides rapid startup, automatic scaling, and is fully managed by Databricks, significantly reducing operational overhead ."
+      },
+      {
+        "texto_opcion": "An existing cluster.",
+        "es_correcta": false,
+        "explicacion": "Running jobs on an existing cluster requires manual management of cluster lifecycle and scaling, which increases operational overhead compared to serverless compute ."
+      },
+      {
+        "texto_opcion": "A new job cluster.",
+        "es_correcta": false,
+        "explicacion": "While a new job cluster is a good option, serverless compute is often preferred for its instant startup and automatic scaling, reducing management needs ."
+      },
+      {
+        "texto_opcion": "A SQL warehouse.",
+        "es_correcta": false,
+        "explicacion": "A SQL warehouse is designed for SQL tasks and queries, not for general-purpose notebook tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Job clusters"
+    ]
+  },
+  {
+    "pregunta": "1789 - A data engineer is using the Jobs API and wants to create a job that runs a Python file. Which field in the API request should they use to specify the Python file path?",
+    "opciones": [
+      {
+        "texto_opcion": "The `spark_python_task` field with the `python_file`.",
+        "es_correcta": true,
+        "explicacion": "The `spark_python_task` field is used to define a Python script task, and it requires the `python_file` to specify the path to the Python file in DBFS or a Git repository ."
+      },
+      {
+        "texto_opcion": "The `notebook_task` field with the `notebook_path`.",
+        "es_correcta": false,
+        "explicacion": "`notebook_task` is for Databricks notebooks, not for Python files ."
+      },
+      {
+        "texto_opcion": "The `spark_jar_task` field with the `main_class_name`.",
+        "es_correcta": false,
+        "explicacion": "`spark_jar_task` is for JAR files, requiring the `main_class_name` ."
+      },
+      {
+        "texto_opcion": "The `libraries` field.",
+        "es_correcta": false,
+        "explicacion": "`libraries` is used to specify JARs or PyPI packages to be installed on the cluster, not for defining the main Python file to run ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1790 - A data engineer is configuring a job and wants to ensure that if a task fails due to a timeout, it is retried. Which settings should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Set `timeout_seconds` and `retry_on_timeout` to `true`.",
+        "es_correcta": true,
+        "explicacion": "To retry a task when it times out, you need to define the timeout duration with `timeout_seconds` and explicitly enable retries on timeout by setting `retry_on_timeout` to `true` ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` and `max_retries` to a value greater than 0.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls retries for task failures (e.g., due to errors), but it does not automatically retry on timeout. The explicit `retry_on_timeout` setting is required ."
+      },
+      {
+        "texto_opcion": "Set `min_retry_interval_millis` to a high value.",
+        "es_correcta": false,
+        "explicacion": "This setting controls the minimum interval between retries, not the behavior of retrying on timeout ."
+      },
+      {
+        "texto_opcion": "Set `max_retries` to -1.",
+        "es_correcta": false,
+        "explicacion": "Setting `max_retries` to -1 retries indefinitely, but only on task failure. To retry on timeout, you need `retry_on_timeout` ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Retries"
+    ]
+  },
+  {
+    "pregunta": "1791 - A data engineer is designing a job and wants to run a set of tasks only if a condition is met, based on the output of a previous task. For example, run a transformation task only if the upstream ingestion task added new data. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "The `If/else` condition task.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` condition task allows you to add branching logic to a job based on a boolean expression. This condition can be evaluated against task values, job parameters, or dynamic values, enabling you to run specific tasks based on the output of upstream tasks ."
+      },
+      {
+        "texto_opcion": "A `Run if` conditional on the task.",
+        "es_correcta": false,
+        "explicacion": "`Run if` conditionals are based on the status (success, failure) of upstream tasks, not on a boolean expression or data values ."
+      },
+      {
+        "texto_opcion": "A `For each` task.",
+        "es_correcta": false,
+        "explicacion": "`For each` is for looping, not for conditional branching ."
+      },
+      {
+        "texto_opcion": "The `Run Job` task.",
+        "es_correcta": false,
+        "explicacion": "A `Run Job` task triggers another job. It does not provide conditional branching logic within the current job's workflow ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1792 - A data engineer is creating a job with a long-running task. They want to receive a warning if the task runs for more than 60 minutes, but they do not want the task to fail automatically. Which configuration should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Configure a `health` rule with `RUN_DURATION_SECONDS` and set `on_duration_warning_threshold_exceeded` notifications.",
+        "es_correcta": true,
+        "explicacion": "Health rules allow you to define a duration threshold that triggers a warning notification without failing the task. This is the correct approach for getting a warning on long-running tasks ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` to 3600.",
+        "es_correcta": false,
+        "explicacion": "This would fail the task after 60 minutes, which is not the desired behavior. The health rule provides a warning without automatic failure ."
+      },
+      {
+        "texto_opcion": "Configure `on_failure` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_failure` sends notifications only when a task fails, not when it exceeds a duration threshold ."
+      },
+      {
+        "texto_opcion": "Use the `health` rule with `STREAMING_BACKLOG_BYTES`.",
+        "es_correcta": false,
+        "explicacion": "`STREAMING_BACKLOG_BYTES` is a streaming-specific metric for health rules. For a duration warning, you need to use `RUN_DURATION_SECONDS` ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1793 - A data engineer is using the Jobs API to create a job. They want to define the source of a notebook task as being from a Git repository. Which field should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`git_source`",
+        "es_correcta": true,
+        "explicacion": "The `git_source` field is used to specify a remote Git repository containing the source code for the job's tasks. This allows the job to retrieve files, such as notebooks, from the repository ."
+      },
+      {
+        "texto_opcion": "`source`",
+        "es_correcta": false,
+        "explicacion": "The `source` field is used to override the source location for a task, such as `WORKSPACE` or `GIT`. The `git_source` field defines the Git repository itself ."
+      },
+      {
+        "texto_opcion": "`libraries`",
+        "es_correcta": false,
+        "explicacion": "`libraries` is used to specify JARs or PyPI packages to be installed on the cluster, not for defining the source code repository ."
+      },
+      {
+        "texto_opcion": "`environments`",
+        "es_correcta": false,
+        "explicacion": "`environments` is for specifying task execution environments. It is not used for Git repository configuration ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1794 - A data engineer is configuring a job and wants to run a task only after both Task A and Task B have completed, regardless of their success or failure. Which `run_if` condition should they use for this task?",
+    "opciones": [
+      {
+        "texto_opcion": "`ALL_DONE`",
+        "es_correcta": true,
+        "explicacion": "The `ALL_DONE` condition triggers the task after all its dependencies have run, irrespective of their success or failure status. This is the correct choice for running a task after dependencies complete, regardless of outcome ."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "This condition requires both Task A and Task B to succeed, which is not the requirement since the task should run regardless of their status."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This condition would run if none of the dependencies failed. If either Task A or Task B fails, this condition would not be met."
+      },
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This condition would only run if at least one dependency failed, which is not the requirement. The task should run regardless of outcome."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1795 - A data engineer needs to run a task with different parameters for each value in a list that is dynamically generated by a previous SQL task. Which task type should they use to iterate over this list?",
+    "opciones": [
+      {
+        "texto_opcion": "A `For each` task that iterates over the SQL task's output.",
+        "es_correcta": true,
+        "explicacion": "The `For each` task is designed to run a nested task in a loop with different parameters. The input for the loop can be generated dynamically by a preceding SQL task, making it ideal for iterating over query results ."
+      },
+      {
+        "texto_opcion": "A `Run if` conditional task for each table.",
+        "es_correcta": false,
+        "explicacion": "`Run if` controls execution based on dependency status, not for iterating over a list. It would require creating a separate task for each iteration and is not suitable for a variable-sized list ."
+      },
+      {
+        "texto_opcion": "An `If/else` condition task.",
+        "es_correcta": false,
+        "explicacion": "`If/else` is for branching logic based on a boolean condition, not for looping over a list of values ."
+      },
+      {
+        "texto_opcion": "You cannot loop tasks in Databricks Jobs.",
+        "es_correcta": false,
+        "explicacion": "The `For each` task is specifically designed to support looping functionality in Databricks Jobs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1799 - A data engineer is creating a job and wants to run a task that evaluates a boolean condition and branches the workflow accordingly. The condition should be based on a task value from a previous task. Which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "The `If/else` condition task.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` condition task is designed to add boolean conditional logic to task graphs. It evaluates a condition that can reference task values, job parameters, or dynamic values, and then runs tasks defined in the `if` or `else` branches ."
+      },
+      {
+        "texto_opcion": "The `Run if` conditional task.",
+        "es_correcta": false,
+        "explicacion": "`Run if` conditionals control when a downstream task runs based on the status (success, failure) of upstream tasks, not a boolean expression based on data or parameters ."
+      },
+      {
+        "texto_opcion": "The `For each` task.",
+        "es_correcta": false,
+        "explicacion": "`For each` is used for looping, not for conditional branching ."
+      },
+      {
+        "texto_opcion": "The SQL Alert task.",
+        "es_correcta": false,
+        "explicacion": "The SQL Alert task is used to evaluate a Databricks SQL alert, not for general conditional branching logic ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1811 - A data engineer is configuring a job and wants to limit the maximum number of concurrent runs of that job to 2. Which setting should they configure?",
+    "opciones": [
+      {
+        "texto_opcion": "`max_concurrent_runs`",
+        "es_correcta": true,
+        "explicacion": "The `max_concurrent_runs` parameter controls the maximum number of concurrent runs of a job. By default, it is 1 (to prevent overlapping runs). Setting it to 2 allows up to two runs of the same job to execute simultaneously ."
+      },
+      {
+        "texto_opcion": "`timeout_seconds`",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` sets a maximum duration for a single job run. It does not control the number of concurrent runs of the job ."
+      },
+      {
+        "texto_opcion": "`max_retries`",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls how many times a task is retried after a failure. It is not related to concurrent run limits ."
+      },
+      {
+        "texto_opcion": "`queue`",
+        "es_correcta": false,
+        "explicacion": "`queue` is a parameter that determines if the job should be queued when it is triggered. It does not set a limit on concurrent runs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1816 - A data engineer is configuring a job in a CI/CD pipeline using infrastructure-as-code. They want to set a timeout of 1 hour for a specific task. If the task times out, it should fail and not be retried. How should they define this in the job definition code?",
+    "opciones": [
+      {
+        "texto_opcion": "Include `timeout_seconds` set to 3600 and ensure `retry_on_timeout` is `false` (or omitted).",
+        "es_correcta": true,
+        "explicacion": "`timeout_seconds` defines the maximum duration for a task. By default, `retry_on_timeout` is `false`, meaning if a task times out, it will fail without retrying. This meets the requirement of failing on timeout without retries. This configuration must be defined in the job definition code to persist across deployments."
+      },
+      {
+        "texto_opcion": "Set `max_retries` to 0 and `timeout_seconds` to 3600.",
+        "es_correcta": false,
+        "explicacion": "Setting `max_retries` to 0 prevents retries on task failure due to errors, but it does not control retries on timeout. To prevent retries on timeout, you need to set `retry_on_timeout` to `false`. The default behavior is already to not retry on timeout, so explicitly setting `max_retries` is not the correct way to handle this."
+      },
+      {
+        "texto_opcion": "Configure a `health` rule with `RUN_DURATION_SECONDS` set to 3600 and `on_duration_warning_threshold_exceeded`.",
+        "es_correcta": false,
+        "explicacion": "A `health` rule with `RUN_DURATION_SECONDS` sends a warning notification if the duration threshold is exceeded, but it does not fail the task. The requirement is to fail the task on timeout, which is achieved with `timeout_seconds`. The `health` rule is for warnings, not for failing tasks."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` to 3600 and `retry_on_timeout` to `true`.",
+        "es_correcta": false,
+        "explicacion": "Setting `retry_on_timeout` to `true` enables retries on timeout, which is the opposite of the requirement. The task should fail on timeout without retrying, so `retry_on_timeout` should be `false` or omitted."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1817 - A data engineer is using a `For each` task to process a list of table names. They want to run the nested task for each table name in parallel to improve throughput. How should they configure this?",
+    "opciones": [
+      {
+        "texto_opcion": "Set the `concurrency` property of the `For each` task to the desired number of parallel iterations.",
+        "es_correcta": true,
+        "explicacion": "The `concurrency` setting for a `For each` task controls how many iterations of the nested task can run simultaneously. The default value is 1, meaning iterations run sequentially. Setting `concurrency` to a value greater than 1 allows parallel execution of the nested task across different iterations."
+      },
+      {
+        "texto_opcion": "Increase the `max_concurrent_runs` of the entire job.",
+        "es_correcta": false,
+        "explicacion": "`max_concurrent_runs` controls how many runs of the entire job can execute in parallel, not the parallelism of the `For each` task's iterations. It is not the correct setting for controlling parallel iterations within a `For each` task."
+      },
+      {
+        "texto_opcion": "Set the `max_retries` property of the nested task to a value greater than 1.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls how many times a task is retried after a failure, not the parallelism of iterations. It does not affect the `concurrency` of the `For each` task."
+      },
+      {
+        "texto_opcion": "The `For each` task does not support parallel execution. Iterations always run sequentially.",
+        "es_correcta": false,
+        "explicacion": "The `For each` task supports parallel execution through the `concurrency` setting. By default, iterations run sequentially, but you can configure parallel execution to improve performance."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1818 - A data engineer is configuring a job and wants to be notified via email if a run takes longer than 45 minutes. They do not want the run to fail automatically. Which configuration should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "Configure a `health` rule with `RUN_DURATION_SECONDS` set to 2700 and specify `on_duration_warning_threshold_exceeded` email addresses.",
+        "es_correcta": true,
+        "explicacion": "Health rules allow you to define a duration threshold that triggers a warning notification without failing the task. A `RUN_DURATION_SECONDS` rule with a threshold of 2700 seconds (45 minutes) will send a warning to the specified email addresses if the run exceeds that duration."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` to 2700.",
+        "es_correcta": false,
+        "explicacion": "Setting `timeout_seconds` to 2700 would fail the job after 45 minutes, which is not the desired behavior. The engineer wants a warning, not a failure."
+      },
+      {
+        "texto_opcion": "Configure `on_failure` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_failure` sends notifications only when a task fails, not when a duration threshold is exceeded. The duration warning is a separate notification setting."
+      },
+      {
+        "texto_opcion": "Use the `health` rule with `STREAMING_BACKLOG_BYTES`.",
+        "es_correcta": false,
+        "explicacion": "`STREAMING_BACKLOG_BYTES` is a streaming-specific metric for health rules. For a duration warning, you need to use `RUN_DURATION_SECONDS`."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1819 - A data engineer is creating a job with multiple tasks. They want Task C to run only if Task A succeeded and Task B failed. Which `run_if` condition should they configure for Task C?",
+    "opciones": [
+      {
+        "texto_opcion": "`ALL_SUCCEEDED_AND_ONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This condition is not a valid `run_if` option in Databricks Jobs. The available conditions are `ALL_SUCCESS`, `AT_LEAST_ONE_FAILED`, `NONE_FAILED`, `ALL_DONE`, and `ALL_FAILED`."
+      },
+      {
+        "texto_opcion": "This combination cannot be expressed with a single `run_if` condition.",
+        "es_correcta": true,
+        "explicacion": "The `run_if` conditions in Databricks Jobs are based on the aggregate status of dependencies. They evaluate conditions like all succeeded, at least one failed, or none failed. A condition requiring specific statuses for individual tasks (Task A succeeded and Task B failed) cannot be expressed with a single `run_if`. You would need to restructure the workflow using `If/else` conditions or intermediate tasks."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`NONE_FAILED` would run Task C if Task A succeeds and Task B does not fail (i.e., Task B succeeds or is skipped). If Task B fails, Task C would not run, which is not the requirement."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS` with dependencies on both Task A and Task B.",
+        "es_correcta": false,
+        "explicacion": "`ALL_SUCCESS` would run Task C only if both Task A and Task B succeed. The requirement is for Task C to run when Task A succeeds and Task B fails, which is the opposite."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1820 - A data engineer is creating a job that runs a Python file from a Git repository. They have specified the `git_source` for the job. Which field in the task definition is used to specify the Python file path within the repository?",
+    "opciones": [
+      {
+        "texto_opcion": "The `spark_python_task` field with the `python_file`.",
+        "es_correcta": true,
+        "explicacion": "The `spark_python_task` field is used to define a Python script task. The `python_file` specifies the path to the Python file relative to the root of the Git repository. The `git_source` provides the repository context."
+      },
+      {
+        "texto_opcion": "The `notebook_task` field with the `notebook_path`.",
+        "es_correcta": false,
+        "explicacion": "`notebook_task` is for Databricks notebooks, not for Python files. The `python_file` field is used for Python script tasks."
+      },
+      {
+        "texto_opcion": "The `spark_jar_task` field with the `main_class_name`.",
+        "es_correcta": false,
+        "explicacion": "`spark_jar_task` is for JAR files, requiring the `main_class_name`. It is not for Python files."
+      },
+      {
+        "texto_opcion": "The `source` field.",
+        "es_correcta": false,
+        "explicacion": "The `source` field is used to override the source location for a task, such as `WORKSPACE` or `GIT`. The `python_file` field specifies the actual file path within that source."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Tasks"
+    ]
+  },
+  {
+    "pregunta": "1821 - A data engineer is configuring a job and wants to run a task only after a previous task has completed, but the previous task may be skipped under certain conditions. Which `run_if` condition should they use for the downstream task?",
+    "opciones": [
+      {
+        "texto_opcion": "`ALL_DONE`",
+        "es_correcta": true,
+        "explicacion": "The `ALL_DONE` condition triggers the task after all its dependencies have run, regardless of their status (success, failure, or skipped). This is the correct choice for running a task after dependencies complete, irrespective of outcome."
+      },
+      {
+        "texto_opcion": "`ALL_SUCCESS`",
+        "es_correcta": false,
+        "explicacion": "`ALL_SUCCESS` requires all dependencies to succeed. If a dependency is skipped or fails, Task C will not run, which is not the requirement."
+      },
+      {
+        "texto_opcion": "`NONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "`NONE_FAILED` would run if none of the dependencies failed. If a dependency is skipped, it is not considered failed, so this condition would be met. However, `ALL_DONE` is more explicit for running regardless of status."
+      },
+      {
+        "texto_opcion": "`AT_LEAST_ONE_FAILED`",
+        "es_correcta": false,
+        "explicacion": "This would only run if at least one dependency failed, which is not the requirement. The task should run regardless of the dependency's outcome."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1822 - A data engineer is using the Jobs API to create a job. They want to include a SQL task that reads a configuration table and outputs a JSON array. How can they make this output available to downstream tasks?",
+    "opciones": [
+      {
+        "texto_opcion": "The SQL task automatically returns a JSON array of rows, which can be referenced as a task value.",
+        "es_correcta": true,
+        "explicacion": "SQL tasks in Databricks Jobs output their results as a JSON array of rows. This output can be used as a task value and referenced in downstream tasks, such as a `For each` task, to dynamically define the iterations."
+      },
+      {
+        "texto_opcion": "The SQL task must write the results to a temporary table, and downstream tasks must read from that table.",
+        "es_correcta": false,
+        "explicacion": "While this is a possible workaround, it is not the recommended approach. The SQL task's direct output as a task value is the standard and more efficient way to pass data between tasks."
+      },
+      {
+        "texto_opcion": "The output of a SQL task is not accessible to other tasks; it must be a notebook task.",
+        "es_correcta": false,
+        "explicacion": "SQL tasks do produce output that can be used by other tasks via task values. This is a core feature for building dynamic workflows."
+      },
+      {
+        "texto_opcion": "Use the `base_parameters` field to pass the SQL output to downstream tasks.",
+        "es_correcta": false,
+        "explicacion": "`base_parameters` is used for passing parameters to tasks, not for capturing output from a SQL task. The SQL task's output is available as a task value."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1823 - A data engineer is configuring a job and wants to set a maximum runtime of 2 hours for the entire job. If the job exceeds this time, it should be terminated. Which setting should they use in the job definition?",
+    "opciones": [
+      {
+        "texto_opcion": "`timeout_seconds` set to 7200.",
+        "es_correcta": true,
+        "explicacion": "The `timeout_seconds` parameter is the correct setting to limit the overall runtime of a job. A value of 7200 seconds (2 hours) would terminate the run if it exceeds this duration."
+      },
+      {
+        "texto_opcion": "`max_retries` set to 7200.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls the number of times a task is retried upon failure, not the total runtime limit. It accepts an integer count, not a time duration."
+      },
+      {
+        "texto_opcion": "`schedule` with a quartz cron expression.",
+        "es_correcta": false,
+        "explicacion": "The `schedule` defines when the job runs, not its maximum duration."
+      },
+      {
+        "texto_opcion": "`retry_on_timeout` set to `false`.",
+        "es_correcta": false,
+        "explicacion": "`retry_on_timeout` controls whether a timed-out job is retried. It does not set the timeout duration itself."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1824 - A data engineer is configuring a job and wants to set up email notifications for when a job run fails. They only want to be notified on failure, not on start or success. Which notification setting should they configure?",
+    "opciones": [
+      {
+        "texto_opcion": "`on_failure` email notifications.",
+        "es_correcta": true,
+        "explicacion": "The `on_failure` field is used to specify email addresses for notifications when a job run fails, which includes states like `FAILED`, `INTERNAL_ERROR`, or `TIMED_OUT`."
+      },
+      {
+        "texto_opcion": "`on_start` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_start` emails are sent when a job run begins, which is not the desired event for this requirement."
+      },
+      {
+        "texto_opcion": "`on_success` email notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_success` emails are sent when a job completes successfully, which is not the desired event."
+      },
+      {
+        "texto_opcion": "`no_alert_for_skipped_runs`",
+        "es_correcta": false,
+        "explicacion": "This setting controls whether notifications are muted for skipped runs, not the type of event (start, success, failure) that triggers a notification."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1845 - A data engineer is configuring a job that runs a notebook task and wants to use a serverless compute environment to minimize startup time and management overhead. According to Databricks best practices, which compute option should they select?",
+    "opciones": [
+      {
+        "texto_opcion": "Serverless job compute.",
+        "es_correcta": true,
+        "explicacion": "Serverless job compute is the recommended compute option for most automated workloads, including notebook tasks. It provides rapid startup, automatic scaling, and is fully managed by Databricks, reducing operational overhead ."
+      },
+      {
+        "texto_opcion": "A classic all-purpose cluster.",
+        "es_correcta": false,
+        "explicacion": "All-purpose clusters are intended for interactive workloads like notebooks. They have slower startup times compared to serverless compute and are not optimized for automated jobs ."
+      },
+      {
+        "texto_opcion": "A new job cluster.",
+        "es_correcta": false,
+        "explicacion": "A new job cluster is created for each run and terminated afterward. While this is a valid option, serverless compute is the recommended choice for most workloads due to its instant startup and automatic scaling ."
+      },
+      {
+        "texto_opcion": "A SQL warehouse.",
+        "es_correcta": false,
+        "explicacion": "A SQL warehouse is designed for SQL tasks and queries, not for general-purpose notebook tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Job clusters"
+    ]
+  },
+  {
+    "pregunta": "1846 - A data engineer is configuring a job and wants to set a maximum runtime of 2 hours for a specific task. If the task exceeds this time, it should be terminated. Which setting should they use in the task definition?",
+    "opciones": [
+      {
+        "texto_opcion": "`timeout_seconds` set to 7200.",
+        "es_correcta": true,
+        "explicacion": "The `timeout_seconds` parameter is the correct setting to limit the maximum duration of a task. A value of 7200 seconds (2 hours) will terminate the task if it exceeds this duration ."
+      },
+      {
+        "texto_opcion": "`max_retries` set to 7200.",
+        "es_correcta": false,
+        "explicacion": "`max_retries` controls the number of times a task is retried upon failure, not the runtime limit. It accepts an integer count, not a time duration ."
+      },
+      {
+        "texto_opcion": "A `health` rule with `RUN_DURATION_SECONDS` set to 7200.",
+        "es_correcta": false,
+        "explicacion": "A `health` rule sends a warning notification when a duration threshold is exceeded, but it does not terminate the task. `timeout_seconds` is the correct setting for termination ."
+      },
+      {
+        "texto_opcion": "`retry_on_timeout` set to `false`.",
+        "es_correcta": false,
+        "explicacion": "`retry_on_timeout` controls whether a timed-out task is retried. It does not set the timeout duration itself ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Jobs"
+    ]
+  },
+  {
+    "pregunta": "1849 - A data engineer needs to run a task 100 times, each time with a different parameter value from a list. The list is dynamically generated by a preceding SQL task. According to Databricks best practices, which task type should they use to iterate over this list?",
+    "opciones": [
+      {
+        "texto_opcion": "A `For each` task that iterates over the SQL task's output.",
+        "es_correcta": true,
+        "explicacion": "The `For each` task is designed to run another task in a loop, passing a different set of parameters to each iteration. The input for the loop can be generated dynamically by a preceding SQL task, making it ideal for iterating over query results ."
+      },
+      {
+        "texto_opcion": "A `Run if` conditional task for each table.",
+        "es_correcta": false,
+        "explicacion": "`Run if` controls execution based on dependency status, not for iterating over a list. It would require creating a separate task for each iteration and is not suitable for a variable-sized list ."
+      },
+      {
+        "texto_opcion": "An `If/else` condition task.",
+        "es_correcta": false,
+        "explicacion": "`If/else` is for branching logic, not for looping over a list of values ."
+      },
+      {
+        "texto_opcion": "You cannot loop tasks in Databricks Jobs.",
+        "es_correcta": false,
+        "explicacion": "The `For each` task is specifically designed to support looping functionality in Databricks Jobs ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Task dependencies"
+    ]
+  },
+  {
+    "pregunta": "1850 - A data engineer is configuring a job and wants to set a notification for when a job run exceeds a certain duration, such as 30 minutes. They do not want the job to fail; they only want a warning. Which notification setting should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "`health` with a `RUN_DURATION_SECONDS` rule.",
+        "es_correcta": true,
+        "explicacion": "The `health` field allows you to define health rules for a job, including a `RUN_DURATION_SECONDS` metric. If the duration exceeds a threshold, notifications can be sent to the specified `on_duration_warning_threshold_exceeded` email addresses ."
+      },
+      {
+        "texto_opcion": "`on_failure` notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_failure` sends notifications only when a job run fails. A duration threshold exceeding a limit is not necessarily a failure; it's a performance warning ."
+      },
+      {
+        "texto_opcion": "`on_success` notifications.",
+        "es_correcta": false,
+        "explicacion": "`on_success` sends notifications when a job run completes successfully. It does not trigger on duration warnings ."
+      },
+      {
+        "texto_opcion": "`timeout_seconds` with a value of 1800.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` will fail the job after the specified time. The `health` rule provides a warning without failing the job ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Notifications"
+    ]
+  },
+  {
+    "pregunta": "1851 - A data engineer is configuring a job that may fail due to transient errors. They want the task to automatically retry up to 3 times. Which setting should they use in the task definition?",
+    "opciones": [
+      {
+        "texto_opcion": "Set `max_retries` to 3.",
+        "es_correcta": true,
+        "explicacion": "The `max_retries` field defines how many times a task should be retried if it fails. Setting it to 3 means the task will be retried up to 3 times after the initial failure, for a total of 4 attempts ."
+      },
+      {
+        "texto_opcion": "Set `timeout_seconds` to 3.",
+        "es_correcta": false,
+        "explicacion": "`timeout_seconds` sets a maximum duration for a job run. It does not control retries ."
+      },
+      {
+        "texto_opcion": "Set `concurrency` to 3.",
+        "es_correcta": false,
+        "explicacion": "`max_concurrent_runs` controls how many runs of the same job can execute in parallel. It is not related to retries ."
+      },
+      {
+        "texto_opcion": "Retries are automatically handled by Databricks and cannot be configured.",
+        "es_correcta": false,
+        "explicacion": "Retries are configurable. You can set the `max_retries` parameter to control the number of retry attempts. The default is to never retry ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Retries"
+    ]
+  },
+  {
+    "pregunta": "1895 - A data engineer is configuring a job with multiple tasks and wants to implement a branch in the workflow. They want to run Task C if Task A succeeds, and Task D if Task A fails. According to Databricks best practices, which task type should they use?",
+    "opciones": [
+      {
+        "texto_opcion": "The `If/else` condition task.",
+        "es_correcta": true,
+        "explicacion": "The `If/else` task is designed to add boolean conditional logic to task graphs. It evaluates a condition and allows you to configure tasks that run based on `true` or `false` results. This is the correct choice for branching a workflow based on the success or failure of a previous task ."
+      },
+      {
+        "texto_opcion": "The `Run if` conditional task.",
+        "es_correcta": false,
+        "explicacion": "`Run if` conditionals control when a downstream task runs based on the status of upstream tasks, but they don't create a branch with two separate paths. The `If/else` task is used for branching logic ."
+      },
+      {
+        "texto_opcion": "The `For each` task.",
+        "es_correcta": false,
+        "explicacion": "`For each` is used to run a task in a loop, not for conditional branching ."
+      },
+      {
+        "texto_opcion": "The SQL Alert task.",
+        "es_correcta": false,
+        "explicacion": "The SQL Alert task is used to evaluate a Databricks SQL alert. It does not provide general conditional branching logic for tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Workflow orchestration"
+    ]
+  },
+  {
+    "pregunta": "1899 - A data engineer is configuring a job and wants to use a serverless compute environment for a notebook task to minimize startup time and management overhead. According to Databricks best practices, which compute option should they select?",
+    "opciones": [
+      {
+        "texto_opcion": "Serverless job compute.",
+        "es_correcta": true,
+        "explicacion": "Serverless job compute is the recommended compute option for most automated workloads, including notebook tasks. It provides rapid startup, automatic scaling, and is fully managed by Databricks, reducing operational overhead ."
+      },
+      {
+        "texto_opcion": "An existing cluster.",
+        "es_correcta": false,
+        "explicacion": "Running jobs on an existing cluster requires manual management of cluster lifecycle and scaling, which increases operational overhead compared to serverless compute ."
+      },
+      {
+        "texto_opcion": "A new job cluster.",
+        "es_correcta": false,
+        "explicacion": "While a new job cluster is a good option, serverless compute is often preferred for its instant startup and automatic scaling, reducing management needs ."
+      },
+      {
+        "texto_opcion": "A SQL warehouse.",
+        "es_correcta": false,
+        "explicacion": "A SQL warehouse is designed for SQL tasks and queries, not for general-purpose notebook tasks ."
+      }
+    ],
+    "tags": [
+      "Databricks Workflows and Jobs",
+      "Job clusters"
+    ]
+  }
+]
